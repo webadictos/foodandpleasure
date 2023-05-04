@@ -1,0 +1,228 @@
+.hamburguer-menu {
+  //--background-menu: url('../images/fondo-bushmills.jpg');
+  &.offcanvas {
+    width: 100%;
+  }
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  background-image: var(--background-menu, unset);
+  background-repeat: no-repeat;
+  background-size: cover;
+  &::before {
+    position: absolute;
+    width: 100%;
+    content: ' ';
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+
+  .close-hamburger {
+    background: transparent
+      url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3E%3Cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E")
+      50%/1em auto no-repeat;
+    margin: 0;
+  }
+  .menu-hamburger__nav-items {
+    .navbar-nav {
+      // max-width: 80%;
+      // margin: 0 auto;
+    }
+    .menu-item + .menu-item {
+      margin-top: 0.5rem;
+    }
+    .nav-link {
+      --menu-hamburger-size: clamp(1.4375rem, 0.7vw + 1.3rem, 1.8125rem);
+      color: #fff;
+      opacity: 0.18;
+      transition: all 1s;
+      font-family: var(--font-family-nav);
+      font-weight: var(--font-family-nav-weight);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: var(--menu-hamburger-size);
+      &:hover,
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .hamburguer-menu__logo {
+    width: rem(73px);
+    height: auto;
+    @include media-breakpoint-up(lg) {
+      width: rem(132px);
+    }
+  }
+}
+
+.menu-hamburger__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 2rem;
+
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    // grid-template-columns: repeat(3, 0.5fr) repeat(6, 1fr) repeat(2, 0.5fr);
+    grid-template-columns: repeat(8, 1fr) repeat(2, 0.5fr);
+
+    grid-template-rows: auto;
+    grid-gap: 1rem;
+    padding: 0;
+  }
+
+  .menu-hamburger__close {
+    grid-area: 1 / 2 / 2 / 3;
+    @include media-breakpoint-up(lg) {
+      text-align: right;
+    }
+  }
+
+  .menu-hamburger__main-items {
+    grid-area: 2 / 1 / 3 / 3;
+    @include media-breakpoint-up(lg) {
+      text-align: right;
+    }
+  }
+
+  .menu-hamburger__social {
+    grid-area: 3 / 10 / 4 / 11;
+
+    .social-media-icons {
+      color: #000;
+      font-size: 1.2rem;
+
+      justify-content: flex-start;
+      gap: 0 2rem;
+      @include media-breakpoint-up(lg) {
+        flex-direction: column;
+        justify-content: space-evenly;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      a {
+        color: #fff;
+      }
+    }
+  }
+
+  .menu-hamburger__display-items {
+    grid-area: 2 / 3 / 3 / 11;
+    padding: 0 5rem;
+    display: none;
+    @include media-breakpoint-up(lg) {
+      display: block;
+    }
+  }
+}
+
+.menu-display {
+  border-left: rem(1px) solid var(--bs-secondary);
+  padding-left: 1.5rem;
+
+  .carousel-whiskies{
+    .carousel-control-next,
+    .carousel-control-prev {
+        bottom: 0;
+        display: block;
+        height: 4rem;
+        opacity: .5;
+        top: unset;
+        width: 2.5rem;
+        z-index: 3;
+    }
+    .carousel-control-prev {
+        left: unset;
+        right: 2.5rem;
+
+        &::after{
+            border-right: 1px solid #fff;
+            content: "";
+            display: inline-block;
+            height: 2rem;
+        }
+    }
+  }
+}
+
+.whisky-info{
+
+  .whisky-info__heading{
+    --color-headings:#FFF;
+
+  }
+
+  .whisky-info__subtitle{
+    --color-headings:#FFF;
+    --font-family-headings:var(--font-family-text)
+    font-weight: 400;
+    font-size:rem(23px);
+    border-bottom: rem(1px) solid var(--bs-secondary);
+    padding-bottom: 1rem;
+    display: inline-block;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    a{
+      color:var(--color-headings);
+      text-decoration: none;
+    }
+  }
+
+  .whisky-info__excerpt{
+    font-size: rem(12px);
+  }
+
+  .whisky-info__link{
+    font-size: rem(14px);
+  }
+}
+
+.whisky-image{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  img{
+    height: rem(359);
+    width: auto;
+  }
+}
+
+
+.loading-spinner {
+  position: fixed;
+  left: 1%;
+  bottom: 1%;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1025;
+  &.show {
+    display: flex;
+  }
+  span {
+    font-size: rem(9px);
+  }
+}
+.spinner-animation {
+  border: rem(4px) solid rgba(0, 0, 0, 0.1);
+  width: rem(36px);
+  height: rem(36px);
+  border-radius: 50%;
+  border-left-color: var(--bs-secondary);
+
+  animation: myspin 1s ease infinite;
+}
+
+@keyframes myspin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

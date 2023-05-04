@@ -1,0 +1,123 @@
+body {
+  .navbar {
+  }
+
+  &.home {
+  }
+}
+
+.masthead {
+  .navbar {
+    --logo-nav-bar-width-mobile: #{rem(370px)};
+    --logo-nav-bar-width: #{rem(650px)};
+    transition: all 0.25s ease-out;
+
+    .logo-navbar {
+      transition: all 0.15s ease-in;
+      --bs-navbar-brand-margin-end: 1rem;
+
+      @include media-breakpoint-up(lg) {
+        --bs-navbar-brand-margin-end: 2rem;
+      }
+
+      img {
+        width: 100%;
+        max-width: var(--logo-nav-bar-width-mobile);
+        height: auto;
+        transition: all 0.15s ease-in;
+        @include media-breakpoint-up(md) {
+          width: 100%;
+          max-width: var(--logo-nav-bar-width);
+        }
+      }
+    }
+    .navbar-collapse {
+      @include media-breakpoint-down(xs) {
+        padding-top: 1rem;
+      }
+    }
+    .navbar-toggler {
+      border: 0;
+      &:focus {
+        box-shadow: unset;
+      }
+    }
+    .nav-link {
+      --bs-nav-link-color: #858585;
+      --bs-nav-link-font-size: 1rem;
+      --bs-nav-link-font-weight: var(--font-family-nav-weight, 400);
+      --bs-navbar-active-color: var(--bs-primary);
+      --bs-nav-link-hover-color: var(--bs-primary);
+
+      text-decoration: none;
+      font-family: var(--font-family-nav);
+      text-transform: uppercase;
+      background-image: linear-gradient(
+        var(--bs-navbar-active-color),
+        var(--bs-navbar-active-color)
+      );
+      background-position: 100% 0;
+      background-repeat: no-repeat;
+      background-size: 0% rem(4px);
+      transition: background-size 0.5s;
+      &:hover,
+      &.active {
+        background-size: 100% rem(4px);
+      }
+    }
+
+    .search-form {
+      .input-group-text {
+        border-radius: 0;
+        background-color: var(--bs-body-bg);
+        border-color: var(--bs-secondary);
+        border-right: 0;
+      }
+      .form-control {
+        border-radius: 0;
+        border-color: var(--bs-secondary);
+        border-left: 0;
+      }
+    }
+    .social-media-icons {
+      margin: 1rem 0;
+      @include media-breakpoint-up(lg) {
+        margin: 0 1rem;
+      }
+    }
+
+    &.isSticky {
+      --bs-navbar-padding-y: 0.5rem;
+      background-color: var(--background-navbar-sticky, #000);
+      align-items: center;
+      .nav-donde-comprar {
+        @include media-breakpoint-up(md) {
+          display: block;
+          opacity: 1;
+        }
+      }
+      .logo-navbar {
+        margin-left: unset;
+        img {
+          @include media-breakpoint-up(md) {
+            width: var(--logo-nav-bar-sticky-width);
+          }
+        }
+      }
+    }
+  }
+}
+
+.sticky-header {
+  top: calc(var(--sticky-header) + 1rem);
+}
+
+.social-media-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

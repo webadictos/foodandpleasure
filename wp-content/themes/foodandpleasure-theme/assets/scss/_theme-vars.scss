@@ -1,0 +1,80 @@
+@use 'sass:meta';
+//Bootstrap Vars
+$primary: #091405;
+$secondary: #82898b;
+$tertiary: #d4d7d8;
+$font-family-base: 'Enriqueta', serif;
+$font-weight-base: 300;
+$body-bg: #f6f9f5;
+$body-color: #091405;
+$popover-bg: #091405;
+$popover-body-color: #fff;
+$footer-background: #fff;
+
+$font-family-nav: 'Maitree', serif;
+$font-family-nav-weight: 400;
+$font-family-category: 'Maitree', serif;
+$font-family-category-weight: 700;
+
+$font-family-headings: 'Maitree', serif;
+$font-family-headings-weight: 400;
+$font-family-section-title: 'Cinzel', serif;
+$font-family-section-title-weight: 400;
+$font-family-text: 'Enriqueta', serif;
+$font-family-article-title: 'Maitree', serif; //'Cinzel', serif;
+$font-family-article-title-weight: 400;
+$font-family-single-title: 'Cinzel', serif;
+$font-family-excerpt: 'Enriqueta', serif;
+$font-family-excerpt-weight: 400;
+$font-family-ads-text: 'Maitree', serif;
+$fa-font-path: '../webfonts/fontawesome/';
+$color-headings: #091405;
+$color-gray: #666;
+$color-excerpt: #091405;
+$color-entry-txt: #091405;
+$color-nav: #091405;
+$footer-nav-color: #fff;
+$color-section-headings: #ac834e;
+//CSS VARS
+
+:root {
+  --body-bg: #{$body-bg};
+  --nav-bg: transparent;
+  --nav-color: #{$color-nav};
+  --big-title-size: clamp(2rem, 3.7vw + 1.3rem, 4.5rem);
+
+  --font-family-nav: #{meta.inspect($font-family-nav)};
+  --font-family-nav-weight: #{$font-family-nav-weight};
+  --font-family-category: #{meta.inspect($font-family-category)};
+  --font-family-category-weight: #{$font-family-category-weight};
+  --font-family-headings: #{meta.inspect($font-family-headings)};
+  --font-family-headings-weight: #{$font-family-headings-weight};
+  --color-headings: #{$color-headings};
+  --font-family-section-title: #{meta.inspect($font-family-section-title)};
+  --font-family-section-title-weight: #{$font-family-section-title-weight};
+  --color-section-headings: #{meta.inspect($color-section-headings)};
+  --font-family-text: #{meta.inspect($font-family-text)};
+  --font-family-excerpt: #{meta.inspect($font-family-excerpt)};
+  --font-family-excerpt-weight: #{$font-family-excerpt-weight};
+  --font-family-article-title: #{meta.inspect($font-family-article-title)};
+  --font-family-article-title-weight: #{$font-family-article-title-weight};
+  --font-family-single-title: #{meta.inspect($font-family-single-title)};
+  --font-familiy-ads-text: #{meta.inspect($font-family-ads-text)};
+  --page-title-size: clamp(3rem, 9.4vw + 1.1rem, 7rem);
+  --article-title-size: clamp(1.625rem, 1.3vw + 1.4rem, 2.25rem);
+  --article-excerpt-size: clamp(1rem, 0.4vw + 0.9rem, 1.3rem);
+  --color-excerpt: #{$color-excerpt};
+  --color-entry-txt: #{$color-entry-txt};
+  --footer-nav-color: #{$footer-nav-color};
+  --footer-nav-size: clamp(0.8875rem, 0.7vw + 0.6rem, 1.0625rem);
+  --footer-bg: #{$footer-background};
+  --section-title-size: #{rem(20px)}; //clamp(1.5625rem, 2.2vw + 1.1rem, 2.5rem);
+  --font-size-txt: 1rem;
+  --sections-margins: 1rem 0;
+  --background-article: transparent;
+  --sticky-header: #{rem(85px)};
+  --social-icons-fsize: 1rem;
+  --social-icons-justify: space-evenly;
+  --social-icons-gap: 0;
+  --bs-tertiary: #{$tertiary};
+}
