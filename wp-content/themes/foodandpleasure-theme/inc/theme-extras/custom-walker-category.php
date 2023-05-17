@@ -11,7 +11,7 @@ class Custom_Walker_Category extends Walker_Category
         $linkclass = "nav-link";
         $link = '<a href="' . esc_url(get_term_link($category)) . '" ';
         if ($use_desc_for_title == 0 || empty($category->description))
-            $link .= 'title="' . esc_attr(sprintf(__('Ver socios en %s', 'guia-gastronomica'), $cat_name)) . '"';
+            $link .= 'title="' . esc_attr(sprintf(__('Ver notas en %s', 'wa-theme'), $cat_name)) . '"';
         else
             $link .= 'title="' . esc_attr(strip_tags(apply_filters('category_description', $category->description, $category))) . '"';
 

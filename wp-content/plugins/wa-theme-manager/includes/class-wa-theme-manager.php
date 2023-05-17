@@ -143,6 +143,9 @@ class Wa_Theme_Manager
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-conditionals/cmb2-conditionals.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-field-map/cmb-field-map.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-attached-posts/cmb2-attached-posts-field.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-social-field/cmb2-social-field.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-ad-slot-field/cmb2-ad-slot-field.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-parameters-field/cmb2-parameters-field.php';
 
 
 		$this->loader = new Wa_Theme_Manager_Loader();
@@ -273,5 +276,15 @@ class Wa_Theme_Manager
 	static function accept_html_values_sanitize($original_value, $args, $cmb2_field)
 	{
 		return $original_value; // Unsanitized value.
+	}
+
+	static function convert_name_as_id($original_value, $args, $cmb2_field)
+	{
+		$delimiter = "_";
+
+		$name_id = strtolower(str_replace(" ", $delimiter, $original_value));
+		$name_id = preg_replace('/[^A-Za-z0-9_' . $delimiter . ']/', '', $name_id);
+
+		return $name_id;
 	}
 }

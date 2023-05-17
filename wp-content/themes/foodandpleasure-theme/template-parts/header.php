@@ -63,7 +63,13 @@ $search_enabled  = get_theme_mod('search_enabled', '1'); // Get custom meta-valu
 
                         <div class="navbar-text navbar-widgets col-12 d-flex align-items-center justify-content-md-center justify-content-lg-end mb-3 gap-3 flex-column flex-md-row">
                             <div class="navbar-social-icons">
-                                <?php my_social_media_icons(false, false, false); ?>
+                                <?php
+                                if (function_exists('wa_show_social_profiles')) {
+                                    wa_show_social_profiles();
+                                }
+                                ?>
+                                <?php //my_social_media_icons(false, false, false); 
+                                ?>
                             </div>
 
                             <?php

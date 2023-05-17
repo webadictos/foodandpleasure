@@ -274,7 +274,7 @@ if (!class_exists('Wa_Theme_Manager_Codigos')) {
                 'capability'      => 'manage_options',
                 'vertical_tabs' => true,
                 'has_tabs' => true,
-                'wa_fields' => apply_filters('wa_theme_get_wa_theme_options_page_fields', $codeFields),
+                'wa_fields' => apply_filters('wa_theme_get_wa_theme_options_codes_page_fields', $codeFields),
             );
 
             $optionsPage[$this->prefix . 'codes_page'] = $codeOptionsPage;

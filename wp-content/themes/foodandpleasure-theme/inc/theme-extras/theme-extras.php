@@ -115,7 +115,6 @@ function WA_SetGlobals()
 add_action('init', 'WA_SetGlobals');
 
 
-
 $GLOBALS['featured'] = array();
 $GLOBALS['post_config'] = array(
     'enablescroll' => true,
@@ -237,61 +236,22 @@ function get_post_primary_category($post_id, $term = 'category', $return_all_cat
 }
 
 
-remove_filter('get_the_excerpt', 'wp_trim_excerpt'); //Remove the filter we don't want
-add_filter('get_the_excerpt', 'wa_wp_trim_excerpt'); //Add the modified filter
-add_filter('the_excerpt', 'do_shortcode'); //Make sure shortcodes get processed
 
-function wa_wp_trim_excerpt($text = '')
-{
-    global $post;
+// function limit_to_tags($terms, $num = 1)
+// {
+//     return array_slice($terms, 0, $num, true);
+// }
 
-    $seodesc = trim(get_post_meta($post->ID, '_yoast_wpseo_metadesc', true));
-    $excerpt = trim($post->post_excerpt);
-    $theexcerpt = "";
+// add_filter('term_links-post_tag', 'limit_to_tags_tres');
+// function limit_to_tags_tres($terms)
+// {
+//     $esInfinito = (isset($_REQUEST['action']) &&  $_REQUEST['action'] == "loadmore") ? true : false;
 
-    if (is_user_logged_in()) :
-    //	print_r($post);
-    //echo "EXCERPT: ".$excerpt;
-    endif;
-
-
-    if ($seodesc != "") {
-        $theexcerpt = $seodesc;
-        return $seodesc;
-    } else if ($excerpt) {
-        $theexcerpt = $excerpt;
-        return $excerpt;
-    }
-
-
-    if ('' == $theexcerpt) {
-        $text = get_the_content('');
-        //$text = strip_shortcodes( $text ); //Comment out the part we don't want
-        $text = apply_filters('the_content', $text);
-        $text = str_replace(']]>', ']]&gt;', $text);
-        $excerpt_length = apply_filters('excerpt_length', 40);
-        $excerpt_more = apply_filters('excerpt_more', ' ' . '[...]');
-        $text = wp_trim_words($text, $excerpt_length, $excerpt_more);
-    }
-    return apply_filters('wp_trim_excerpt', $text, $post->post_content);
-}
-
-
-function limit_to_tags($terms, $num = 1)
-{
-    return array_slice($terms, 0, $num, true);
-}
-
-add_filter('term_links-post_tag', 'limit_to_tags_tres');
-function limit_to_tags_tres($terms)
-{
-    $esInfinito = (isset($_REQUEST['action']) &&  $_REQUEST['action'] == "loadmore") ? true : false;
-
-    if (is_single() || $esInfinito)
-        return array_slice($terms, 0, 3, true);
-    else
-        return $terms;
-}
+//     if (is_single() || $esInfinito)
+//         return array_slice($terms, 0, 3, true);
+//     else
+//         return $terms;
+// }
 
 
 
@@ -348,6 +308,7 @@ add_action('wp_head', 'wa_themeSetupScript');
 
 function wa_themeSetupScript()
 {
+
 
 
 
@@ -451,32 +412,6 @@ function wa_themeSetupScript()
     if (!is_singular()) {
 
         $postSetup['loadmore'] = getLoadMoreArchiveSetup();
-    }
-
-    if (is_single() && get_post_type() === 'gg_socio') {
-
-        $config = getSocioConfig(get_the_ID());
-
-        $postSetup['socio']['categories'] = $config['categories'];
-        $postSetup['socio']['gg_socio_menu'] = $config['gg_socio_menu'];
-        $postSetup['socio']['gg_socio_url_reservaciones'] = $config['gg_socio_url_reservaciones'];
-        $postSetup['socio']['gg_socio_telefono'] = wa_Utils::validNumber($config['gg_socio_telefono']);
-        $postSetup['socio']['gg_socio_whatsapp'] = $config['gg_socio_whatsapp'];
-        $postSetup['socio']['gg_socio_menu'] = $config['gg_socio_menu'];
-        $postSetup['socio']['gg_socio_geolocalizacion'] = $config['gg_socio_geolocalizacion'];
-
-
-        // $socioInfo['gg_socio_menu'] = get_post_meta($socioID, 'gg_socio_menu', true);
-        // $socioInfo['gg_socio_reservaciones'] =  get_post_meta($socioID, 'gg_socio_reservaciones', true);
-        // $socioInfo['gg_socio_reservaciones_info'] =  get_post_meta($socioID, 'gg_socio_reservaciones_info', true);
-        // $socioInfo['gg_socio_url_reservaciones'] =  get_post_meta($socioID, 'gg_socio_url_reservacaciones', true);
-        // $socioInfo['gg_socio_direccion'] =  get_post_meta($socioID, 'gg_socio_direccion', true);
-        // $socioInfo['gg_socio_telefono'] =  get_post_meta($socioID, 'gg_socio_telefono', true);
-        // $socioInfo['gg_socio_whatsapp'] =  wa_Utils::validNumber(get_post_meta($socioID, 'gg_socio_whatsapp', true), "521");
-        // $socioInfo['gg_socio_web'] = get_post_meta($socioID, 'gg_socio_web', true);
-        // $socioInfo['gg_socio_horarios'] =  get_post_meta($socioID, 'gg_socio_horarios', true);
-        // $socioInfo['gg_certificates'] =  get_the_terms($socioID, 'gg_certificates');
-        // $socioInfo['gg_socio_geolocalizacion'] =  get_post_meta($socioID, 'gg_socio_geolocalizacion', true);
     }
 
     echo "<script type='text/javascript'>\n";
@@ -679,134 +614,7 @@ function getPostDataAttributes()
     }
 }
 
-function getSocioConfig($socioID)
-{
-
-    $config = array();
-    $config['gg_socio_destaca_por'] = get_post_meta($socioID, 'gg_socio_destaca_por', true);
-    $config['gg_socio_menu'] = get_post_meta($socioID, 'gg_socio_menu', true);
-    $config['gg_socio_reservaciones'] =  get_post_meta($socioID, 'gg_socio_reservaciones', true);
-    $config['gg_socio_reservaciones_info'] =  get_post_meta($socioID, 'gg_socio_reservaciones_info', true);
-    $config['gg_socio_url_reservaciones'] =  get_post_meta($socioID, 'gg_socio_url_reservacaciones', true);
-    $config['gg_socio_direccion'] =  get_post_meta($socioID, 'gg_socio_direccion', true);
-    $config['gg_socio_telefono'] =  get_post_meta($socioID, 'gg_socio_telefono', true);
-    $config['gg_socio_whatsapp'] =  wa_Utils::validNumber(get_post_meta($socioID, 'gg_socio_whatsapp', true), "521");
-    $config['gg_socio_web'] = get_post_meta($socioID, 'gg_socio_web', true);
-    $config['gg_socio_horarios'] =  get_post_meta($socioID, 'gg_socio_horarios', true);
-    $config['gg_certificates'] =  get_the_terms($socioID, 'gg_certificates');
-    $config['gg_socio_geolocalizacion'] =  get_post_meta($socioID, 'gg_socio_geolocalizacion', true);
-    $config['redes_sociales'] = array();
-    $config['redes_sociales']['facebook'] = get_post_meta($socioID, 'gg_socio_facebook', true);
-    $config['redes_sociales']['instagram'] = get_post_meta($socioID, 'gg_socio_instagram', true);
-    $config['redes_sociales']['twitter'] = get_post_meta($socioID, 'gg_socio_twitter', true);
-    $config['gg_socio_topochico'] = get_post_meta($socioID, 'gg_socio_topochico', true);
-    $config['gg_socio_recomendaciones'] = get_post_meta($socioID, 'gg_socio_recomendaciones', true);
-    $config['gg_socio_opciones_veganas_vegetarianas'] = get_post_meta($socioID, 'gg_socio_opciones_veganas_vegetarianas', true);
-    $config['gg_socio_reservaciones_info'] = get_post_meta($socioID, 'gg_socio_reservaciones_info', 1);
-    $config['gg_socio_delivery'] = get_post_meta($socioID, 'gg_socio_delivery', 1);
-    $config['gg_socio_delivery_info'] = get_post_meta($socioID, 'gg_socio_delivery_info', 1);
-
-    $config['gg_socio_aportaciones_sociales'] = get_post_meta($socioID, 'gg_socio_aportaciones_sociales', 1);
-    $config['gg_socio_acciones_medioambiente'] = get_post_meta($socioID, 'gg_socio_acciones_medioambiente', 1);
-    $config['gg_socio_sucursales'] = get_post_meta($socioID, 'gg_socio_sucursales', true);
-    $config['gg_socio_observaciones'] = get_post_meta($socioID, 'gg_socio_observaciones', true);
-
-
-    //inread_paragraph
-    //disable_scroll
-    //posts_scroll
-
-
-
-    $config['id'] = (string) $socioID;
-
-    $terms = get_the_terms($socioID, 'gg_category');
-
-    $tagsTmp = array();
-
-    if ($terms) {
-        foreach ($terms as $t) {
-            $tagsTmp[] = strtolower($t->slug);
-        }
-    }
-
-    $config['categories'] = $tagsTmp;
-
-    $yoast_title = get_post_meta($socioID, '_yoast_wpseo_title', true);
-    $title = strstr($yoast_title, '%%', true);
-    if (empty($title)) {
-        $title = get_the_title($socioID);
-    }
-
-    $config['seo_title'] = $title;
-
-
-    $GLOBALS['current_post_config'] = $config;
-
-    return $config;
-}
-
-
-
-/**
- * Eliminar <p>&nbsp;</p>
- */
-function trimBlankParagraphs($content)
-{
-
-    $content = str_replace("<p>&nbsp;</p>", "", $content);
-
-    return $content;
-}
-
-//add_filter('the_content', 'trimBlankParagraphs');
-
-
-function reading_time()
-{
-    global $post;
-
-    $content = get_post_field('post_content', $post->ID);
-    $word_count = str_word_count(strip_tags($content));
-    $readingtime = ceil($word_count / 200);
-    if ($readingtime == 1) {
-        $timer = " min.";
-    } else {
-        $timer = " mins.";
-    }
-    $totalreadingtime = 'Lectura ' . $readingtime . $timer;
-    return $totalreadingtime;
-}
-
-
-// This will suppress empty email errors when submitting the user form
-add_action('user_profile_update_errors', 'my_user_profile_update_errors', 10, 3);
-function my_user_profile_update_errors($errors, $update, $user)
-{
-    $errors->remove('empty_email');
-}
-
-// This will remove javascript required validation for email input
-// It will also remove the '(required)' text in the label
-// Works for new user, user profile and edit user forms
-add_action('user_new_form', 'my_user_new_form', 10, 1);
-add_action('show_user_profile', 'my_user_new_form', 10, 1);
-add_action('edit_user_profile', 'my_user_new_form', 10, 1);
-function my_user_new_form($form_type)
-{
-?>
-    <script type="text/javascript">
-        jQuery('#email').closest('tr').removeClass('form-required').find('.description').remove();
-        // Uncheck send new user email option by default
-        <?php if (isset($form_type) && $form_type === 'add-new-user') : ?>
-            jQuery('#send_user_notification').removeAttr('checked');
-        <?php endif; ?>
-    </script>
-<?php
-}
-
-
-add_action('pre_get_posts', 'exclude_ids_from_loop');
+//add_action('pre_get_posts', 'exclude_ids_from_loop');
 
 function exclude_ids_from_loop($query)
 {
@@ -839,31 +647,6 @@ function exclude_ids_from_loop($query)
         $query->set('post__not_in', $GLOBAL['exclude_ids']);
     }
 }
-/**
- *  Dejamos solo la sección principal entre las clases de la función post class de wordpress
- */
-add_filter('post_class', 'waPostClass', 10, 3);
-
-function waPostClass($classes, $class, $postId)
-{
-
-
-    $primary = get_post_primary_category($postId);
-    $parent_cat = isset($primary['primary_category']) ? smart_category_top_parent_id($primary['primary_category']->term_id, true) : null;
-
-    // $classesWithPrimaryOnly = array();
-    // $func = function ($clase) {
-    //     if (!strstr($clase, 'category-')) {
-    //         return $clase;
-    //     }
-    // };
-
-    // $classesWithPrimaryOnly = array_map($func, $classes);
-
-    if (is_object($parent_cat))    $classes[] = "main-category-" . $parent_cat->slug;
-
-    return $classes;
-}
 
 
 function getPrimaryCatSlug($post_id)
@@ -881,93 +664,6 @@ add_filter('get_primary_cat_slug', 'getPrimaryCatSlug');
 
 
 
-
-function wpa_category_nav_class($classes, $item)
-{
-    if ('category' == $item->object) {
-        $category = get_category($item->object_id);
-        $parent_cat = smart_category_top_parent_id($category->term_id, true);
-
-        $classes[] = 'main-category-' . $parent_cat->slug;
-    }
-    return $classes;
-}
-add_filter('nav_menu_css_class', 'wpa_category_nav_class', 10, 2);
-
-
-add_action('nav_menu_css_class', 'add_current_nav_class', 10, 2);
-
-function add_current_nav_class($classes, $item)
-{
-
-    // Getting the current post details
-    global $post;
-
-    // Get post ID, if nothing found set to NULL
-    $id = (isset($post->ID) ? get_the_ID() : NULL);
-
-    // Checking if post ID exist...
-    if (isset($id)) {
-
-        $category = get_post_primary_category(get_the_ID());
-        $parent_cat = isset($category['primary_category']) ? smart_category_top_parent_id($category['primary_category']->term_id, true) : null;
-
-
-        // Getting the post type of the current post
-        //$current_post_type = get_post_type_object(get_post_type($post->ID));
-        //$current_post_type_slug = $current_post_type->rewrite['slug'];          
-
-        // Getting the URL of the menu item
-        $menu_slug = strtolower(trim($item->url));
-
-        // If the menu item URL contains the current post types slug add the current-menu-item class
-        if (is_object($parent_cat)) {
-            if (strpos($menu_slug, $parent_cat->slug) !== false) {
-
-                $classes[] = 'main-category';
-            }
-        }
-    }
-    // Return the corrected set of classes to be added to the menu item
-    return $classes;
-}
-
-// Allow SVG
-add_filter('wp_check_filetype_and_ext', function ($data, $file, $filename, $mimes) {
-
-    global $wp_version;
-    if ($wp_version !== '4.7.1') {
-        return $data;
-    }
-
-    $filetype = wp_check_filetype($filename, $mimes);
-
-    return [
-        'ext'             => $filetype['ext'],
-        'type'            => $filetype['type'],
-        'proper_filename' => $data['proper_filename']
-    ];
-}, 10, 4);
-
-function cc_mime_types($mimes)
-{
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
-}
-add_filter('upload_mimes', 'cc_mime_types');
-
-function fix_svg()
-{
-    echo '<style type="text/css">
-          .attachment-266x266, .thumbnail img {
-               width: 100% !important;
-               height: auto !important;
-          }
-          </style>';
-}
-add_action('admin_head', 'fix_svg');
-
-
 function wa_get_lang()
 {
     $currentLang = apply_filters('wpml_current_language', null);
@@ -976,3 +672,28 @@ function wa_get_lang()
 
     return $currentLang;
 }
+
+add_filter('wa_get_ads_insertion_positions', function ($positions) {
+
+    $new_positions = array(
+        'wa_before_header'   => __('Antes del <header> principal', 'cmb2'),
+        'wa_after_header'   => __('Después del </header> principal', 'cmb2'),
+        // 'wa_before_footer'   => __('Antes del <footer>', 'cmb2'),
+        // 'wa_after_footer'   => __('Después del </footer>', 'cmb2'),
+        // 'wa_before_single_header'   => __('Antes del <header> de la nota', 'cmb2'),
+        // 'wa_after_single_header'   => __('Después del </header> de la nota', 'cmb2'),
+        // 'wa_single_header'   => __('Dentro del <header></header> de la nota', 'cmb2'),
+        // 'wa_single_footer'   => __('Dentro del <footer></footer> de la nota', 'cmb2'),
+        // 'wa_before_single_footer'   => __('Antes del <footer> de la nota', 'cmb2'),
+        // 'wa_after_single_footer'   => __('Después del </footer> de la nota', 'cmb2'),
+        // 'wa_before_single_entry'   => __('Antesl del texto de la nota', 'cmb2'),
+        // 'wa_after_single_entry'   => __('Después del texto de la nota', 'cmb2'),
+        // 'wa_single_entry'   => __('Dentro del texto de la nota (Al principio)', 'cmb2'),
+    );
+
+    $positions = array_merge($positions, $new_positions);
+
+    $positions = array_unique($positions, SORT_REGULAR);
+
+    return $positions;
+});

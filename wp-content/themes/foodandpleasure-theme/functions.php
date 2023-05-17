@@ -30,7 +30,7 @@ if (!function_exists('foodandpleasure_theme_setup_theme')) {
 		 */
 		global $content_width;
 		if (!isset($content_width)) {
-			$content_width = 800;
+			$content_width = 600;
 		}
 
 		// Theme Support.
@@ -250,8 +250,8 @@ function foodandpleasure_theme_widgets_init()
 		array(
 			'name'          => 'Primary Widget Area (Sidebar)',
 			'id'            => 'primary_widget_area',
-			'before_widget' => '',
-			'after_widget'  => '',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
 			'before_title'  => '<h3 class="widget-title">',
 			'after_title'   => '</h3>',
 		)
@@ -260,10 +260,10 @@ function foodandpleasure_theme_widgets_init()
 	// Area 2.
 	register_sidebar(
 		array(
-			'name'          => 'Secondary Widget Area (Header Navigation)',
+			'name'          => 'Archive Widget Area',
 			'id'            => 'secondary_widget_area',
-			'before_widget' => '',
-			'after_widget'  => '',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
 			'before_title'  => '<h3 class="widget-title">',
 			'after_title'   => '</h3>',
 		)
@@ -274,8 +274,20 @@ function foodandpleasure_theme_widgets_init()
 		array(
 			'name'          => 'Third Widget Area (Footer)',
 			'id'            => 'third_widget_area',
-			'before_widget' => '',
-			'after_widget'  => '',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		)
+	);
+
+	// Area 4.
+	register_sidebar(
+		array(
+			'name'          => 'Articles Widget Area',
+			'id'            => 'articles_widget_area',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
 			'before_title'  => '<h3 class="widget-title">',
 			'after_title'   => '</h3>',
 		)
@@ -517,7 +529,11 @@ if (function_exists('register_nav_menus')) {
 	register_nav_menus(
 		array(
 			'main-menu'   => 'Main Navigation Menu',
+			'main-menu-left'   => 'Main Navigation Left',
+			'main-menu-right'   => 'Main Navigation Right',
+			'hamburger-menu'   => 'Hamburger Navigation Menu',
 			'footer-menu' => 'Footer Menu',
+			'privacy-menu' => 'Privacy Menu',
 		)
 	);
 }
@@ -532,49 +548,6 @@ $custom_walker_footer = __DIR__ . '/inc/wp-bootstrap-navwalker-footer.php';
 if (is_readable($custom_walker_footer)) {
 	require_once $custom_walker_footer;
 }
-
-/**
- * Disable comments funcionality
- */
-add_action('admin_init', function () {
-	// Redirect any user trying to access comments page
-	global $pagenow;
-
-	if ($pagenow === 'edit-comments.php') {
-		wp_safe_redirect(admin_url());
-		exit;
-	}
-
-	// Remove comments metabox from dashboard
-	remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
-
-	// Disable support for comments and trackbacks in post types
-	foreach (get_post_types() as $post_type) {
-		if (post_type_supports($post_type, 'comments')) {
-			remove_post_type_support($post_type, 'comments');
-			remove_post_type_support($post_type, 'trackbacks');
-		}
-	}
-});
-
-// Close comments on the front-end
-add_filter('comments_open', '__return_false', 20, 2);
-add_filter('pings_open', '__return_false', 20, 2);
-
-// Hide existing comments
-add_filter('comments_array', '__return_empty_array', 10, 2);
-
-// Remove comments page in menu
-add_action('admin_menu', function () {
-	remove_menu_page('edit-comments.php');
-});
-
-// Remove comments links from admin bar
-add_action('init', function () {
-	if (is_admin_bar_showing()) {
-		remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
-	}
-});
 
 /**
  * Loading All CSS Stylesheets and Javascript Files.
@@ -609,24 +582,18 @@ add_action('wp_enqueue_scripts', 'foodandpleasure_theme_scripts_loader');
 /**
  * THEME EXTRAS
  */
-function requireThemeExtras()
+function require_theme_extras()
 {
 	$theme_extras = array(
-		get_template_directory() . '/inc/theme-extras/social-icons.php',
+		get_template_directory() . '/wa-theme-config.php',
+		get_template_directory() . '/inc/core/class-wa-theme.php',
 		get_template_directory() . '/inc/theme-extras/theme-extras.php',
 		get_template_directory() . '/inc/theme-extras/infinite-scroll.php',
-		get_template_directory() . '/inc/theme-extras/videos.php',
 		get_template_directory() . '/inc/theme-extras/ads.php',
 		get_template_directory() . '/inc/theme-extras/menu-desplegable.php',
-		get_template_directory() . '/inc/theme-extras/optimizacion.php',
-		get_template_directory() . '/inc/theme-extras/remove-shortcodes.php',
 		get_template_directory() . '/inc/theme-extras/custom-walker-category.php',
-		get_template_directory() . '/widgets/widgets-init.php',
-		get_template_directory() . '/inc/theme-extras/shortcodes.php',
+		// get_template_directory() . '/widgets/widgets-init.php',
 		get_template_directory() . '/inc/theme-extras/pwa.php',
-		get_template_directory() . '/inc/theme-extras/filters.php',
-		get_template_directory() . '/inc/theme-extras/utils.php',
-
 	);
 
 	foreach ($theme_extras as $file) {
@@ -635,4 +602,4 @@ function requireThemeExtras()
 		}
 	}
 }
-requireThemeExtras();
+require_theme_extras();

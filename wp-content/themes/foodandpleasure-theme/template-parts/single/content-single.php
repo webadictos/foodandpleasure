@@ -7,7 +7,8 @@
 <?php
 $esInfinito = (isset($_REQUEST['action']) &&  $_REQUEST['action'] == "loadmore") ? true : false;
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class('post article-layout container'); ?> <?php getPostDataAttributes(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('post article-layout container'); ?> <?php //getPostDataAttributes(); 
+                                                                                            ?> <?php function_exists('wa_article_attributes') ? wa_article_attributes() : ''; ?>>
     <header class="entry-header">
         <?php
 
@@ -89,6 +90,9 @@ $esInfinito = (isset($_REQUEST['action']) &&  $_REQUEST['action'] == "loadmore")
 
             <?php
 */
+            if (function_exists('wa_show_sharebar')) {
+                wa_show_sharebar(get_the_ID(), array('networks' => array('facebook', 'whatsapp', 'twitter')));
+            }
 
             the_content();
 

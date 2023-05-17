@@ -14,9 +14,9 @@ License: GPLv2+
  * Class PW_CMB2_Field_Google_Maps.
  */
 
-if (!class_exists('CMB2_Field_Social')) {
+if (!class_exists('CMB2_Ad_Slot')) {
 
-    class CMB2_Field_Social
+    class CMB2_Ad_Slot
     {
 
         /**
@@ -29,41 +29,47 @@ if (!class_exists('CMB2_Field_Social')) {
          */
         public function __construct()
         {
-            add_filter('cmb2_render_social', array($this, 'render_social'), 10, 5);
-            add_filter('cmb2_sanitize_social', array($this, 'sanitize_social'), 10, 4);
-            add_filter('cmb2_types_esc_social', array($this, 'escape'), 10, 4);
+            add_filter('cmb2_render_ad_slot', array($this, 'render_ad_slot'), 10, 5);
+            add_filter('cmb2_sanitize_ad_slot', array($this, 'sanitize_ad_slot'), 10, 4);
+            add_filter('cmb2_types_esc_ad_slot', array($this, 'escape'), 10, 4);
         }
 
         /**
          * Render field.
          */
-        public function render_social($field, $field_escaped_value, $field_object_id, $field_object_type, $field_type_object)
+        public function render_ad_slot($field, $field_escaped_value, $field_object_id, $field_object_type, $field_type_object)
         {
 
             // make sure we specify each part of the value we need.
             $value = wp_parse_args($field_escaped_value, array(
-                'social' => '',
-                'url' => '',
+                'platform' => '',
+                'width' => '',
+                'height' => '',
             ));
 
 
             echo $field_type_object->select(array(
-                'name'  => $field_type_object->_name('[social]'),
-                'id'    => $field_type_object->_id('_social'),
-                'options' => $this->get_social_networks($value['social']),
-                'desc'    => '',
+                'name'  => $field_type_object->_name('[platform]'),
+                'id'    => $field_type_object->_id('_platform'),
+                'options' => $this->get_platforms($value['platform']),
+                'style' => "margin-top:0;margin-right:1rem;",
             ));
-
-
 
             echo $field_type_object->input(array(
-                'name'  => $field_type_object->_name('[url]'),
-                'id'    => $field_type_object->_id('_url'),
-                'value' => $value['url'],
-                'placeholder' => "URL del perfil",
-                'desc'  => '',
+                'name'  => $field_type_object->_name('[width]'),
+                'id'    => $field_type_object->_id('_width'),
+                'value' => $value['width'],
+                'placeholder' => "Ancho",
+                'style' => "width:100px;",
             ));
 
+            echo $field_type_object->input(array(
+                'name'  => $field_type_object->_name('[height]'),
+                'id'    => $field_type_object->_id('_height'),
+                'value' => $value['height'],
+                'placeholder' => "Alto",
+                'style' => "width:100px;",
+            ));
 
             echo $field_type_object->_desc(true);
         }
@@ -73,7 +79,7 @@ if (!class_exists('CMB2_Field_Social')) {
          * @param  CMB2_Field $field 
          * @return array An array of options that matches the CMB2 options array
          */
-        public function get_social_networks($value)
+        public function get_platforms($value)
         {
             // $_args = array(
             //     'taxonomy'   => 'bushmills_retailers',
@@ -84,44 +90,20 @@ if (!class_exists('CMB2_Field_Social')) {
 
             // $terms = get_terms($_args);
 
-            $socialNetworks = apply_filters('wa_theme_manager_social_field_values', array(
+            $platforms = array(
                 array(
-                    'id' => 'facebook',
-                    'name' => 'Facebook'
+                    'id' => 'mobile',
+                    'name' => 'Mobile'
                 ),
                 array(
-                    'id' => 'twitter',
-                    'name' => 'Twitter'
+                    'id' => 'desktop',
+                    'name' => 'Desktop'
                 ),
                 array(
-                    'id' => 'instagram',
-                    'name' => 'Instagram'
+                    'id' => 'all',
+                    'name' => 'Todas'
                 ),
-                array(
-                    'id' => 'youtube',
-                    'name' => 'YouTube'
-                ),
-                array(
-                    'id' => 'tiktok',
-                    'name' => 'Tiktok'
-                ),
-                array(
-                    'id' => 'linkedin',
-                    'name' => 'LinkedIn'
-                ),
-                array(
-                    'id' => 'pinterest',
-                    'name' => 'Pinterest'
-                ),
-                array(
-                    'id' => 'flipboard',
-                    'name' => 'Flipboard'
-                ),
-                array(
-                    'id' => 'email',
-                    'name' => 'Email'
-                ),
-            ));
+            );
 
             $options = "";
             // Initate an empty array
@@ -132,8 +114,8 @@ if (!class_exists('CMB2_Field_Social')) {
 
 
             // if (!empty($terms)) {
-            foreach ($socialNetworks as $socialNetwork) {
-                $term_options .= '<option value="' . $socialNetwork['id'] . '" ' . selected($value, $socialNetwork['id'], false) . '>' . $socialNetwork['name'] . '</option>';
+            foreach ($platforms as $platform) {
+                $term_options .= '<option value="' . $platform['id'] . '" ' . selected($value, $platform['id'], false) . '>' . $platform['name'] . '</option>';
 
                 //$term_options[$term->term_id] = $term->name;
             }
@@ -147,7 +129,7 @@ if (!class_exists('CMB2_Field_Social')) {
          * Optionally save the latitude/longitude values into two custom fields.
          * sanitize_retail(NULL, Array, 58070, Array)
          */
-        public function sanitize_social($check, $meta_value, $object_id, $field_args)
+        public function sanitize_ad_slot($check, $meta_value, $object_id, $field_args)
         {
             // if not repeatable, bail out.
             if (!is_array($meta_value) || !$field_args['repeatable']) {
@@ -175,5 +157,5 @@ if (!class_exists('CMB2_Field_Social')) {
             return array_filter($meta_value);
         }
     }
-    $fp_social_field = new CMB2_Field_Social();
+    $ad_slot_field = new CMB2_Ad_Slot();
 }

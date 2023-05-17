@@ -69,105 +69,147 @@ class Wa_Theme_Manager_Admin
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->prefix = "wa_theme_options_";
-		$this->prefix_posts = "wa_post_";
+		$this->prefix_posts = "wa_meta_";
+	}
+
+
+	public function wa_register_metaboxes()
+	{
+
+
+
+		$metabox_id = $this->prefix_posts . 'article_metabox';
+
+		$_metaboxes = array(
+			$metabox_id => array(
+				'id'            => $metabox_id,
+				'title'         => esc_html__('Opciones del artículo', 'cmb2'),
+				'object_types'  => array('post', 'page'), // Post type
+				'context'    => 'side',
+				'priority'   => 'high',
+				'wa_metabox_fields' => apply_filters("wa_theme_get_{$metabox_id}_fields", array(), $this->prefix_posts),
+			)
+		);
+
+		// $_metaboxes = array();
+
+
+		$metaboxes = apply_filters('wa_theme_set_metaboxes', $_metaboxes, $this->prefix_posts);
+
+		if (is_array($metaboxes)) {
+
+			// print_r($metaboxes);
+
+			foreach ($metaboxes as $metabox) {
+
+				if (isset($metabox['wa_metabox_fields']) && is_array($metabox['wa_metabox_fields']) && count($metabox['wa_metabox_fields']) > 0) {
+
+					$_metabox = new_cmb2_box($metabox);
+
+					foreach ($metabox['wa_metabox_fields'] as $field) {
+
+
+						$cmbOptions = $_metabox->add_field($field);
+					}
+				}
+			}
+		}
 	}
 
 
 
 
-
-
-	public function wa_register_metaboxes()
+	public function wa_register_metaboxes_old()
 	{
 		$prefix = $this->prefix_posts; //'wa_post_';
 
-		$cmb_page_metabox = new_cmb2_box(array(
-			'id'            => $prefix . 'metabox_layout',
-			'title'         => esc_html__('Opciones del layout', 'cmb2'),
-			'object_types'  => array('page'), // Post type
-			'context'    => 'side',
-			'priority'   => 'high',
-		));
+		// $cmb_page_metabox = new_cmb2_box(array(
+		// 	'id'            => $prefix . 'metabox_layout',
+		// 	'title'         => esc_html__('Opciones del layout', 'cmb2'),
+		// 	'object_types'  => array('page'), // Post type
+		// 	'context'    => 'side',
+		// 	'priority'   => 'high',
+		// ));
 
-		$cmb_page_metabox->add_field(array(
-			'name' => 'Imagen de fondo',
-			'id'   => $prefix . 'bg_type',
-			'desc' => "Selecciona el tipo de fondo de la página a utilizar",
-			'type'             => 'radio',
-			'show_option_none' => false,
-			'options'          => array(
-				'default' => __('Default', 'cmb2'),
-				'custom'   => __('Personalizado', 'cmb2'),
-				'none'     => __('Sin imagen de fondo', 'cmb2'),
-			),
-			'default' => 'default',
+		// $cmb_page_metabox->add_field(array(
+		// 	'name' => 'Imagen de fondo',
+		// 	'id'   => $prefix . 'bg_type',
+		// 	'desc' => "Selecciona el tipo de fondo de la página a utilizar",
+		// 	'type'             => 'radio',
+		// 	'show_option_none' => false,
+		// 	'options'          => array(
+		// 		'default' => __('Default', 'cmb2'),
+		// 		'custom'   => __('Personalizado', 'cmb2'),
+		// 		'none'     => __('Sin imagen de fondo', 'cmb2'),
+		// 	),
+		// 	'default' => 'default',
 
-		));
+		// ));
 
-		$cmb_page_metabox->add_field(array(
-			'name'    => 'Fondo',
-			'desc'    => 'Seleccione la imagen de fondo.',
-			'id'          => $prefix . 'page_bg',
-			'type'    => 'file',
-			// Optional:
-			'options' => array(
-				'url' => false, // Hide the text input for the url
-			),
-			'text'    => array(
-				'add_upload_file_text' => 'Agregar fondo' // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args' => array(
-				//'type' => 'application/pdf', // Make library only display PDFs.
-				// Or only allow gif, jpg, or png images
-				'type' => array(
-					'image/gif',
-					'image/jpeg',
-					'image/png',
-					'image/svg+xml',
-				),
-			),
-			'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
-			'attributes'    => array(
-				'data-conditional-id'     => $prefix . 'bg_type',
-				'data-conditional-value'  => 'custom',
-			),
-		));
-
-
-		$cmb_page_metabox->add_field(array(
-			'name'    => 'Color de fondo',
-			'id'      => $prefix . 'page_bg_color',
-			'type'    => 'colorpicker',
-
-			'options' => array(
-				'alpha' => true, // Make this a rgba color picker.
-			),
-		));
+		// $cmb_page_metabox->add_field(array(
+		// 	'name'    => 'Fondo',
+		// 	'desc'    => 'Seleccione la imagen de fondo.',
+		// 	'id'          => $prefix . 'page_bg',
+		// 	'type'    => 'file',
+		// 	// Optional:
+		// 	'options' => array(
+		// 		'url' => false, // Hide the text input for the url
+		// 	),
+		// 	'text'    => array(
+		// 		'add_upload_file_text' => 'Agregar fondo' // Change upload button text. Default: "Add or Upload File"
+		// 	),
+		// 	// query_args are passed to wp.media's library query.
+		// 	'query_args' => array(
+		// 		//'type' => 'application/pdf', // Make library only display PDFs.
+		// 		// Or only allow gif, jpg, or png images
+		// 		'type' => array(
+		// 			'image/gif',
+		// 			'image/jpeg',
+		// 			'image/png',
+		// 			'image/svg+xml',
+		// 		),
+		// 	),
+		// 	'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
+		// 	'attributes'    => array(
+		// 		'data-conditional-id'     => $prefix . 'bg_type',
+		// 		'data-conditional-value'  => 'custom',
+		// 	),
+		// ));
 
 
-		$cmb_page_metabox->add_field(array(
-			'name'    => 'Color de fondo del contenido',
-			'id'      => $prefix . 'entry_bg_color',
-			'type'    => 'colorpicker',
-			'options' => array(
-				'alpha' => true, // Make this a rgba color picker.
-			),
-		));
+		// $cmb_page_metabox->add_field(array(
+		// 	'name'    => 'Color de fondo',
+		// 	'id'      => $prefix . 'page_bg_color',
+		// 	'type'    => 'colorpicker',
 
-		$cmb_page_metabox->add_field(array(
-			'name' => 'Padding',
-			'desc' => 'Padding del contenedor de texto',
-			'id'   => $prefix . 'page-layout-padding',
-			'type' => 'text',
-		));
+		// 	'options' => array(
+		// 		'alpha' => true, // Make this a rgba color picker.
+		// 	),
+		// ));
 
-		$cmb_page_metabox->add_field(array(
-			'name' => 'Clase CSS principal',
-			'desc' => 'Clase CSS asignada al contenedor principal de la página',
-			'id'   => $prefix . 'page_css_class',
-			'type' => 'text',
-		));
+
+		// $cmb_page_metabox->add_field(array(
+		// 	'name'    => 'Color de fondo del contenido',
+		// 	'id'      => $prefix . 'entry_bg_color',
+		// 	'type'    => 'colorpicker',
+		// 	'options' => array(
+		// 		'alpha' => true, // Make this a rgba color picker.
+		// 	),
+		// ));
+
+		// $cmb_page_metabox->add_field(array(
+		// 	'name' => 'Padding',
+		// 	'desc' => 'Padding del contenedor de texto',
+		// 	'id'   => $prefix . 'page-layout-padding',
+		// 	'type' => 'text',
+		// ));
+
+		// $cmb_page_metabox->add_field(array(
+		// 	'name' => 'Clase CSS principal',
+		// 	'desc' => 'Clase CSS asignada al contenedor principal de la página',
+		// 	'id'   => $prefix . 'page_css_class',
+		// 	'type' => 'text',
+		// ));
 
 
 
@@ -367,10 +409,6 @@ class Wa_Theme_Manager_Admin
 		// the current object (post, user, etc) ID.
 	}
 
-
-	public function getDefaultOptions()
-	{
-	}
 
 	/**
 	 * Hook in and register a metabox to handle a theme options page and adds a menu item.
@@ -576,7 +614,7 @@ class Wa_Theme_Manager_Admin
 						)
 
 
-					)),
+					), $prefix),
 				)
 
 
@@ -585,7 +623,7 @@ class Wa_Theme_Manager_Admin
 
 
 
-		$optionsPage = apply_filters('wa_theme_set_options_page', $defaultOptionsPages);
+		$optionsPage = apply_filters('wa_theme_set_options_page', $defaultOptionsPages, $prefix);
 
 		if (is_array($optionsPage)) {
 
@@ -1298,6 +1336,7 @@ class Wa_Theme_Manager_Admin
 				'pattern' => '\d*',
 			),
 		));
+
 
 
 
