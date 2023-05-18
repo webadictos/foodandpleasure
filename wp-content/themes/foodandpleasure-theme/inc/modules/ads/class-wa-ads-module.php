@@ -27,6 +27,9 @@ class WA_Ads_Module extends WA_Module
         $this->slots_key = $this->prefix . 'slots';
         $this->settings_key = $this->prefix . "ads";
 
+        // $this->load_config();
+
+
         $this->loader->add_filter('wa_theme_get_wa_theme_options_page_fields', $this, 'add_settings', 10, 1);
         $this->loader->add_filter('wa_theme_set_options_page', $this, 'add_slots_page', 11, 1);
         $this->loader->add_filter('wa_theme_set_metaboxes', $this, 'add_metaboxes', 10, 1);
@@ -528,6 +531,7 @@ class WA_Ads_Module extends WA_Module
                 }
             }
         }
+
 
         return $_ads_slots;
     }

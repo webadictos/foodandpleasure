@@ -5,6 +5,9 @@ class WA_Shortcodes_Module extends WA_Module
 
     public function init()
     {
+
+        // $this->load_config();
+
         add_shortcode('webadictos', array($this, 'shortcode_handler'), 10, 2);
         remove_filter('the_content', 'wpautop');
         add_filter('the_content', array($this, 'remove_wpautop_in_front'), 10, 1);

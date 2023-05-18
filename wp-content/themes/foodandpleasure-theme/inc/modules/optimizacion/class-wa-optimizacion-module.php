@@ -7,6 +7,8 @@ class WA_Optimizacion_Module extends WA_Module
 
     public function init()
     {
+        // $this->load_config();
+
         $this->loader->add_filter('oembed_fetch_url', $this, 'ommit_social_scripts', 10, 3);
         $this->loader->add_filter('embed_oembed_html', $this, 'remove_instagram_script', 100, 4);
 

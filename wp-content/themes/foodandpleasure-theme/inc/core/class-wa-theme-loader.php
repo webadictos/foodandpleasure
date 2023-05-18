@@ -46,6 +46,9 @@ class WA_Theme_Loader
 	 */
 	protected $filters;
 
+
+	protected $modules;
+
 	/**
 	 * Initialize the collections used to maintain the actions and filters.
 	 *
@@ -56,6 +59,7 @@ class WA_Theme_Loader
 
 		$this->actions = array();
 		$this->filters = array();
+		$this->modules = array();
 	}
 
 	/**
@@ -114,6 +118,17 @@ class WA_Theme_Loader
 		);
 
 		return $hooks;
+	}
+
+
+	public function add_module($module)
+	{
+		$this->modules[] = $module;
+	}
+
+	public function get_modules()
+	{
+		return $this->modules;
 	}
 
 	/**

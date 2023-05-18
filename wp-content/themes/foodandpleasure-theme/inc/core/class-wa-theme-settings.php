@@ -17,10 +17,10 @@ class WA_Theme_Settings
         $this->loader->add_filter('wa_theme_settings', $this, 'add_additional_settings', 11, 1);
         $this->loader->add_filter('wa_general_front_settings', $this, 'general_front_settings', 11, 1);
 
-        $this->init();
+        // $this->init();
     }
 
-    private function init()
+    public function run()
     {
         $this->load_settings();
     }
@@ -125,7 +125,10 @@ class WA_Theme_Settings
         unset($_general_settings['logo_navbar']);
         unset($_general_settings['logo_footer']);
         unset($_general_settings['logo_dark']);
-
+        unset($_general_settings['logo_id']);
+        unset($_general_settings['logo_navbar_id']);
+        unset($_general_settings['logo_footer_id']);
+        unset($_general_settings['logo_dark_id']);
 
         return $_general_settings;
     }

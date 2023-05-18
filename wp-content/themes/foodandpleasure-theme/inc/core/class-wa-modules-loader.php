@@ -7,8 +7,8 @@
 class WA_Modules_Loader
 {
 
-    private $modules;
-    private $helpers;
+    public $modules;
+    public $helpers;
     protected $loader;
     protected $modules_path;
     protected $helpers_path;
@@ -73,10 +73,21 @@ class WA_Modules_Loader
 
                 // Crea una instancia del módulo y la guarda en el arreglo de módulos
                 $this->modules[$nombre_modulo] = new $clase_modulo($nombre_modulo, $theme_modules[$nombre_modulo]['config'], $this->loader);
+                $this->loader->add_module($nombre_modulo);
             }
         }
     }
 
+    public function run()
+    {
+        foreach ($this->helpers as $helper) {
+            $helper->run();
+        }
+
+        foreach ($this->modules as $module) {
+            $module->run();
+        }
+    }
 
     public function get_class_name($module)
     {

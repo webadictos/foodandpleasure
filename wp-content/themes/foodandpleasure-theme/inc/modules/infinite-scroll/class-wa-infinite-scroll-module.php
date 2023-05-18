@@ -4,6 +4,9 @@ class WA_Infinite_Scroll_Module extends WA_Module
 {
     public function init()
     {
+
+        // $this->load_config();
+
         $this->loader->add_filter('wa_theme_get_wa_theme_options_page_fields', $this, 'add_settings', 10, 2);
         $this->loader->add_filter('wa_theme_get_wa_meta_article_metabox_fields', $this, 'add_metabox_fields', 10, 2);
     }
@@ -26,6 +29,7 @@ class WA_Infinite_Scroll_Module extends WA_Module
         $this->module_config = array_merge($scroll_options, $_scroll_options);
 
         $this->module_config['enableScroll'] = filter_var($this->module_config['enableScroll'], FILTER_VALIDATE_BOOLEAN) ?? false;
+        $this->module_config['enablePromoted'] = filter_var($this->module_config['enablePromoted'], FILTER_VALIDATE_BOOLEAN) ?? false;
     }
 
     public function add_metabox_fields($fields, $prefix)
@@ -164,7 +168,6 @@ class WA_Infinite_Scroll_Module extends WA_Module
                                 'pattern' => '\d*',
                             ),
                         )
-
                     )
                 ),
 

@@ -41,5 +41,10 @@ $GLOBALS['theme_modules'] = array(
         'active' => true,
         'config' => array(),
     ),
-    // Agrega más módulos aquí
+    'promoted' => array(
+        'active' => true,
+        'config' => array(
+            'show_in_front' => true,
+        ),
+    ),
 );

@@ -24,7 +24,7 @@ class WA_Theme
 
     protected $loader;
 
-    protected $modulos;
+    public $modulos;
 
     protected $theme_config;
 
@@ -47,6 +47,10 @@ class WA_Theme
         $this->loader = new WA_Theme_Loader();
 
         new WA_Theme_Setup($this->loader);
+
+        $this->modulos = new WA_Modules_Loader($this->loader);
+
+        $this->theme_config = new WA_Theme_Settings($this->loader, $this->modulos);
     }
 
     /**
@@ -56,11 +60,11 @@ class WA_Theme
      */
     public function run()
     {
-        $this->modulos = new WA_Modules_Loader($this->loader);
-
-        $this->theme_config = new WA_Theme_Settings($this->loader, $this->modulos);
+        $this->modulos->run();
 
         $this->loader->run();
+
+        $this->theme_config->run();
     }
 
     /**

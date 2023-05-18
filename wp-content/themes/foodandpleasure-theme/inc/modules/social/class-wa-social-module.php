@@ -9,6 +9,8 @@ class WA_Social_Module extends WA_Module
 
     public function init()
     {
+        // $this->load_config();
+
         $this->loader->add_filter('wa_theme_get_wa_theme_options_page_fields', $this, 'add_settings_page', 10, 2);
     }
 

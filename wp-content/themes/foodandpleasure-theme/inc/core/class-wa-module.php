@@ -13,23 +13,34 @@ abstract class WA_Module
     protected $module_config;
     protected $name;
     protected $filter_name;
+    public $modules_loader;
 
     public function __construct($name, $settings = array(), $loader = null)
     {
         $this->name = $name;
         $this->settings = $settings;
         $this->loader = $loader;
-        $this->init();
-        $this->load_config();
+        // $this->init();
+        // $this->load_config();
         $this->filter_name = $this->clean_name();
-
         $this->settings['show_in_front'] = $this->settings['show_in_front'] ?? true;
     }
 
     abstract public function init();
 
+    public function run()
+    {
+        $this->init();
+        $this->load_config();
+    }
+
     public function load_config()
     {
+    }
+
+    public function is_active_dependency($module)
+    {
+        return $this->modules_loader->is_active($module);
     }
 
     public function get_config()

@@ -457,115 +457,6 @@ class Foodandpleasure_Admin
 				)*/
 			)
 		));
-
-
-		/**
-		 * Registers options page menu item and form.
-		 */
-		/*		$cmb_portada = new_cmb2_box( array(
-			'id'           => 'foodandp_home_page',
-			'title'        => 'Portada',
-			'object_types' => array( 'options-page' ),
-	
-			/*
-			 * The following parameters are specific to the options-page box
-			 * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
-			 */
-		/*
-			'option_key'      => 'foodandp_portada', // The option key and admin menu page slug.
-			'icon_url'        => 'dashicons-admin-site', // Menu icon. Only applicable if 'parent_slug' is left empty.
-			// 'menu_title'      => esc_html__( 'Options', 'cmb2' ), // Falls back to 'title' (above).
-			'parent_slug'     => 'foodandpleasure_settings', // Make options page a submenu item of the themes menu.
-			'capability'      => 'edit_posts', // Cap required to view options-page.
-			// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
-			// 'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
-			// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
-			// 'save_button'     => esc_html__( 'Save Theme Options', 'cmb2' ), // The text for the options-page save button. Defaults to 'Save'.
-			// 'disable_settings_errors' => true, // On settings pages (not options-general.php sub-pages), allows disabling.
-			// 'message_cb'      => array( $this, 'notify_server' ),
-			// 'tab_group'       => '', // Tab-group identifier, enables options page tab navigation.
-			// 'tab_title'       => null, // Falls back to 'title' (above).
-			 'autoload'        => false, // Defaults to true, the options-page option will be autloaded.
-		) );
-
-		$cmb_portada->add_field( array(
-			'name' => 'PORTADA',
-			'desc' => 'Configura las opciones de portada',
-			'type' => 'title',
-			'id'   => $prefix.'portada_title'
-		) );
-
-
-		$cmb_portada->add_field( array(
-			'name'      	=> 'Carrusel',
-			'id'        	=> $prefix.'carrusel',
-			'type'      	=> 'post_ajax_search',
-			'desc'			=> 'Comienza escribiendo el título del artículo.',
-			// Optional :
-			'multiple-item' => true,
-			'limit'      	=> 6,
-			'sortable' 	 	=> true, 	// Allow selected items to be sortable (default false)
-			'query_args'	=> array(
-				'post_type'			=> array( 'post' ),
-				'post_status'		=> array( 'publish' ),
-				'posts_per_page'	=> 5,
-				/*'date_query' => array(
-					'after' => date('Y-m-d', strtotime('-2 years')) 
-				)*/
-		/*	)
-		) );*/
-
-
-
-
-
-
-
-
-		/*
-		$spread_settings = new_cmb2_box( array(
-			'id'           => 'blm_content_settings_page',
-			'title'        => esc_html__( 'Configuración del Widget', 'cmb2' ),
-			'object_types' => array( 'options-page' ),
-			'option_key'   => 'blm_content_settings',
-			'parent_slug'  => 'blm_content',
-			'capability'      => 'manage_options', // Cap required to view options-page.
-		) );
-	
-		$spread_settings->add_field( array(
-			'name' => 'Título del widget',
-			'desc' => 'Título que mostrará el Widget (Ej: Te puede interesar)',
-			'default' => 'Te puede interesar',
-			'id'   =>  'spreadnews_setting_titulo',
-			'type' => 'text',
-		) );
-	
-	
-		$spread_settings->add_field( array(
-			'name' => 'Contenidos por sitio',
-			'desc' => 'Cantidad máxima de contenidos a obtener por sitio',
-			'default' => 1,
-			'id'   =>  'spreadnews_setting_per_site',
-			'type' => 'text',
-		) );
-	
-		$spread_settings->add_field( array(
-			'name' => 'Máximo de contenidos a mostrar',
-			'desc' => 'Cantidad máxima de contenidos a mostrar. Si la cantidad de contenidos por sitio multiplicadas por el número de sitios supera el total, el máximo mostrado será este y es posible que se muestren más contenidos de un sitio que de otros.',
-			'default' => 4,
-			'id'   =>  'spreadnews_setting_total',
-			'type' => 'text',
-		) );
-	
-	
-		$spread_settings->add_field( array(
-			'name' => 'Mostrar nombre del sitio',
-			'desc' => 'Si se activa, se mostrará el nombre del sitio al que pertenece cada nota',
-			'id'   => 'spreadnews_setting_show_site',
-			'type' => 'checkbox',
-		) );
-		
-	*/
 	}
 
 
@@ -609,15 +500,6 @@ class Foodandpleasure_Admin
 	public function custom_user_avatar($avatar, $id_or_email, $size, $alt, $args)
 	{
 
-		// determine which user we're asking about - this is the hard part!
-		// ........
-
-		// get your custom field here, using the user's object to get the correct one
-		// ........
-
-		// enter your custom image output here
-		//print_r($id_or_email);
-		//get_user_meta( $id_or_email, theseeker_user_avatar, true );
 		if (!is_admin()) return $avatar;
 
 		$img = get_user_meta($id_or_email, 'food_user_avatar', true);

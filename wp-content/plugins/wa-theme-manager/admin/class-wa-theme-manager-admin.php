@@ -123,95 +123,6 @@ class Wa_Theme_Manager_Admin
 	{
 		$prefix = $this->prefix_posts; //'wa_post_';
 
-		// $cmb_page_metabox = new_cmb2_box(array(
-		// 	'id'            => $prefix . 'metabox_layout',
-		// 	'title'         => esc_html__('Opciones del layout', 'cmb2'),
-		// 	'object_types'  => array('page'), // Post type
-		// 	'context'    => 'side',
-		// 	'priority'   => 'high',
-		// ));
-
-		// $cmb_page_metabox->add_field(array(
-		// 	'name' => 'Imagen de fondo',
-		// 	'id'   => $prefix . 'bg_type',
-		// 	'desc' => "Selecciona el tipo de fondo de la página a utilizar",
-		// 	'type'             => 'radio',
-		// 	'show_option_none' => false,
-		// 	'options'          => array(
-		// 		'default' => __('Default', 'cmb2'),
-		// 		'custom'   => __('Personalizado', 'cmb2'),
-		// 		'none'     => __('Sin imagen de fondo', 'cmb2'),
-		// 	),
-		// 	'default' => 'default',
-
-		// ));
-
-		// $cmb_page_metabox->add_field(array(
-		// 	'name'    => 'Fondo',
-		// 	'desc'    => 'Seleccione la imagen de fondo.',
-		// 	'id'          => $prefix . 'page_bg',
-		// 	'type'    => 'file',
-		// 	// Optional:
-		// 	'options' => array(
-		// 		'url' => false, // Hide the text input for the url
-		// 	),
-		// 	'text'    => array(
-		// 		'add_upload_file_text' => 'Agregar fondo' // Change upload button text. Default: "Add or Upload File"
-		// 	),
-		// 	// query_args are passed to wp.media's library query.
-		// 	'query_args' => array(
-		// 		//'type' => 'application/pdf', // Make library only display PDFs.
-		// 		// Or only allow gif, jpg, or png images
-		// 		'type' => array(
-		// 			'image/gif',
-		// 			'image/jpeg',
-		// 			'image/png',
-		// 			'image/svg+xml',
-		// 		),
-		// 	),
-		// 	'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
-		// 	'attributes'    => array(
-		// 		'data-conditional-id'     => $prefix . 'bg_type',
-		// 		'data-conditional-value'  => 'custom',
-		// 	),
-		// ));
-
-
-		// $cmb_page_metabox->add_field(array(
-		// 	'name'    => 'Color de fondo',
-		// 	'id'      => $prefix . 'page_bg_color',
-		// 	'type'    => 'colorpicker',
-
-		// 	'options' => array(
-		// 		'alpha' => true, // Make this a rgba color picker.
-		// 	),
-		// ));
-
-
-		// $cmb_page_metabox->add_field(array(
-		// 	'name'    => 'Color de fondo del contenido',
-		// 	'id'      => $prefix . 'entry_bg_color',
-		// 	'type'    => 'colorpicker',
-		// 	'options' => array(
-		// 		'alpha' => true, // Make this a rgba color picker.
-		// 	),
-		// ));
-
-		// $cmb_page_metabox->add_field(array(
-		// 	'name' => 'Padding',
-		// 	'desc' => 'Padding del contenedor de texto',
-		// 	'id'   => $prefix . 'page-layout-padding',
-		// 	'type' => 'text',
-		// ));
-
-		// $cmb_page_metabox->add_field(array(
-		// 	'name' => 'Clase CSS principal',
-		// 	'desc' => 'Clase CSS asignada al contenedor principal de la página',
-		// 	'id'   => $prefix . 'page_css_class',
-		// 	'type' => 'text',
-		// ));
-
-
 
 		$cmb_metabox = new_cmb2_box(array(
 			'id'            => $prefix . 'metabox',
@@ -220,97 +131,6 @@ class Wa_Theme_Manager_Admin
 			'context'    => 'side',
 			'priority'   => 'high',
 		));
-
-
-		// $cmb_metabox->add_field(array(
-		// 	'name' => 'Mostrar como Breaking',
-		// 	'id'   => $prefix . 'show_breaking',
-		// 	'type' => 'checkbox',
-		// 	'desc' => "Marque si desea que aparezca en el apartado de Breaking News",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// ));
-
-		// $cmb_metabox->add_field(array(
-		// 	'name' => 'Mostrar en Lo Último',
-		// 	'id'   => $prefix . 'show_lo_ultimo',
-		// 	'type' => 'checkbox',
-		// 	'desc' => "Marque si desea que aparezca en el apartado de Lo último",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// ));
-
-		// $cmb_metabox->add_field(array(
-		// 	'name'             => 'Orden',
-		// 	'id'               => $prefix . 'orden_lo_ultimo',
-		// 	'type'             => 'select',
-		// 	'desc' => "Seleccione el orden en el que aparecerá. Reemplazará a la nota actual en ese orden.",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// 	'show_option_none' => false,
-		// 	'options'          => array(
-		// 		'1'   => '1',
-		// 		'2'   => '2',
-		// 	),
-		// 	'attributes'    => array(
-		// 		'data-conditional-id'     => $prefix . 'show_lo_ultimo',
-		// 		'data-conditional-value'  => 'on',
-		// 	),
-		// ));
-
-		// $cmb_metabox->add_field(array(
-		// 	'name' => 'Mostrar en Must Read',
-		// 	'id'   => $prefix . 'show_mustread',
-		// 	'type' => 'checkbox',
-		// 	'desc' => "Marque si desea que aparezca en el apartado Must Read",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// ));
-
-		// $cmb_metabox->add_field(array(
-		// 	'name'             => 'Orden',
-		// 	'id'               => $prefix . 'orden_mustread',
-		// 	'type'             => 'select',
-		// 	'desc' => "Seleccione el orden en el que aparecerá. Reemplazará a la nota actual en ese orden.",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// 	'show_option_none' => false,
-		// 	'options'          => array(
-		// 		'1'   => '1',
-		// 		'2'   => '2',
-		// 		'3'   => '3',
-		// 		'4'   => '4',
-		// 		'5'   => '5',
-		// 		'6'   => '6',
-		// 	),
-		// 	'attributes'    => array(
-		// 		'data-conditional-id'     => $prefix . 'show_mustread',
-		// 		'data-conditional-value'  => 'on',
-		// 	),
-		// ));
-
-
-		// $cmb_metabox->add_field(array(
-		// 	'name' => 'Mostrar en destacadas',
-		// 	'id'   => $prefix . 'show_destacadas',
-		// 	'type' => 'checkbox',
-		// 	'desc' => "Marque si desea que aparezca en el apartado de notas destacadas de cada artículo",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// ));
-
-		// $cmb_metabox->add_field(array(
-		// 	'name'             => 'Orden',
-		// 	'id'               => $prefix . 'orden_destacadas',
-		// 	'type'             => 'select',
-		// 	'desc' => "Seleccione el orden en el que aparecerá. Reemplazará a la nota actual en ese orden.",
-		// 	'show_on_cb' => array($this, 'hide_if_published'),
-		// 	'show_option_none' => false,
-		// 	'options'          => array(
-		// 		'1'   => '1',
-		// 		'2'   => '2',
-		// 		'3'   => '3',
-		// 		'4'   => '4',
-		// 	),
-		// 	'attributes'    => array(
-		// 		'data-conditional-id'     => $prefix . 'show_destacadas',
-		// 		'data-conditional-value'  => 'on',
-		// 	),
-		// ));
 
 
 		$cmb_metabox->add_field(array(
@@ -631,7 +451,7 @@ class Wa_Theme_Manager_Admin
 			foreach ($optionsPage as $optionPage) {
 
 
-				if ($optionPage['has_tabs']) {
+				if (isset($optionPage['has_tabs']) && $optionPage['has_tabs']) {
 					if (is_array($optionPage['wa_fields'])) {
 						foreach ($optionPage['wa_fields'] as $field) {
 
@@ -1339,8 +1159,6 @@ class Wa_Theme_Manager_Admin
 
 
 
-
-
 		$socialOptions = $themeOptions->add_field(array(
 			'id'          => $prefix . 'social',
 			'type'        => 'group',
@@ -1636,25 +1454,6 @@ class Wa_Theme_Manager_Admin
 			'capability'      => 'edit_posts', // Cap required to view options-page.
 		));
 
-		// $promote_options->add_field(array(
-		// 	'name'      	=> __('Notas patrocinadas', 'cmb2'),
-		// 	'id'        	=> $prefix.'posts_promoted',
-		// 	'type'      	=> 'post_ajax_search',
-		// 	'desc'			=> 'Comienza escribiendo el título de la nota.<br>Las notas patrocinadas aparecerán enseguida en el scroll infinito, ayudando a conseguir más pageviews.',
-		// 	// Optional :
-		// 	'limit'      	=> 4, 		// Limit selection to X items only (default 1)
-		// 	'multiple-item' => true,
-		// 	'maxitems'      => 4,
-		// 	'sortable' 	 	=> true, 	// Allow selected items to be sortable (default false)
-		// 	'query_args'	=> array(
-		// 		'post_type'			=> array('post'),
-		// 		'post_status'		=> array('publish'),
-		// 		'posts_per_page'	=> 5,
-		// 		'date_query' => array(
-		// 			'after' => date('Y-m-d', strtotime('-1 year'))
-		// 		)
-		// 	)
-		// ));
 		$promote_options->add_field(array(
 			'name'      	=> __('Notas patrocinadas', 'cmb2'),
 			'id'        	=> $prefix . 'posts_promoted',
@@ -1673,220 +1472,6 @@ class Wa_Theme_Manager_Admin
 				)
 			)
 		));
-
-		/**
-		 * Registers secondary options page, and set main item as parent.
-		 */
-		// $portada_options = new_cmb2_box(array(
-		// 	'id'           => $prefix . 'portada_page',
-		// 	'title'        => esc_html__('Portada', 'cmb2'),
-		// 	'object_types' => array('options-page'),
-		// 	'option_key'   => $prefix . '_portada',
-		// 	'parent_slug'  => 'wa_theme_options',
-		// 	'capability'      => 'edit_posts', // Cap required to view options-page.
-		// ));
-
-
-		// $portada_group_id = $portada_options->add_field(array(
-		// 	'id'          => 'sections_home_robb',
-		// 	'type'        => 'group',
-		// 	'desc'       => 'Secciones del home',
-		// 	'repeatable'  => true,
-		// 	'options'     => array(
-		// 		'group_title'   => 'Sección {#}',
-		// 		'add_button'    => 'Agregar sección',
-		// 		'remove_button' => 'Quitar sección',
-		// 		'closed'        => true,  // Repeater fields closed by default - neat & compact.
-		// 		'sortable'      => true,  // Allow changing the order of repeated groups.
-		// 	),
-		// ));
-		// $portada_options->add_group_field($portada_group_id, array(
-		// 	'name' => 'Nombre',
-		// 	'desc' => 'Escribe el título de la sección',
-		// 	'id'   => 'title',
-		// 	'type' => 'text',
-		// ));
-
-
-		// $portada_options->add_group_field($portada_group_id, array(
-		// 	'name'             => 'Módulo',
-		// 	'id'               => $prefix.'modulo',
-		// 	'type'             => 'select',
-		// 	'desc' => "Seleccione el tipo de sección a agregar",
-		// 	'show_option_none' => true,
-		// 	'options_cb'     => array( $this, 'getModulosCallback' ),//'cmb2_get_term_options',
-		// ));
-
-
-		// $portada_options->add_group_field($portada_group_id, array(
-		// 	'name'             => 'Sidebar',
-		// 	'id'               => $prefix.'sidebar',
-		// 	'type'             => 'select',
-		// 	'desc' => "Seleccione el sidebar",
-		// 	'show_option_none' => true,
-		// 	'options_cb'     => array( $this, 'getSidebarsCallback' ),//'cmb2_get_term_options',
-		// ));
-
-
-		// $portada_options->add_group_field($portada_group_id, array(
-		// 	'name'    => 'Posición del Sidebar',
-		// 	'id'      => $prefix.'sidebar_position',
-		// 	'type'    => 'radio_inline',
-		// 	'options' => array(
-		// 		'left' => 'Izquierda',
-		// 		'right'   => 'Derecha',
-		// 	),
-		// 	'default' => 'right',
-		// ) );
-
-
-		// $portada_options->add_group_field( $portada_group_id, array(
-		// 	'name'           => 'Selecciona la categoría',
-		// 	'desc'           => 'Categoría a mostrar en la sección',
-		// 	'id'             => 'categoria',
-		// 	'taxonomy'       => 'category', //Enter Taxonomy Slug
-		// 	'type'           => 'taxonomy_select',
-		// 	'remove_default' => 'true', // Removes the default metabox provided by WP core.
-		// 	// Optionally override the args sent to the WordPress get_terms function.
-		// 	'query_args' => array(
-		// 		// 'orderby' => 'slug',
-		// 		 'hide_empty' => true,
-		// 	),
-		// 	'attributes'    => array(
-		// 		'data-conditional-id'     => $prefix.'modulo',
-		// 		'data-conditional-value'  => 'seccion',
-		// 	),			
-		// ) );
-
-		// $portada_options->add_group_field($portada_group_id,array(
-		// 	'name'             => 'Layout de la sección',
-		// 	'desc'             => '',
-		// 	'id'               => $prefix . 'radioimg',
-		// 	'type'             => 'radio_image',
-		// 	'options'          => array(
-		// 		'layout1'    => 'Layout 1',
-		// 		'layout2'  => 'Layout 2',
-		// 		'layout3' => 'Layout 3',
-		// 		'layout4' => 'Layout 4',
-		// 		'layout5' => 'Layout 5',
-		// 		'layout6' => 'Layout 6',
-		// 		'layout-mb' => 'Layout Grid con orillas redondeadas',
-		// 	),
-		// 	'images_path'      => get_template_directory_uri(),
-		// 	'images'           => array(
-		// 		'layout1'    => 'assets/images/layout1.jpg',
-		// 		'layout2'  => 'assets/images/layout2.jpg',
-		// 		'layout3' => 'assets/images/layout3.jpg',
-		// 		'layout4' => 'assets/images/layout4.jpg',
-		// 		'layout5' => 'assets/images/layout5.jpg',
-		// 		'layout6' => 'assets/images/layout6.jpg',
-		// 		'layout-mb' => 'assets/images/layout-mb.jpg',
-
-
-
-		// 	),
-		// 	'attributes' => array(
-		// 		'required'               => true, // Will be required only if visible.
-		// 		'data-conditional-id'    => $prefix . 'modulo',
-		// 		'data-conditional-value' => 'seccion',
-		// 	),
-		// ) );
-
-		/**
-		 * Options fields ids only need
-		 * to be unique within this box.
-		 * Prefix is not needed.
-		 */
-
-		/* 
-	$cmb->add_field( array(
-		'name'    => esc_html__( 'Fondo del sitio', 'cmb2' ),
-		'desc'    => esc_html__( 'Color de fondo del sitio', 'cmb2' ),
-		'id'      => 'bg_color',
-		'type'    => 'colorpicker',
-		'default' => '#ffffff',
-	) );
-
-
-
-	$blog_group_id = $cmb->add_field( array(
-		'id'          => 'sections_home_robb',
-		'type'        => 'group',
-		'desc'       => 'Secciones del home',
-		'repeatable'  => true,
-		'options'     => array(
-			'group_title'   => 'Sección {#}',
-			'add_button'    => 'Agregar sección',
-			'remove_button' => 'Quitar sección',
-			'closed'        => true,  // Repeater fields closed by default - neat & compact.
-			'sortable'      => true,  // Allow changing the order of repeated groups.
-		),
-	) );
-	$cmb->add_group_field( $blog_group_id, array(
-		'name' => 'Nombre',
-		'desc' => 'Escribe el título de la sección',
-		'id'   => 'title',
-		'type' => 'text',
-	) );
-
-
-	$cmb->add_group_field( $blog_group_id, array(
-		'name'             => 'Tipo',
-		'id'               => 'tipo_seccion',
-		'type'             => 'select',
-		'desc' => "Seleccione el tipo de sección a agregar",
-		'show_option_none' => true,
-		'options'          => array(
-			'ultimo'   => 'Lo último',
-			'una_categoria'   => 'Mostrar una categoría',
-			'varias_categorias' => 'Mostrar varias categorías',
-			'carrusel_videos' => 'Carrusel de videos',
-			'ad' => 'Banner publictario',
-
-		)	
-	) );
-
-
-	$cmb->add_group_field( $blog_group_id, array(
-		'name'           => 'Selecciona la categoría',
-		'desc'           => 'Categoría a mostrar en la sección',
-		'id'             => 'categoria',
-		'taxonomy'       => 'category', //Enter Taxonomy Slug
-		'type'           => 'taxonomy_select',
-		'remove_default' => 'true', // Removes the default metabox provided by WP core.
-		// Optionally override the args sent to the WordPress get_terms function.
-		'query_args' => array(
-			// 'orderby' => 'slug',
-			 'hide_empty' => true,
-		),
-        'attributes'    => array(
-            'data-conditional-id'     => 'tipo_seccion',
-            'data-conditional-value'  => 'una_categoria',
-		),			
-	) );
-
-	$cmb->add_group_field( $blog_group_id, array(
-		'name'           => 'Marca las categorías',
-		'desc'           => '',
-		'id'             => 'categorias',
-		'taxonomy'       => 'category', //Enter Taxonomy Slug
-		'type'           => 'taxonomy_multicheck_inline',
-		// Optional :
-		'text'           => array(
-			'no_terms_text' => 'No se encontraron categorías' // Change default text. Default: "No terms"
-		),
-		'remove_default' => 'true', // Removes the default metabox provided by WP core.
-		// Optionally override the args sent to the WordPress get_terms function.
-		'query_args' => array(
-			// 'orderby' => 'slug',
-			 'hide_empty' => true,
-		),
-		'select_all_button' => false,
-        'attributes'    => array(
-            'data-conditional-id'     => 'tipo_seccion',
-            'data-conditional-value'  => 'varias_categorias',
-		),			
-	) );*/
 	}
 
 	public function accept_html_values_sanitize($original_value, $args, $cmb2_field)
@@ -1928,7 +1513,7 @@ class Wa_Theme_Manager_Admin
 		 * class.
 		 */
 
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/wa-theme-manager-admin.css', array(), $this->version, 'all');
+		//	wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/wa-theme-manager-admin.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -1951,7 +1536,7 @@ class Wa_Theme_Manager_Admin
 		 * class.
 		 */
 
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wa-theme-manager-admin.js', array('jquery'), $this->version, false);
+		//wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wa-theme-manager-admin.js', array('jquery'), $this->version, false);
 	}
 
 	public function getModulos()

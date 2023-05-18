@@ -82,7 +82,7 @@ class Wa_Theme_Manager_Public
 		 * class.
 		 */
 
-		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/wa-theme-manager-public.css', array(), $this->version, 'all');
+		//wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/wa-theme-manager-public.css', array(), $this->version, 'all');
 		$this->init_globals();
 	}
 
@@ -106,7 +106,7 @@ class Wa_Theme_Manager_Public
 		 * class.
 		 */
 
-		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wa-theme-manager-public.js', array('jquery'), $this->version, false);
+		//	wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wa-theme-manager-public.js', array('jquery'), $this->version, false);
 	}
 
 	public function init_globals()
