@@ -32,8 +32,12 @@ abstract class WA_Module
     {
         $this->init();
         $this->load_config();
+        $this->after_load_config();
     }
 
+    public function after_load_config()
+    {
+    }
     public function load_config()
     {
     }

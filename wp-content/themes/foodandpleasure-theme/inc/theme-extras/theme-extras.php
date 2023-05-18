@@ -676,10 +676,35 @@ function wa_get_lang()
 add_filter('wa_get_ads_insertion_positions', function ($positions) {
 
     $new_positions = array(
-        'wa_before_header'   => __('Antes del <header> principal', 'cmb2'),
-        'wa_after_header'   => __('Después del </header> principal', 'cmb2'),
+        'wa_before_header'   => __('Antes del &lt;header&gt; principal', 'cmb2'),
+        'wa_after_header'   => __('Después del &lt;/header&gt; principal', 'cmb2'),
         // 'wa_before_footer'   => __('Antes del <footer>', 'cmb2'),
         // 'wa_after_footer'   => __('Después del </footer>', 'cmb2'),
+        // 'wa_before_single_header'   => __('Antes del <header> de la nota', 'cmb2'),
+        // 'wa_after_single_header'   => __('Después del </header> de la nota', 'cmb2'),
+        // 'wa_single_header'   => __('Dentro del <header></header> de la nota', 'cmb2'),
+        // 'wa_single_footer'   => __('Dentro del <footer></footer> de la nota', 'cmb2'),
+        // 'wa_before_single_footer'   => __('Antes del <footer> de la nota', 'cmb2'),
+        // 'wa_after_single_footer'   => __('Después del </footer> de la nota', 'cmb2'),
+        // 'wa_before_single_entry'   => __('Antesl del texto de la nota', 'cmb2'),
+        // 'wa_after_single_entry'   => __('Después del texto de la nota', 'cmb2'),
+        // 'wa_single_entry'   => __('Dentro del texto de la nota (Al principio)', 'cmb2'),
+    );
+
+    $positions = array_merge($positions, $new_positions);
+
+    $positions = array_unique($positions, SORT_REGULAR);
+
+    return $positions;
+});
+
+add_filter('wa_get_codes_positions', function ($positions) {
+
+    $new_positions = array(
+        'wa_before_header'   => __('Antes del  &lt;header&gt; principal', 'cmb2'),
+        'wa_after_header'   => __('Después del  &lt;/header&gt; principal', 'cmb2'),
+        'wa_before_footer'   => __('Antes del  &lt;footer&gt;', 'cmb2'),
+        'wa_after_footer'   => __('Después del  &lt;/footer&gt;', 'cmb2'),
         // 'wa_before_single_header'   => __('Antes del <header> de la nota', 'cmb2'),
         // 'wa_after_single_header'   => __('Después del </header> de la nota', 'cmb2'),
         // 'wa_single_header'   => __('Dentro del <header></header> de la nota', 'cmb2'),

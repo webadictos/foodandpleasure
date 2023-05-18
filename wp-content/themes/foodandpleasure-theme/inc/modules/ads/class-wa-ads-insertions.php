@@ -55,7 +55,7 @@ class WA_Ads_Insertions
                     'id'               => 'posicion',
                     'type'             => 'select',
                     'show_option_none' => false,
-                    'default'          => 'wp_body_open',
+                    // 'default'          => 'wp_body_open',
                     'options'          => apply_filters('wa_get_ads_insertion_positions', array(
                         'wp_body_open' => __('Al inicio del body', 'cmb2'),
                         'wp_footer'   => __('En el footer', 'cmb2'),
@@ -106,10 +106,10 @@ class WA_Ads_Insertions
 
         if (!is_admin() && !is_feed()) {
 
-            $positions = apply_filters('wa_get_ads_insertion_positions', array(
-                'wp_body_open' => __('Al inicio del body', 'cmb2'),
-                'wp_footer'   => __('En el footer', 'cmb2'),
-            ));
+            // $positions = apply_filters('wa_get_ads_insertion_positions', array(
+            //     'wp_body_open' => __('Al inicio del body', 'cmb2'),
+            //     'wp_footer'   => __('En el footer', 'cmb2'),
+            // ));
 
             foreach ($this->insertions_codes as $insertion) {
 

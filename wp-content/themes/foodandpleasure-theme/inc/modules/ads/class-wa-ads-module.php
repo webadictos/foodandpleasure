@@ -27,15 +27,45 @@ class WA_Ads_Module extends WA_Module
         $this->slots_key = $this->prefix . 'slots';
         $this->settings_key = $this->prefix . "ads";
 
-        // $this->load_config();
-
-
         $this->loader->add_filter('wa_theme_get_wa_theme_options_page_fields', $this, 'add_settings', 10, 1);
-        $this->loader->add_filter('wa_theme_set_options_page', $this, 'add_slots_page', 11, 1);
-        $this->loader->add_filter('wa_theme_set_metaboxes', $this, 'add_metaboxes', 10, 1);
-        $this->loader->add_filter("wa_ads_front_settings", $this, 'add_size_mappings_to_front', 10, 1);
+    }
 
-        $this->ads_insertions = new WA_Ads_Insertions($this);
+    public function load_config()
+    {
+        $ads_options = array(
+            'enabled' => true,
+            'network' => '',
+            'prefix' => '',
+            'loadOnScroll' => '',
+            'refreshAllAdUnits' => '',
+            'timeToRefreshAllAdUnits' => '',
+            'refreshAds' => '',
+            'refresh_time' => '',
+            'enableInRead' => '',
+            'inReadParagraph' => '',
+            'enableMultipleInRead' => '',
+            'inReadLimit' => '',
+        );
+        if (class_exists('Wa_Theme_Manager')) {
+            $ads_options_cmb = Wa_Theme_Manager::get_opciones('wa_theme_options', 'wa_theme_options_ads');
+
+            $_ads_options = apply_filters('wa_ads_settings', $ads_options_cmb[0]); //$ads_options_cmb[0];
+        }
+
+        $this->module_config = array_merge($ads_options, $_ads_options);
+
+        $this->size_mappings = $this->size_mappings();
+        $this->ads_slots = $this->ad_slots();
+    }
+
+    public function after_load_config()
+    {
+        if ($this->config('enabled')) {
+            $this->loader->add_filter('wa_theme_set_options_page', $this, 'add_slots_page', 11, 1);
+            $this->loader->add_filter('wa_theme_set_metaboxes', $this, 'add_metaboxes', 10, 1);
+            $this->loader->add_filter("wa_ads_front_settings", $this, 'add_size_mappings_to_front', 10, 1);
+            $this->ads_insertions = new WA_Ads_Insertions($this);
+        }
     }
 
     public function add_settings($optionsFields)
@@ -676,33 +706,7 @@ class WA_Ads_Module extends WA_Module
         return $metaboxes;
     }
 
-    public function load_config()
-    {
-        $ads_options = array(
-            'enabled' => true,
-            'network' => '',
-            'prefix' => '',
-            'loadOnScroll' => '',
-            'refreshAllAdUnits' => '',
-            'timeToRefreshAllAdUnits' => '',
-            'refreshAds' => '',
-            'refresh_time' => '',
-            'enableInRead' => '',
-            'inReadParagraph' => '',
-            'enableMultipleInRead' => '',
-            'inReadLimit' => '',
-        );
-        if (class_exists('Wa_Theme_Manager')) {
-            $ads_options_cmb = Wa_Theme_Manager::get_opciones('wa_theme_options', 'wa_theme_options_ads');
 
-            $_ads_options = apply_filters('wa_ads_settings', $ads_options_cmb[0]); //$ads_options_cmb[0];
-        }
-
-        $this->module_config = array_merge($ads_options, $_ads_options);
-
-        $this->size_mappings = $this->size_mappings();
-        $this->ads_slots = $this->ad_slots();
-    }
 
     public function get_front_settings($settings)
     {

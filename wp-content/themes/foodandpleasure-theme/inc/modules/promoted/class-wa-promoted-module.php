@@ -6,7 +6,7 @@ class WA_Promoted_Module extends WA_Module
     {
 
         if (!wa_theme()->modules()->is_active('infinite-scroll')) return;
-
+        if (!wa_theme()->module('infinite-scroll')->config('enableScroll')) return;
         if (!wa_theme()->module('infinite-scroll')->config('enablePromoted')) return;
 
         $this->loader->add_filter('wa_theme_set_options_page', $this, 'add_settings', 10, 2);

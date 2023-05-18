@@ -140,7 +140,10 @@ class Wa_Theme_Manager
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-tabs/cmb2-tabs.php';
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/CMB2/cmb2-radio-image.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-conditionals/cmb2-conditionals.php';
+		//	require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-conditionals/cmb2-conditionals.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-conditional-logic/cmb2-conditional-logic.php';
+
+
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-field-map/cmb-field-map.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-attached-posts/cmb2-attached-posts-field.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-social-field/cmb2-social-field.php';
@@ -153,7 +156,9 @@ class Wa_Theme_Manager
 		/**
 		 * Códigos
 		 */
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/modules/class-wa-theme-manager-codigos.php';
+		//require_once plugin_dir_path(dirname(__FILE__)) . 'includes/modules/class-wa-theme-manager-codigos.php';
+
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/modules/class-wa-theme-manager-codes.php';
 	}
 
 	/**
