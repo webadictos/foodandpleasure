@@ -541,7 +541,7 @@ class WA_Ads_Module extends WA_Module
         return $this->ads_slots[$slot_name] ?? false;
     }
 
-    public function get_ad_slots_options($field)
+    public function get_ad_slots_options($field = "")
     {
 
         $ads_slots = $this->ads_slots;

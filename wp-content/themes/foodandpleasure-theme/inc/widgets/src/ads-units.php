@@ -26,6 +26,11 @@ class WA_Widget_Adunit extends WP_Widget
 	 */
 	public function __construct()
 	{
+
+		if (function_exists('wa_theme')) {
+			if (!wa_theme()->modules()->is_active('ads')) return;
+		}
+
 		$widget_ops = array(
 			'classname' 					=> 'wa-ad-unit',
 			'description' 					=> 'Bloques de anuncios',
@@ -54,38 +59,19 @@ class WA_Widget_Adunit extends WP_Widget
 	public function widget($args, $instance)
 	{
 
-		$ad_code		= $instance['ad_code'];
-		$ad_class		= $instance['ad_class'];
-		$ad_slot		= $instance['ad_slot'];
-		$ad_type		= $instance['ad_type'];
-		// if($ad_code){
+		$slot		= $instance['slot'];
 
-		//     $ad_code = str_replace("{POSTID}",get_the_ID(),$ad_code);
 
-		// 	echo $args['before_widget'];
-		// 	echo '<div class="'.$ad_class.'">';
-		// 	echo $ad_code;
-		// 	echo '</div>';
-		// 	echo $args['after_widget'];
-		// }
-
-		$map = eval("return " . $ad_code . ";");
-
-		$_params = array(
-			'css' => $ad_class,
-		);
-
-		if ($map && is_array($map)) {
-			$_params['mappings'] = $map;
-		}
-
-		if ($ad_slot && $ad_type) {
-
-			$ad_code = str_replace("{POSTID}", get_the_ID(), $ad_code);
+		if ($slot) {
 
 			echo $args['before_widget'];
 
-			waCreatePlacement($ad_slot, $ad_type, $_params);
+
+			$_slot = wa_theme()->module('ads')->ad_slot($slot);
+
+			if (is_array($_slot)) {
+				wa_create_ad_slot($_slot);
+			}
 
 			echo $args['after_widget'];
 		}
@@ -107,15 +93,9 @@ class WA_Widget_Adunit extends WP_Widget
 	{
 		$instance = $old_instance;
 		$new_instance = wp_parse_args((array) $new_instance, array(
-			'ad_code'	=> null,
-			'ad_slot' => null,
-			'ad_type' => null,
-			'ad_class'	=> null
+			'slot'	=> null,
 		));
-		$instance['ad_code'] 	= $new_instance['ad_code'];
-		$instance['ad_class'] 	= $new_instance['ad_class'];
-		$instance['ad_slot'] 	= $new_instance['ad_slot'];
-		$instance['ad_type'] 	= $new_instance['ad_type'];
+		$instance['slot'] 	= $new_instance['slot'];
 
 		return $instance;
 	}
@@ -131,33 +111,30 @@ class WA_Widget_Adunit extends WP_Widget
 	public function form($instance)
 	{
 		$instance = wp_parse_args((array) $instance, array(
-			'ad_code'	=> null,
-			'ad_slot' => null,
-			'ad_type' => null,
-			'ad_class'	=> null
+			'slot' => null,
 		));
+
+		$options = wa_theme()->module('ads')->get_ad_slots_options();
+
 ?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('ad_code'); ?>">Mappings:</label>
-			<textarea class="widefat" id="<?php echo $this->get_field_id('ad_code'); ?>" name="<?php echo $this->get_field_name('ad_code'); ?>" cols="20" rows="10" placeholder="Pega el código del bloque aquí"><?php echo esc_attr($instance['ad_code']); ?></textarea>
-		</p>
+			<label for="<?php echo $this->get_field_id('slot'); ?>">Bloque de anuncio:</label>
 
-		<p>
-			<label for="<?php echo $this->get_field_id('ad_slot'); ?>">Slot:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('ad_slot'); ?>" name="<?php echo $this->get_field_name('ad_slot'); ?>" type="text" placeholder="<?php echo esc_attr($instance['ad_slot']); ?>" value="<?php echo esc_attr($instance['ad_slot']); ?>" />
-		</p>
+			<select name="<?php echo $this->get_field_name('slot'); ?>">
 
-		<p>
-			<label for="<?php echo $this->get_field_id('ad_type'); ?>">Ad Type:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('ad_type'); ?>" name="<?php echo $this->get_field_name('ad_type'); ?>" type="text" placeholder="<?php echo esc_attr($instance['ad_type']); ?>" value="<?php echo esc_attr($instance['ad_type']); ?>" />
-		</p>
+				<?php
+				foreach ($options as $slot_id => $slot) {
 
-		<p>
-			<label for="<?php echo $this->get_field_id('ads_class'); ?>">Custom CSS:</label>
-			<input class="widefat" id="<?php echo $this->get_field_id('ad_class'); ?>" name="<?php echo $this->get_field_name('ad_class'); ?>" type="text" placeholder="<?php echo esc_attr($instance['ad_class']); ?>" value="<?php echo esc_attr($instance['ad_class']); ?>" />
-		</p>
+				?>
+					<option value="<?php echo $slot_id; ?>" <?php selected(esc_attr($instance['slot']), $slot_id); ?>><?php echo $slot; ?></option>
+				<?php
 
+				}
+				?>
+
+			</select>
+		</p>
 
 <?php
 	}

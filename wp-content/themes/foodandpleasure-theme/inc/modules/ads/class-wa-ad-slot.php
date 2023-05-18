@@ -17,6 +17,8 @@ class WA_Ad_Slot
         $this->slot['refresh'] = filter_var($this->slot['refresh'], FILTER_VALIDATE_BOOLEAN) ?? false;
 
         $this->parse_slots_params();
+
+        print_r($this->slot);
     }
 
     public function render_slot()

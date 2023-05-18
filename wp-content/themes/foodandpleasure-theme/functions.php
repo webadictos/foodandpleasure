@@ -592,7 +592,7 @@ function require_theme_extras()
 		get_template_directory() . '/inc/theme-extras/ads.php',
 		get_template_directory() . '/inc/theme-extras/menu-desplegable.php',
 		get_template_directory() . '/inc/theme-extras/custom-walker-category.php',
-		// get_template_directory() . '/widgets/widgets-init.php',
+		get_template_directory() . '/inc/widgets/widgets-init.php',
 		get_template_directory() . '/inc/theme-extras/pwa.php',
 	);
 
