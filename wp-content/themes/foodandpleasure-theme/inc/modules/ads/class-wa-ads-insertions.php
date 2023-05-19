@@ -59,7 +59,21 @@ class WA_Ads_Insertions
                     'options'          => apply_filters('wa_get_ads_insertion_positions', array(
                         'wp_body_open' => __('Al inicio del body', 'cmb2'),
                         'wp_footer'   => __('En el footer', 'cmb2'),
+                        'wa_the_content'   => __('Dentro del texto', 'cmb2'),
                     )),
+                ),
+                'parrafo' => array(
+                    'name' => 'Después de qué párrafo',
+                    'desc' => 'Indica después de qué párrafo debe ser insertado el código.',
+                    'id'   => 'parrafo',
+                    'type' => 'text',
+                    'default' => 3,
+                    'attributes' => array(
+                        'type' => 'number',
+                        'pattern' => '\d*',
+                        'data-conditional-id'     => 'posicion',
+                        'data-conditional-value'  => wp_json_encode(array('wa_the_content')),
+                    ),
                 ),
                 'ad_slot' => array(
                     'name'             => 'Bloque de anuncio',
@@ -113,14 +127,40 @@ class WA_Ads_Insertions
 
             foreach ($this->insertions_codes as $insertion) {
 
-                add_action($insertion['posicion'], function () use ($insertion) {
-                    $ad_slot = $this->ads_module->ad_slot($insertion['ad_slot']);
+                if ($insertion['posicion'] === "wa_the_content") {
 
-                    if ($ad_slot) {
-                        $slot = new WA_Ad_Slot($ad_slot);
-                        $slot->render_slot();
-                    }
-                }, 10);
+                    add_filter('the_content', function ($content) use ($insertion) {
+
+                        if (is_singular()) {
+
+                            $ad_slot = $this->ads_module->ad_slot($insertion['ad_slot']);
+
+                            if ($ad_slot) {
+
+                                ob_start();
+
+                                $slot = new WA_Ad_Slot($ad_slot);
+                                $slot->render_slot();
+                                $slot_code = ob_get_clean();
+
+                                $parrafo = intval($insertion['parrafo']);
+
+                                $content = WA_Theme_Manager::insertAdAfterParagraph($slot_code, $parrafo, $content);
+                            }
+                        }
+
+                        return $content;
+                    }, 10);
+                } else {
+                    add_action($insertion['posicion'], function () use ($insertion) {
+                        $ad_slot = $this->ads_module->ad_slot($insertion['ad_slot']);
+
+                        if ($ad_slot) {
+                            $slot = new WA_Ad_Slot($ad_slot);
+                            $slot->render_slot();
+                        }
+                    }, 10);
+                }
             }
         }
     }

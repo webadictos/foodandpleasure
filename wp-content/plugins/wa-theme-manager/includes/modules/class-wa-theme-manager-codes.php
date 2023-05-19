@@ -121,6 +121,7 @@ if (!class_exists('Wa_Theme_Manager_Codes')) {
 
                             )
                         ),
+
                         'post_ids' => array(
                             'name'             => 'Artículos',
                             'id'               => 'posts_ids',
@@ -169,7 +170,21 @@ if (!class_exists('Wa_Theme_Manager_Codes')) {
                                 'wp_head' => __('Antes del &lt/head&gt;', 'cmb2'),
                                 'wp_body_open' => __('Al inicio del body', 'cmb2'),
                                 'wp_footer'   => __('En el footer', 'cmb2'),
+                                'wa_the_content'   => __('Dentro del texto', 'cmb2'),
                             )),
+                        ),
+                        'parrafo' => array(
+                            'name' => 'Después de qué párrafo',
+                            'desc' => 'Indica después de qué párrafo debe ser insertado el código.',
+                            'id'   => 'parrafo',
+                            'type' => 'text',
+                            'default' => 3,
+                            'attributes' => array(
+                                'type' => 'number',
+                                'pattern' => '\d*',
+                                'data-conditional-id'     => 'posicion',
+                                'data-conditional-value'  => wp_json_encode(array('wa_the_content')),
+                            ),
                         ),
                         'enable_code' => array(
                             'name' => 'Habilitar',
@@ -222,19 +237,60 @@ if (!class_exists('Wa_Theme_Manager_Codes')) {
                     if (isset($code['enable_code']) && $code['enable_code'] == "on") {
 
 
-                        add_action($code['posicion'], function () use ($code) {
+                        if ($code['posicion'] === "wa_the_content") {
 
-                            if ($this->can_be_inserted($code)) {
+                            add_filter('the_content', function ($content) use ($code) {
 
-                                echo "<!--" . $code['identificador'] . "-->\n";
-                                echo $code['codigo'] . "\n";
-                                echo "<!-- Fin " . $code['identificador'] . "-->\n";
-                            }
-                        }, 10);
+                                if (is_singular() && $this->can_be_inserted($code)) {
+
+
+                                    $codigo_personalizado = "<!--" . $code['identificador'] . "-->\n";
+                                    $codigo_personalizado .= $code['codigo'] . "\n";
+                                    $codigo_personalizado .= "<!-- Fin " . $code['identificador'] . "-->\n";
+
+                                    $parrafo = intval($code['parrafo']);
+
+                                    $content = WA_Theme_Manager::insertAdAfterParagraph($codigo_personalizado, $parrafo, $content);
+                                }
+
+                                return $content;
+                            }, 10);
+                        } else {
+                            add_action($code['posicion'], function () use ($code) {
+
+                                if ($this->can_be_inserted($code)) {
+
+                                    echo "<!--" . $code['identificador'] . "-->\n";
+                                    echo $code['codigo'] . "\n";
+                                    echo "<!-- Fin " . $code['identificador'] . "-->\n";
+                                }
+                            }, 10);
+                        }
                     }
                 }
             }
         }
+        function insertAdAfterParagraph($insertion, $paragraph_id, $content)
+        {
+            $closing_p = '</p>';
+            $paragraphs = explode($closing_p, $content);
+            foreach ($paragraphs as $index => $paragraph) {
+                // Only add closing tag to non-empty paragraphs
+                if (trim($paragraph)) {
+                    // Adding closing markup now, rather than at implode, means insertion
+                    // is outside of the paragraph markup, and not just inside of it.
+                    $paragraphs[$index] .= $closing_p;
+                }
+
+                // + 1 allows for considering the first paragraph as #1, not #0.
+                if ($paragraph_id == $index + 1) {
+                    $paragraphs[$index] .=  $insertion;
+                }
+            }
+            return implode('', $paragraphs);
+        }
+
+
 
 
         private function can_be_inserted($code)

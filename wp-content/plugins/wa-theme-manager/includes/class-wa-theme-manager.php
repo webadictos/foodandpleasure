@@ -292,4 +292,23 @@ class Wa_Theme_Manager
 
 		return $name_id;
 	}
+	static function insertAdAfterParagraph($insertion, $paragraph_id, $content)
+	{
+		$closing_p = '</p>';
+		$paragraphs = explode($closing_p, $content);
+		foreach ($paragraphs as $index => $paragraph) {
+			// Only add closing tag to non-empty paragraphs
+			if (trim($paragraph)) {
+				// Adding closing markup now, rather than at implode, means insertion
+				// is outside of the paragraph markup, and not just inside of it.
+				$paragraphs[$index] .= $closing_p;
+			}
+
+			// + 1 allows for considering the first paragraph as #1, not #0.
+			if ($paragraph_id == $index + 1) {
+				$paragraphs[$index] .=  $insertion;
+			}
+		}
+		return implode('', $paragraphs);
+	}
 }

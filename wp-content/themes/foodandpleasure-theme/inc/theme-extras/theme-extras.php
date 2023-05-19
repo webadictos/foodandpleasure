@@ -705,6 +705,7 @@ add_filter('wa_get_codes_positions', function ($positions) {
         'wa_after_header'   => __('Después del  &lt;/header&gt; principal', 'cmb2'),
         'wa_before_footer'   => __('Antes del  &lt;footer&gt;', 'cmb2'),
         'wa_after_footer'   => __('Después del  &lt;/footer&gt;', 'cmb2'),
+
         // 'wa_before_single_header'   => __('Antes del <header> de la nota', 'cmb2'),
         // 'wa_after_single_header'   => __('Después del </header> de la nota', 'cmb2'),
         // 'wa_single_header'   => __('Dentro del <header></header> de la nota', 'cmb2'),
