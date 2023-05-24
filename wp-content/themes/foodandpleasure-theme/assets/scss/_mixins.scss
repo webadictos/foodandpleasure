@@ -9,3 +9,13 @@
   background: $color-to;
   background: linear-gradient($angle, $color-from 0%, $color-to 100%);
 }
+
+@mixin fondoBicolor($color-from, $color-to, $angle, $percent) {
+  background: linear-gradient(
+    $angle,
+    $color-from 0%,
+    $color-from $percent,
+    $color-to $percent,
+    $color-to 100%
+  );
+}

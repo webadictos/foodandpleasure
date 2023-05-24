@@ -42,6 +42,7 @@ $color-section-headings: #ac834e;
   --nav-bg: transparent;
   --nav-color: #{$color-nav};
   --big-title-size: clamp(2rem, 3.7vw + 1.3rem, 4.5rem);
+  --big-title-size2: #{fluid(32px, 72px)};
 
   --font-family-nav: #{meta.inspect($font-family-nav)};
   --font-family-nav-weight: #{$font-family-nav-weight};

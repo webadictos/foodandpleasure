@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 $html-font-size: 16px;
 @function stripUnit($value) {
@@ -10,4 +10,43 @@ $html-font-size: 16px;
 
 @function hexToRGB($hex) {
   @return red($hex), green($hex), blue($hex);
+}
+
+$default-min-bp: 320px;
+$default-max-bp: 1280px;
+
+@function round($number, $decimals: 0) {
+  $n: 1;
+  @if $decimals > 0 {
+    @for $i from 1 through $decimals {
+      $n: $n * 10;
+    }
+  }
+  @return math.div(math.round($number * $n), $n);
+}
+
+@function px-to-rem($px) {
+  //  @return #{math.div(stripUnit($pxValue), stripUnit($html-font-size))}rem;
+
+  $rems: math.div(stripUnit($px), stripUnit($html-font-size)) * 1rem;
+  @return $rems;
+}
+
+@function fluid(
+  $min-size,
+  $max-size,
+  $min-breakpoint: $default-min-bp,
+  $max-breakpoint: $default-max-bp,
+  $unit: vw
+) {
+  $slope: math.div($max-size - $min-size, $max-breakpoint - $min-breakpoint);
+  $slope-to-unit: round($slope * 100, 1);
+  $intercept-rem: round(px-to-rem($min-size - $slope * $min-breakpoint), 1);
+  $min-size-rem: round(px-to-rem($min-size), 4);
+  $max-size-rem: round(px-to-rem($max-size), 4);
+  @return clamp(
+    #{$min-size-rem},
+    #{$slope-to-unit}#{$unit} + #{$intercept-rem},
+    #{$max-size-rem}
+  );
 }
