@@ -231,6 +231,7 @@ if (!class_exists('Wa_Theme_Manager_Codes')) {
 
             if (!is_admin() && !is_feed()) {
 
+                if (!is_array($this->codes)) return;
 
                 foreach ($this->codes as $code) {
 

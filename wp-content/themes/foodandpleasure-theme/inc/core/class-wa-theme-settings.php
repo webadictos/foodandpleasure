@@ -43,7 +43,8 @@ class WA_Theme_Settings
         if (class_exists('Wa_Theme_Manager')) {
             $theme_general_options = Wa_Theme_Manager::get_opciones('wa_theme_options', 'wa_theme_options_theme_setup');
 
-            $_general_options = apply_filters('wa_general_settings', $theme_general_options[0]);
+            if ($theme_general_options)
+                $_general_options = apply_filters('wa_general_settings', $theme_general_options[0]);
         }
 
         $this->settings['general'] = array_merge($general_options, $_general_options);
@@ -68,6 +69,11 @@ class WA_Theme_Settings
         }
 
         return $this->settings;
+    }
+
+    public function setting($module, $setting)
+    {
+        return $this->settings[$module][$setting] ?? null;
     }
 
     public function add($group, $_settings)

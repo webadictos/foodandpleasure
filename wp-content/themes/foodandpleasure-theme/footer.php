@@ -1,3 +1,6 @@
+<?php
+do_action('wa_before_footer');
+?>
 <footer id="footer">
 	<div class="container">
 		<div class="row">
@@ -40,6 +43,9 @@
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 </footer><!-- /#footer -->
+<?php
+do_action('wa_after_footer');
+?>
 </div><!-- /#wrapper -->
 <?php
 wp_footer();

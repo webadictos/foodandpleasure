@@ -1,11 +1,51 @@
 <?php
 $navbar_scheme   = get_theme_mod('navbar_scheme', 'navbar-light bg-light'); // Get custom meta-value.
 $navbar_position = get_theme_mod('navbar_position', 'static'); // Get custom meta-value.
-
 $search_enabled  = get_theme_mod('search_enabled', '1'); // Get custom meta-value.
 ?>
 
-<header id="masthead" class="masthead">
+<?php
+print_r(wa_theme()->setting('general', 'logo'));
+?>
+<header id="masthead" class="masthead container <?php echo (is_home() || is_front_page()) ? 'header-home' : ''; ?>">
+
+    <div class="header__toggler"></div>
+    <nav class="header__menu-left navbar navbar-expand">
+
+        <?php
+        // Loading WordPress Custom Menu (theme_location).
+        wp_nav_menu(
+            array(
+                'menu_class'     => 'navbar-nav',
+                'container'      => '',
+                'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
+                'walker'         => new WP_Bootstrap_Navwalker(),
+                'theme_location' => 'main-menu-left',
+            )
+        );
+        ?>
+
+    </nav>
+    <div class="header__logo"></div>
+    <nav class="header__menu-right navbar navbar-expand">
+        <?php
+        // Loading WordPress Custom Menu (theme_location).
+        wp_nav_menu(
+            array(
+                'menu_class'     => 'navbar-nav',
+                'container'      => '',
+                'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
+                'walker'         => new WP_Bootstrap_Navwalker(),
+                'theme_location' => 'main-menu-right',
+            )
+        );
+        ?>
+    </nav>
+    <div class="header__icon"></div>
+
+
+
+
     <nav id="header" class="navbar navbar-expand-md <?php if (is_home() || is_front_page()) : echo ' home';
                                                     endif; ?>">
         <div class="container">

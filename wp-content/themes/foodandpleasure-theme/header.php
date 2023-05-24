@@ -15,5 +15,10 @@
 	<?php wp_body_open(); ?>
 
 	<div id="wrapper">
-
-		<?php get_template_part('template-parts/header'); ?>
+		<?php
+		do_action('wa_before_header');
+		?>
+		<?php get_template_part('template-parts/header/header'); ?>
+		<?php
+		do_action('wa_after_header');
+		?>

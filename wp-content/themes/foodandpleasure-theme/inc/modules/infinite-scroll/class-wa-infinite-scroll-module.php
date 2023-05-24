@@ -20,10 +20,14 @@ class WA_Infinite_Scroll_Module extends WA_Module
             'enablePromoted' => '',
             'promotedTTL' => '',
         );
+        $_scroll_options = array();
+
         if (class_exists('Wa_Theme_Manager')) {
             $scroll_options_cmb = Wa_Theme_Manager::get_opciones('wa_theme_options', 'wa_theme_options_scroll');
 
-            $_scroll_options = apply_filters('wa_scroll_settings', $scroll_options_cmb[0]);
+
+            if ($scroll_options_cmb)
+                $_scroll_options = apply_filters('wa_scroll_settings', $scroll_options_cmb[0]) ?? array();
         }
 
         $this->module_config = array_merge($scroll_options, $_scroll_options);

@@ -85,7 +85,8 @@ class WA_Social_Module extends WA_Module
         if (class_exists('Wa_Theme_Manager')) {
             $social_options_cmb = Wa_Theme_Manager::get_opciones('wa_theme_options', 'wa_theme_options_social');
 
-            $social_options = $social_options_cmb[0];
+            if ($social_options_cmb)
+                $social_options = $social_options_cmb[0];
         }
 
         $this->module_config = $social_options;
@@ -208,8 +209,10 @@ class WA_Social_Module extends WA_Module
     public function get_instagram_token()
     {
 
-        $ig_token = "";
+        if (!isset($this->module_config['igtoken'])) return;
 
+
+        $ig_token = "";
         if ($this->module_config['igtoken'] !== "") {
             if (false === ($ig_token = get_transient("wa_ig_tokenv2"))) {
 

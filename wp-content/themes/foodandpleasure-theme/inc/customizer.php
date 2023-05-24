@@ -16,14 +16,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return void
  */
-function foodandpleasure_theme_customize( $wp_customize ) {
+function watheme_theme_customize( $wp_customize ) {
 	/**
 	 * Initialize sections
 	 */
 	$wp_customize->add_section(
 		'theme_header_section',
 		array(
-			'title'    => __( 'Header', 'foodandpleasure-theme' ),
+			'title'    => __( 'Header', 'watheme-theme' ),
 			'priority' => 1000,
 		)
 	);
@@ -44,8 +44,8 @@ function foodandpleasure_theme_customize( $wp_customize ) {
 			$wp_customize,
 			'header_logo',
 			array(
-				'label'       => __( 'Upload Header Logo', 'foodandpleasure-theme' ),
-				'description' => __( 'Height: &gt;80px', 'foodandpleasure-theme' ),
+				'label'       => __( 'Upload Header Logo', 'watheme-theme' ),
+				'description' => __( 'Height: &gt;80px', 'watheme-theme' ),
 				'section'     => 'theme_header_section',
 				'settings'    => 'header_logo',
 				'priority'    => 1,
@@ -65,12 +65,12 @@ function foodandpleasure_theme_customize( $wp_customize ) {
 		'navbar_scheme',
 		array(
 			'type'     => 'radio',
-			'label'    => __( 'Navbar Scheme', 'foodandpleasure-theme' ),
+			'label'    => __( 'Navbar Scheme', 'watheme-theme' ),
 			'section'  => 'theme_header_section',
 			'choices'  => array(
-				'navbar-light bg-light'  => __( 'Default', 'foodandpleasure-theme' ),
-				'navbar-dark bg-dark'    => __( 'Dark', 'foodandpleasure-theme' ),
-				'navbar-dark bg-primary' => __( 'Primary', 'foodandpleasure-theme' ),
+				'navbar-light bg-light'  => __( 'Default', 'watheme-theme' ),
+				'navbar-dark bg-dark'    => __( 'Dark', 'watheme-theme' ),
+				'navbar-dark bg-primary' => __( 'Primary', 'watheme-theme' ),
 			),
 			'settings' => 'navbar_scheme',
 			'priority' => 1,
@@ -89,12 +89,12 @@ function foodandpleasure_theme_customize( $wp_customize ) {
 		'navbar_position',
 		array(
 			'type'     => 'radio',
-			'label'    => __( 'Navbar', 'foodandpleasure-theme' ),
+			'label'    => __( 'Navbar', 'watheme-theme' ),
 			'section'  => 'theme_header_section',
 			'choices'  => array(
-				'static'       => __( 'Static', 'foodandpleasure-theme' ),
-				'fixed_top'    => __( 'Fixed to top', 'foodandpleasure-theme' ),
-				'fixed_bottom' => __( 'Fixed to bottom', 'foodandpleasure-theme' ),
+				'static'       => __( 'Static', 'watheme-theme' ),
+				'fixed_top'    => __( 'Fixed to top', 'watheme-theme' ),
+				'fixed_bottom' => __( 'Fixed to bottom', 'watheme-theme' ),
 			),
 			'settings' => 'navbar_position',
 			'priority' => 2,
@@ -113,21 +113,21 @@ function foodandpleasure_theme_customize( $wp_customize ) {
 		'search_enabled',
 		array(
 			'type'     => 'checkbox',
-			'label'    => __( 'Show Searchfield?', 'foodandpleasure-theme' ),
+			'label'    => __( 'Show Searchfield?', 'watheme-theme' ),
 			'section'  => 'theme_header_section',
 			'settings' => 'search_enabled',
 			'priority' => 3,
 		)
 	);
 }
-add_action( 'customize_register', 'foodandpleasure_theme_customize' );
+add_action( 'customize_register', 'watheme_theme_customize' );
 
 /**
  * Bind JS handlers to make Theme Customizer preview reload changes asynchronously.
  *
  * @return void
  */
-function foodandpleasure_theme_customize_preview_js() {
+function watheme_theme_customize_preview_js() {
 	wp_enqueue_script( 'customizer', get_template_directory_uri() . '/inc/customizer.js', array( 'jquery' ), null, true );
 }
-add_action( 'customize_preview_init', 'foodandpleasure_theme_customize_preview_js' );
+add_action( 'customize_preview_init', 'watheme_theme_customize_preview_js' );

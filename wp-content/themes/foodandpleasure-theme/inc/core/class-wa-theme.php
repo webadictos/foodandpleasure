@@ -96,6 +96,11 @@ class WA_Theme
     {
         return $this->theme_config;
     }
+
+    public function setting($module, $setting)
+    {
+        return $this->theme_config->setting($module, $setting);
+    }
 }
 
 $wa_theme = new WA_Theme();

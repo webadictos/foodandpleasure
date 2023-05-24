@@ -46,10 +46,12 @@ class WA_Ads_Module extends WA_Module
             'enableMultipleInRead' => '',
             'inReadLimit' => '',
         );
+        $_ads_options = array();
         if (class_exists('Wa_Theme_Manager')) {
             $ads_options_cmb = Wa_Theme_Manager::get_opciones('wa_theme_options', 'wa_theme_options_ads');
 
-            $_ads_options = apply_filters('wa_ads_settings', $ads_options_cmb[0]); //$ads_options_cmb[0];
+            if ($ads_options_cmb)
+                $_ads_options = apply_filters('wa_ads_settings', $ads_options_cmb[0]) ?? array();  //$ads_options_cmb[0];
         }
 
         $this->module_config = array_merge($ads_options, $_ads_options);
@@ -547,6 +549,7 @@ class WA_Ads_Module extends WA_Module
     public function ad_slots()
     {
         $_ads_slots = array();
+        $ads_slots = array();
 
         if (class_exists('Wa_Theme_Manager')) {
             $ads_slots_opts = Wa_Theme_Manager::get_opciones($this->slots_key, $this->slots_group);

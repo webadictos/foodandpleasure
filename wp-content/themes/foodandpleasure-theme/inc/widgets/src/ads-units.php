@@ -27,10 +27,6 @@ class WA_Widget_Adunit extends WP_Widget
 	public function __construct()
 	{
 
-		if (function_exists('wa_theme')) {
-			if (!wa_theme()->modules()->is_active('ads')) return;
-		}
-
 		$widget_ops = array(
 			'classname' 					=> 'wa-ad-unit',
 			'description' 					=> 'Bloques de anuncios',
@@ -65,7 +61,6 @@ class WA_Widget_Adunit extends WP_Widget
 		if ($slot) {
 
 			echo $args['before_widget'];
-
 
 			$_slot = wa_theme()->module('ads')->ad_slot($slot);
 
@@ -142,6 +137,9 @@ class WA_Widget_Adunit extends WP_Widget
 
 function wa_adunit_register_widget()
 {
+	if (function_exists('wa_theme')) {
+		if (!wa_theme()->modules()->is_active('ads')) return;
+	}
 	register_widget('WA_Widget_Adunit');
 }
 add_action('widgets_init', 'wa_adunit_register_widget');
