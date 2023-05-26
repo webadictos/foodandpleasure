@@ -13,6 +13,11 @@ collapseSearch.addEventListener('show.bs.collapse', event => {
   }
 });
 
+overlay.addEventListener('click', event => {
+  var collapse = new bootstrap.Collapse(collapseSearch);
+  collapse.hide();
+});
+
 collapseSearch.addEventListener('shown.bs.collapse', event => {
   body.style.overflow = 'hidden';
   body.style.paddingRight = '0';
