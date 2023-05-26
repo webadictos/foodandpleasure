@@ -62,3 +62,5 @@
 
     </div>
 </div>
+
+<div class="overlay-background"></div>

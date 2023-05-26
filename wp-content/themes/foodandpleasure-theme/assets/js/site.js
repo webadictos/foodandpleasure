@@ -26,6 +26,14 @@ const Site = (() => {
     //   './menu-hamburguesa'
     // );
 
+    if (document.querySelector('.collapse-search')) {
+      import(
+        /* webpackChunkName: "search-autocomplete" */
+        /* webpackMode: "lazy" */
+        './search-autocomplete'
+      );
+    }
+
     //Listener For Infinite Scroll
     document
       .querySelector('body')

@@ -1,0 +1,1 @@
+(self.webpackChunk=self.webpackChunk||[]).push([["search-autocomplete"],{"./js/search-autocomplete.js":function(){var e=document.getElementById("collapse-search");const s=document.body;e.addEventListener("shown.bs.collapse",e=>{s.style.overflow="hidden",s.style.paddingRight="0"}),e.addEventListener("hide.bs.collapse",e=>{s.style.overflow="",s.style.paddingRight=""})}}]);

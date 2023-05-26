@@ -178,6 +178,72 @@ body {
       }
     }
   }
+
+  .collapse-search {
+    background-color: var(--bs-body-bg);
+    .collapse-search__container {
+      padding-top: 1rem;
+      margin-top: 0;
+      @include media-breakpoint-up(md) {
+        border-top: 1px solid #000;
+        margin-top: 2rem;
+      }
+    }
+    .collapse-search__form {
+      display: flex;
+      gap: 1rem;
+      flex-direction: column;
+
+      @include media-breakpoint-up(md) {
+        flex-direction: row;
+      }
+
+      .form-control {
+        border: 0;
+        font-size: fluid(14px, 20px);
+        order: 2;
+        &:focus {
+          box-shadow: unset;
+        }
+        &::placeholder {
+          color: #919396;
+        }
+
+        @include media-breakpoint-up(md) {
+          order: 0;
+        }
+      }
+    }
+    .collapse-search__close {
+      color: #000;
+      text-decoration: underline;
+      font-size: fluid(8px, 13px);
+      text-transform: uppercase;
+      align-self: flex-end;
+      @include media-breakpoint-up(lg) {
+        align-self: unset;
+      }
+    }
+  }
+}
+
+.searchwp-live-search-results {
+  background-color: var(--bs-body-bg) !important;
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: unset !important;
+  width: 100% !important;
+  left: auto !important;
+  padding: 0 1.5rem;
+  .searchwp-live-search-result {
+    p {
+      font-size: fluid(14px, 20px);
+      border-bottom: 0;
+      a {
+        color: #221f20;
+      }
+    }
+  }
 }
 
 .hamburguer-toggler {
