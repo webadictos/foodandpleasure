@@ -1,6 +1,9 @@
 @use 'sass:math';
 
-$html-font-size: 16px;
+$default-min-bp: 320px !default;
+$default-max-bp: 1280px !default;
+$html-font-size: 16px !default;
+
 @function stripUnit($value) {
   @return math.div($value, $value * 0 + 1);
 }
@@ -11,9 +14,6 @@ $html-font-size: 16px;
 @function hexToRGB($hex) {
   @return red($hex), green($hex), blue($hex);
 }
-
-$default-min-bp: 320px;
-$default-max-bp: 1280px;
 
 @function round($number, $decimals: 0) {
   $n: 1;

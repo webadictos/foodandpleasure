@@ -154,10 +154,6 @@ a img.aligncenter {
   display: none;
 }
 
-.bypostauthor {
-  font-weight: bold;
-}
-
 /* Text meant only for screen readers. */
 .screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
@@ -192,24 +188,5 @@ a img.aligncenter {
     margin-left: calc(var(--bs-gutter-x) * -0.5);
     margin-right: calc(var(--bs-gutter-x) * -0.5);
     margin-top: calc(var(--bs-gutter-y) * -1);
-  }
-}
-
-@media (min-width: 2000px) {
-  html {
-    font-size: 150%;
-  }
-  .container,
-  .container-lg,
-  .container-md,
-  .container-sm,
-  .container-xl {
-    max-width: rem(1320px);
-  }
-}
-
-@media (min-width: 2560px) {
-  html {
-    font-size: 170%;
   }
 }

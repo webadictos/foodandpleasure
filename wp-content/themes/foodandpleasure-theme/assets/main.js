@@ -7,7 +7,7 @@ import { Site } from './js/site';
 console.log(
   `%c 
   
-  Theme: Venture and Pleasure   
+  Theme: Food and Pleasure   
   Developed by: @dmedina
   
   `,

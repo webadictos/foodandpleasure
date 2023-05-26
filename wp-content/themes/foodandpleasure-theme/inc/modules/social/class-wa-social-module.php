@@ -111,10 +111,13 @@ class WA_Social_Module extends WA_Module
             'linkedin' => '<i class="fab fa-linkedin"></i>',
             'pinterest' => '<i class="fab fa-pinterest"></i>',
             'flipboard' => '<i class="fab fa-flipboard"></i>',
-            'email' => '<i class="fas fa-envelope"></i>',
+            'email' => '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+          </svg>',
         );
 
         $social_networks = $this->module_config['social_networks'];
+
 
         if (is_array($social_networks) && count($social_networks) > 0) {
 
@@ -126,6 +129,8 @@ class WA_Social_Module extends WA_Module
             echo "<ul class='wa-social-profiles {$custom_class}'>";
 
             foreach ($social_networks as $social_network) {
+
+                if (in_array($social_network['social'], $params['exclude'])) continue;
 
                 echo "<li>";
 

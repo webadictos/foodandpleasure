@@ -131,9 +131,13 @@ $link-decoration: none;
 @import './scss/fonts.scss';
 @import './scss/general';
 @import './scss/wordpress';
-@import './scss/sections';
 @import './scss/header';
-@import './scss/pages';
-@import './scss/archives';
-@import './scss/article-items';
-@import './scss/articles';
+@import './scss/footer';
+@import './scss/overlays';
+
+@import './scss/sections';
+
+// @import './scss/pages';
+// @import './scss/archives';
+// @import './scss/article-items';
+// @import './scss/articles';

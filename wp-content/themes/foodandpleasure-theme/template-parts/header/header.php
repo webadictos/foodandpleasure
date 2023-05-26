@@ -5,151 +5,89 @@ $search_enabled  = get_theme_mod('search_enabled', '1'); // Get custom meta-valu
 ?>
 
 <?php
-print_r(wa_theme()->setting('general', 'logo'));
+$logo = wa_theme()->setting('general', 'logo') ?? '';
+$logo_dark = wa_theme()->setting('general', 'logo_dark') ?? '';
 ?>
-<header id="masthead" class="masthead container <?php echo (is_home() || is_front_page()) ? 'header-home' : ''; ?>">
+<header id="masthead" class="masthead sticky-top <?php echo (is_home() || is_front_page()) ? 'header-home' : ''; ?>">
 
-    <div class="header__toggler"></div>
-    <nav class="header__menu-left navbar navbar-expand">
+    <div id="header" class="header-container">
 
-        <?php
-        // Loading WordPress Custom Menu (theme_location).
-        wp_nav_menu(
-            array(
-                'menu_class'     => 'navbar-nav',
-                'container'      => '',
-                'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
-                'walker'         => new WP_Bootstrap_Navwalker(),
-                'theme_location' => 'main-menu-left',
-            )
-        );
-        ?>
+        <div class="header__toggler">
 
-    </nav>
-    <div class="header__logo"></div>
-    <nav class="header__menu-right navbar navbar-expand">
-        <?php
-        // Loading WordPress Custom Menu (theme_location).
-        wp_nav_menu(
-            array(
-                'menu_class'     => 'navbar-nav',
-                'container'      => '',
-                'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
-                'walker'         => new WP_Bootstrap_Navwalker(),
-                'theme_location' => 'main-menu-right',
-            )
-        );
-        ?>
-    </nav>
-    <div class="header__icon"></div>
+            <button href="#menuoffcanvas" role="button" data-bs-toggle="offcanvas" data-bs-target="#menuoffcanvas" aria-controls="menuoffcanvas" title="Menú" class="btn hamburguer-toggler">
+
+                <svg viewBox="0 0 100 50" width="35" height="25" class="toggler-container">
+                    <rect width="100" height="5" fill="#000000" class="toggler-rect"></rect>
+                    <rect y="25" width="100" height="5" fill="#000000" class="toggler-rect"></rect>
+                    <rect y="50" width="100" height="5" fill="#000000" class="toggler-rect"></rect>
+                </svg>
+
+            </button>
+
+        </div>
 
 
+        <nav class="header__menu-left navbar navbar-expand">
 
+            <?php
+            // Loading WordPress Custom Menu (theme_location).
+            wp_nav_menu(
+                array(
+                    'menu_class'     => 'navbar-nav',
+                    'container'      => '',
+                    'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
+                    'walker'         => new WP_Bootstrap_Navwalker(),
+                    'theme_location' => 'main-menu-left',
+                )
+            );
+            ?>
 
-    <nav id="header" class="navbar navbar-expand-md <?php if (is_home() || is_front_page()) : echo ' home';
-                                                    endif; ?>">
-        <div class="container">
-            <div class="row w-100 g-0 justify-content-center">
-                <div class="col-12 col-lg-6 d-flex justify-content-md-center">
-                    <a class="navbar-brand logo-navbar me-0" href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" rel="home">
+        </nav>
+        <div class="header__logo">
+            <a class="navbar-brand logo-navbar" href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" rel="home">
 
+                <?php
+                if (!empty($logo) && !empty($logo_dark)) :
+                ?>
+                    <img class="main-logo d-none d-lg-inline-block" src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="271" height="46" loading="eager" fetchpriority="high" />
+                    <img class="main-logo main-logo__dark d-lg-none" src="<?php echo esc_url($logo_dark); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="271" height="46" loading="eager" fetchpriority="high" />
 
-                        <?php
-                        $header_logo = waGetLogo(); // Get custom meta-value.
-                        ?>
+                <?php
+                else :
+                    echo esc_attr(get_bloginfo('name', 'display'));
+                endif;
+                ?>
+            </a>
+        </div>
+        <nav class="header__menu-right navbar navbar-expand">
+            <?php
+            // Loading WordPress Custom Menu (theme_location).
+            wp_nav_menu(
+                array(
+                    'menu_class'     => 'navbar-nav',
+                    'container'      => '',
+                    'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
+                    'walker'         => new WP_Bootstrap_Navwalker(),
+                    'theme_location' => 'main-menu-right',
+                )
+            );
+            ?>
+        </nav>
+        <div class="header__icon">
 
+            <button href="#search" role="button" title="<?php echo __('Search', 'wa-theme'); ?>" class="btn search-toggler">
 
-                        <?php
+                <svg class="search-icon" fill="#000000" width="17" height="17" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M790.588 1468.235c-373.722 0-677.647-303.924-677.647-677.647 0-373.722 303.925-677.647 677.647-677.647 373.723 0 677.647 303.925 677.647 677.647 0 373.723-303.924 677.647-677.647 677.647Zm596.781-160.715c120.396-138.692 193.807-319.285 193.807-516.932C1581.176 354.748 1226.428 0 790.588 0S0 354.748 0 790.588s354.748 790.588 790.588 790.588c197.647 0 378.24-73.411 516.932-193.807l516.028 516.142 79.963-79.963-516.142-516.028Z" fill-rule="evenodd" />
+                </svg>
 
-                        $mainLogo = $header_logo;
+            </button>
 
-                        ?>
-                        <?php
-                        if (!empty($mainLogo)) :
-                        ?>
-                            <img class="main-logo " src="<?php echo esc_url($mainLogo); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="300" height="83" loading="eager" fetchpriority="high" />
-
-
-                        <?php
-                        else :
-                            echo esc_attr(get_bloginfo('name', 'display'));
-
-                        endif;
-                        ?>
-
-
-                    </a>
-
-                    <button class="navbar-toggler ms-auto p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="<?php esc_attr_e('Toggle navigation', 'foodandpleasure-theme'); ?>">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-                <div class="col-12 col-lg-6">
-
-
-                    <div id="navbar" class="collapse navbar-collapse row justify-content-end g-0">
-                        <?php
-                        // Loading WordPress Custom Menu (theme_location).
-                        wp_nav_menu(
-                            array(
-                                'menu_class'     => 'col-12 navbar-nav order-md-2 justify-content-md-center justify-content-lg-end',
-                                'container'      => '',
-                                'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
-                                'walker'         => new WP_Bootstrap_Navwalker(),
-                                'theme_location' => 'main-menu',
-                            )
-                        );
-                        ?>
-
-                        <div class="navbar-text navbar-widgets col-12 d-flex align-items-center justify-content-md-center justify-content-lg-end mb-3 gap-3 flex-column flex-md-row">
-                            <div class="navbar-social-icons">
-                                <?php
-                                if (function_exists('wa_show_social_profiles')) {
-                                    wa_show_social_profiles();
-                                }
-                                ?>
-                                <?php //my_social_media_icons(false, false, false); 
-                                ?>
-                            </div>
-
-                            <?php
-                            if ('1' === $search_enabled) :
-                            ?>
-                                <div class="navbar-searchform">
-                                    <form class="search-form my-2 my-lg-0" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                                                </svg>
-                                            </span>
-                                            <input type="text" name="s" class="form-control" placeholder="<?php esc_attr_e('Search', 'foodandpleasure-theme'); ?>" title="<?php esc_attr_e('Search', 'foodandpleasure-theme'); ?>" />
-                                        </div>
-
-
-                                    </form>
-                                </div>
-                            <?php
-                            endif;
-                            ?>
-                        </div>
-
-
-
-
-                    </div><!-- /.navbar-collapse -->
-
-
-
-                </div>
-            </div>
+        </div>
 
 
 
 
 
-
-
-        </div><!-- /.container -->
-    </nav><!-- /#header -->
+    </div>
 </header>
