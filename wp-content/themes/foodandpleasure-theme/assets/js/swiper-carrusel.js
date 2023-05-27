@@ -1,4 +1,4 @@
-import Swiper, { Navigation, Pagination, Mousewheel } from 'swiper';
+import Swiper, { Navigation, Pagination, Mousewheel, Autoplay } from 'swiper';
 const swiperCarrusel = (() => {
   const init = () => {
     document
@@ -19,6 +19,7 @@ const swiperCarrusel = (() => {
 
     let swiperConfig = {
       direction: 'horizontal',
+      centeredSlides: true,
       loop: false,
       slidesPerView: 3,
       spaceBetween: 10,
@@ -55,6 +56,14 @@ const swiperCarrusel = (() => {
       swiperConfig.navigation = {
         nextEl: `#swiper-carousel-${carouselID} .swiper-button-next`,
         prevEl: `#swiper-carousel-${carouselID} .swiper-button-prev`,
+      };
+    }
+    if (itemConfig.autoplay) {
+      swiperConfig.modules.push(Autoplay);
+      swiperConfig.autoplay = {
+        delay: 2500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
       };
     }
 

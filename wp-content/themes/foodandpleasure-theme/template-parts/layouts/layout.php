@@ -12,6 +12,7 @@ $_layoutArgs = array(
     'items_layout' => 'article-item',
     'items_layout_css' => '',
     'items_swiper' => false,
+    'exclude_ids' => true,
     'items_config' => array(
         'items_show_tags' => false,
         'items_show_main_cat' => false,
@@ -21,6 +22,8 @@ $_layoutArgs = array(
         'items_show_excerpt' => false,
         'items_show_arrow' => false,
         'items_show_more_btn' => false,
+        'items_more_btn_txt' => __('Leer más', 'wa-theme'),
+        'image_animation' => true,
     ),
     'section_id' => '',
     'section_class' => '',
@@ -32,10 +35,9 @@ $_layoutArgs = array(
     'section_title_container_class' => 'section__title-underlined',
     'section_title_class' => '',
     'show_more_btn' => false,
-    'show_more_txt' => 'Ver más',
+    'show_more_txt' => 'Ver todas',
     'show_more_link' => '',
     'show_empty' => true,
-    'show_bushmills_btns' => false,
     'queryArgs' => array(),
 );
 
@@ -53,7 +55,12 @@ $_args = array(
     'post_status' => 'publish',
 );
 
+if ($layoutArgs['exclude_ids']) {
+    $_args['post__not_in'] =  $GLOBALS['exclude_ids'];
+}
+
 $_args = array_merge($_args, $layoutArgs['queryArgs']);
+
 
 $seccion = isset($layoutArgs['queryArgs']['category_name']) ? get_category_by_slug($layoutArgs['queryArgs']['category_name']) : '';
 
@@ -160,7 +167,7 @@ if (!$layoutArgs['show_empty'] && !$articlesQuery->have_posts()) {
 
 
                 while ($articlesQuery->have_posts()) : $articlesQuery->the_post();
-                    $GLOBAL['exclude_ids'][] = get_the_ID();
+                    $GLOBALS['exclude_ids'][] = get_the_ID();
 
 
 
@@ -193,15 +200,6 @@ if (!$layoutArgs['show_empty'] && !$articlesQuery->have_posts()) {
                 </div>
             <?php endif; ?>
 
-            <?php if ($layoutArgs['show_bushmills_btns']) : ?>
-
-                <div class="bushmills-products__buttons">
-                    <a href="<?php echo bushmills_utils::buyLink(); ?>" class="btn btn-product btn-primary btn-comprar">Dónde comprar Bushmills</a> <a href="<?php echo bushmills_utils::drinkLink(); ?>" class="btn btn-product btn-primary btn-consumir">Dónde consumir Bushmills</a>
-
-                </div>
-
-
-            <?php endif; ?>
 
             <?php
             if (!$layoutArgs['exclude_container']) :

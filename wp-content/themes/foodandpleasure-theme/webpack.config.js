@@ -10,6 +10,7 @@ module.exports = {
   context: path.resolve(__dirname, 'assets'),
   entry: {
     main: ['./main.js'],
+    home: ['./home.js'],
   },
   output: {
     path: path.resolve(__dirname, 'assets/dist'),

@@ -572,6 +572,11 @@ function foodandpleasure_theme_scripts_loader()
 	// 2. Scripts.
 	wp_enqueue_script('mainjs', get_theme_file_uri('assets/dist/main.bundle.js'), array(), date("ymdHis", filemtime(get_stylesheet_directory() . '/assets/dist/main.bundle.js')), true);
 
+
+	if (is_home() || is_front_page()) {
+		wp_enqueue_script('homejs', get_theme_file_uri('assets/dist/home.bundle.js'), array(), date("ymdHis", filemtime(get_stylesheet_directory() . '/assets/dist/home.bundle.js')), true);
+	}
+
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}

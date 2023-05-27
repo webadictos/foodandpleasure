@@ -71,21 +71,26 @@ $section-headings-color: #000000;
   //Por componente
   --nav-font-family: #{meta.inspect($nav-font-family)};
   --nav-font-weight: #{meta.inspect($nav-font-weight)};
+
   --category-font-family: #{meta.inspect($category-font-family)};
   --category-font-weight: #{$category-font-weight};
   --headings-font-family: #{meta.inspect($headings-font-family)};
   --headings-font-weight: #{$headings-font-weight};
   --headings-color: #{$headings-color};
+
   --section-title-font-family: #{meta.inspect($section-title-font-family)};
   --section-title-font-weight: #{$section-title-font-weight};
   --section-title-color: #{meta.inspect($section-headings-color)};
+  --section-title-font-size: #{fluid(21px, 34px)};
+
   --entry-font-family: #{meta.inspect($entry-font-family)};
   --excerpt-font-family: #{meta.inspect($excerpt-font-family)};
   --excerpt-font-weight: #{$excerpt-font-weight};
   --article-item-title-font-family: #{meta.inspect(
       $article-item-title-font-family
     )};
-  --article-item-font-weight: #{$article-item-title-font-weight};
+  --article-item-title-font-weight: #{$article-item-title-font-weight};
+
   --single-title-font-family: #{meta.inspect($single-title-font-family)};
   --single-title-font-weight: #{meta.inspect($single-title-font-weight)};
   --page-title-font-size: clamp(3rem, 9.4vw + 1.1rem, 7rem);
@@ -93,11 +98,11 @@ $section-headings-color: #000000;
   --excerpt-font-size: clamp(1rem, 0.4vw + 0.9rem, 1.3rem);
   --excerpt-color: #{$excerpt-color};
   --entry-color: #{$entry-color};
+
   --footer-nav-color: #{$footer-nav-color};
   --footer-nav-font-size: #{fluid(10px, 12px)}; //clamp(0.8875rem, 0.7vw + 0.6rem, 1.0625rem);
   --footer-background: #{$footer-background};
   --footer-color: #fff;
-  --section-title-font-size: clamp(1.5625rem, 2.2vw + 1.1rem, 2.5rem);
   --entry-font-size: 1rem;
   --article-item-title-font-size: clamp(1.25rem, 0.2vw + 1.2rem, 1.375rem);
   --section-margin: 1rem 0;

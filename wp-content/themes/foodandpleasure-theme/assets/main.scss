@@ -125,6 +125,10 @@ $link-decoration: none;
 // @import './scss/font-awesome/solid.scss';
 // @import './scss/font-awesome/regular.scss';
 
+// import Swiper and modules styles
+@import '../node_modules/swiper/swiper.scss';
+@import '../node_modules/swiper/modules/navigation/navigation.scss';
+@import '../node_modules/swiper/modules/pagination/pagination.scss';
 /**
 * Wordpress Base
 */
@@ -136,6 +140,8 @@ $link-decoration: none;
 @import './scss/overlays';
 
 @import './scss/sections';
+@import './scss/article-items';
+@import './scss/carrusel-hero';
 
 // @import './scss/pages';
 // @import './scss/archives';
