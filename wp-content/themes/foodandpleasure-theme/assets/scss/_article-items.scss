@@ -309,6 +309,7 @@
     grid-area: 1 / 1 / 4 / 4;
     height: 100%;
     aspect-ratio: 0.9/1;
+    display: block;
   }
 
   .article-item__header {
@@ -389,6 +390,11 @@
 
   .article-item {
     grid-column: span 1;
+
+    .article-item__cat--badge {
+      display: none;
+    }
+
     @include media-breakpoint-up(lg) {
       grid-column: span 2;
     }
@@ -399,6 +405,88 @@
       grid-column: span 2;
       @include media-breakpoint-up(lg) {
         grid-column: span 3;
+      }
+
+      .article-item__cat--badge {
+        display: block;
+      }
+    }
+  }
+}
+
+.grid-container-items--tres {
+  @extend .grid-container-items;
+
+  --grid-container-columns: repeat(2, 1fr);
+  @include media-breakpoint-up(lg) {
+    --grid-container-columns: repeat(6, 1fr);
+    --grid-container-gap: 2rem;
+  }
+
+  .article-item {
+    grid-column: span 2;
+    grid-row: span 2;
+
+    &:not(:last-child) {
+      border-bottom: rem(1px) solid #e4e0dd;
+      padding-bottom: 1.5rem;
+    }
+
+    .article-item__cat--badge {
+      display: none;
+    }
+
+    .article-item__more {
+      display: none;
+    }
+
+    @include media-breakpoint-up(lg) {
+      grid-column: span 3;
+    }
+
+    .article-item__thumbnail {
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      a {
+        width: 100%;
+        height: 100%;
+      }
+      img {
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    &:nth-child(1) {
+      @extend .article-item-tres;
+      grid-column: span 2;
+      @include media-breakpoint-up(lg) {
+        grid-row: 1 / span 4;
+        grid-column: span 3;
+      }
+    }
+    &:nth-child(2) {
+      @extend .article-item-tres;
+      grid-column: span 2;
+
+      @include media-breakpoint-up(lg) {
+        grid-column: span 3;
+        grid-row: 5 / span 4;
+      }
+    }
+    &:nth-child(1),
+    &:nth-child(2) {
+      border-bottom: 0;
+      padding-bottom: 0;
+      .article-item__thumbnail {
+        aspect-ratio: 4/3;
+      }
+      .article-item__cat--badge {
+        display: block;
+      }
+      .article-item__more {
+        display: flex;
       }
     }
   }

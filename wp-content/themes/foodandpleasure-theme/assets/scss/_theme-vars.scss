@@ -26,6 +26,7 @@ $headings-font-weight: 400;
 
 $section-title-font-family: 'Merriweather', serif;
 $section-title-font-weight: 400;
+$section-title-color: #000000;
 
 $article-item-title-font-family: 'Merriweather', serif;
 $article-item-title-font-weight: 400;
@@ -80,7 +81,7 @@ $section-headings-color: #000000;
 
   --section-title-font-family: #{meta.inspect($section-title-font-family)};
   --section-title-font-weight: #{$section-title-font-weight};
-  --section-title-color: #{meta.inspect($section-headings-color)};
+  --section-title-color: #{meta.inspect($section-title-color)};
   --section-title-font-size: #{fluid(21px, 34px)};
 
   --entry-font-family: #{meta.inspect($entry-font-family)};

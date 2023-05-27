@@ -1,9 +1,10 @@
 .section {
   padding: var(--section-padding, 2rem 0);
   margin: var(--section-margin, 0);
+  background: var(--section-background, unset);
 
   @include media-breakpoint-up(lg) {
-    padding: var(--section-padding-lg, var(--section-padding, 0));
+    padding: var(--section-padding-lg, var(--section-padding, 2rem 0));
   }
   .section__title {
     margin: var(--section-title-margin, 0 0 2rem 0);
@@ -14,9 +15,7 @@
     text-align: var(--section-title-text-align, center);
     font-family: var(--section-title-font-family, var(--headings-font-family));
     font-weight: var(--section-title-font-weight, var(--headings-font-weight));
-  }
-
-  .with-big-title {
+    color: var(--section-title-color);
   }
 
   &.full-width {
