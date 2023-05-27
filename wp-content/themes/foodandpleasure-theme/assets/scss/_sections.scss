@@ -16,6 +16,21 @@
     font-family: var(--section-title-font-family, var(--headings-font-family));
     font-weight: var(--section-title-font-weight, var(--headings-font-weight));
     color: var(--section-title-color);
+
+    &.with-middle-line {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+      text-transform: uppercase;
+      &::after {
+        content: '';
+        border-top: rem(1px) solid
+          var(--section-title-line-color, var(--section-title-color));
+        margin: 0 0px 0 rem(32px);
+        flex: 1 0 rem(32px);
+      }
+    }
   }
 
   &.full-width {
