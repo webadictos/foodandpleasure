@@ -43,6 +43,7 @@ const instagramGrid = (() => {
   };
 
   const displayInstagramGrid = (data, el) => {
+    console.log(data);
     data.data.forEach(function (item) {
       el.innerHTML = el.innerHTML + getInstagramItemTemplate(item);
     });
@@ -64,8 +65,8 @@ const instagramGrid = (() => {
     let template = '';
 
     template = `
-      <div class="scrolling-wrapper__item">
-      <div class="scrolling-wrapper__thumbnail">
+      <div class="scrolling-wrapper__item wa-instagram__item">
+      <div class="scrolling-wrapper__thumbnail media-${item.media_type.toLowerCase()}">
 
             <a
               href="${item.permalink}"
@@ -80,7 +81,7 @@ const instagramGrid = (() => {
                       src="${item.media_url}"
                       alt="${item.caption}"
                       title="${item.caption}"
-                      controls
+                      nocontrols
                     />
                   `;
                 } else {
