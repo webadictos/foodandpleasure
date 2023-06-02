@@ -84,7 +84,7 @@ class Wa_Theme_Manager_Admin
 			$metabox_id => array(
 				'id'            => $metabox_id,
 				'title'         => esc_html__('Opciones del artículo', 'cmb2'),
-				'object_types'  => array('post', 'page'), // Post type
+				'object_types'  => array('post'), // Post type
 				'context'    => 'side',
 				'priority'   => 'high',
 				'wa_metabox_fields' => apply_filters("wa_theme_get_{$metabox_id}_fields", array(), $this->prefix_posts),

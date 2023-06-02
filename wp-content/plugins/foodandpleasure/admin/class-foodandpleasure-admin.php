@@ -139,10 +139,10 @@ class Foodandpleasure_Admin
 			'menu_icon' => "dashicons-video-alt",
 			'show_in_rest' => true,
 			'supports' => array('title', 'thumbnail', 'custom_fields', 'editor', 'excerpt'),
-			'has_archive' => 'videos',
+			'has_archive' => 'to-watch',
 			'taxonomies' => array('category'),
 
-			'rewrite'  => array('slug' => 'videos', 'with_front' => true),
+			'rewrite'  => array('slug' => 'to-watch', 'with_front' => true),
 
 		);
 
