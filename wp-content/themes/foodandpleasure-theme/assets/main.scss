@@ -145,8 +145,11 @@ $link-decoration: none;
 @import './scss/section-suscripcion';
 @import './scss/scrolling-wrapper';
 @import './scss/section-instagram';
-
-// @import './scss/pages';
-// @import './scss/archives';
-// @import './scss/article-items';
-// @import './scss/articles';
+@import './scss/archives';
+@import './scss/search';
+@import './scss/pages';
+@import './scss/single';
+@import './scss/widgets';
+@import './scss/category';
+@import './scss/glightbox';
+@import './scss/videos';

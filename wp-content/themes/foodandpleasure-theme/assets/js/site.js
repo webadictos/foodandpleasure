@@ -134,6 +134,14 @@ const Site = (() => {
       });
     }
 
+    if (document.querySelector('.glightbox')) {
+      import(
+        /* webpackChunkName: "lightbox" */
+        /* webpackMode: "lazy" */
+        './lightbox'
+      );
+    }
+
     if (
       ThemeSetup.loadmore &&
       document.querySelector('.archive-articles-container')

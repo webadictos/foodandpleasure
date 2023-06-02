@@ -6,7 +6,7 @@
 
 get_header();
 ?>
-<main class="site-main section-archive" role="main">
+<main class="site-main search-results" role="main">
 	<div class="container">
 		<?php
 
@@ -16,11 +16,8 @@ get_header();
 			<section class="section p-0">
 
 				<header class="section__title-container page-header">
-
-
 					<h1 class="section__title page-title">
-						<?php printf(esc_html__('Search Results for: %s', 'foodandpleasure-theme'), get_search_query()); ?>
-
+						<?php printf(esc_html__('Search Results for: %s', 'wa-theme'), '<span class="search-keywords">' . get_search_query() . '</span>'); ?>
 					</h1>
 				</header>
 
@@ -36,11 +33,11 @@ get_header();
 						'items_config' => array(
 							'items_show_tags' => false,
 							'items_show_main_cat' => false,
-							'items_show_badge_cat' => false,
-							'items_show_date' => true,
-							'items_show_author' => false,
+							'items_show_badge_cat' => true,
+							'items_show_date' => false,
+							'items_show_author' => true,
 							'items_show_excerpt' => false,
-							'items_show_arrow' => false,
+							'items_show_arrow' => true,
 							'items_show_more_btn' => false,
 						),
 					);

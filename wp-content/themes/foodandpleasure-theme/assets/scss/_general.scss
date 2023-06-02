@@ -178,6 +178,37 @@ img {
   }
 }
 
+.wa-social-share {
+  @extend .wa-social-profiles;
+}
+
+.bordered-title {
+  --bordered-title-font-size: #{fluid(14px, 26px)};
+
+  padding: var(--bordered-title-padding, rem(21px) 0);
+  text-align: var(--bordered-title-text-align, center);
+  font-family: var(
+    --bordered-title-font-family,
+    var(--section-title-font-family)
+  );
+  font-weight: var(
+    --bordered-title-font-weight,
+    var(--section-title-font-weight)
+  );
+  color: var(--bordered-title-color, var(--section-title-color));
+  font-size: var(--bordered-title-font-size, var(--section-title-font-size));
+  text-transform: var(--bordered-title-text-transform, uppercase);
+  margin: var(--bordered-title-margin, rem(35px) 0 2rem);
+  border-top: var(
+    --bordered-title-border-top,
+    rem(1px) solid var(--borders-color)
+  );
+  border-bottom: var(
+    --bordered-title-border-bottom,
+    rem(1px) solid var(--borders-color)
+  );
+}
+
 //Incrementamos font-size en pantallas grandes
 @media (min-width: 2000px) {
   html {

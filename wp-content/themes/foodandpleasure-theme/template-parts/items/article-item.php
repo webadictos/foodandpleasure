@@ -17,8 +17,8 @@ $_itemArgs = array(
         'items_show_arrow' => false,
         'items_show_more_btn' => false,
         'items_more_btn_txt' => __('Leer más', 'wa-theme'),
-        'items_more_arrow' => "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1080 1080'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23231f20;%7D%3C/style%3E%3C/defs%3E%3Cpolygon class='cls-1' points='712.44 427.01 711.93 427.45 711.93 527.27 283.72 527.27 283.72 541.33 711.93 541.33 711.93 641.14 712.44 641.58 835.08 534.3 712.44 427.01'/%3E%3C/svg%3E",
         'image_animation' => true,
+        'item_badge_text' => '',
     ),
 );
 
@@ -56,6 +56,24 @@ if ($itemArgs['items_config']['items_show_main_cat'] || $itemArgs['items_config'
     // }
 }
 
+$thumbnail_url = get_the_permalink();
+$thumbnail_url_css = "";
+
+$isVideo = (get_post_type() === "fp_video") ?? false;
+
+if ($isVideo) {
+    $video_url = get_post_meta(get_the_ID(), '_wa_embed_url', true) ?? '';
+
+    if (!empty($video_url)) {
+        $thumbnail_url = $video_url;
+
+        $thumbnail_url_css = "glightbox";
+    }
+}
+
+// var_dump($isVideo);
+
+// print_r($thumbnail_url);
 
 ?>
 
@@ -67,10 +85,23 @@ if ($itemArgs['items_config']['items_show_main_cat'] || $itemArgs['items_config'
     <article <?php post_class("article-item " . $itemArgs['items_layout_css'], get_the_ID()); ?> <?php function_exists('wa_article_item_attributes') ? wa_article_item_attributes() : ''; ?>>
 
         <figure class="article-item__thumbnail <?php echo get_post_format(); ?> <?php echo (!$itemArgs['items_config']['image_animation']) ? 'unanimated' : ''; ?>">
-            <a href="<?php the_permalink() ?>" title="<?php echo get_the_title() ?>"><?php echo $thumb; ?></a>
-            <?php if ($itemArgs['items_config']['items_show_badge_cat']) : ?>
-                <a class="article-item__cat--badge post-category" href="<?php echo get_category_link($primary_category['parent_category']->term_id); ?>"><?php echo $primary_category['parent_category']->name; ?></a>
-            <?php endif; ?>
+            <a class="article-item__thumbnail-link <?php echo $thumbnail_url_css; ?>" href="<?php echo $thumbnail_url; ?>" title="<?php echo get_the_title() ?>"><?php echo $thumb; ?></a>
+
+            <div class="article-item__badges">
+
+                <?php if ($itemArgs['items_config']['items_show_badge_cat']) : ?>
+
+                    <?php if ($itemArgs['items_config']['item_badge_text'] && $itemArgs['items_config']['item_badge_text'] !== "") : ?>
+                        <div class="article-item__cat--badge"><?php echo $itemArgs['items_config']['item_badge_text']; ?></div>
+                    <?php else : ?>
+                        <a class="article-item__cat--badge post-category" href="<?php echo get_category_link($primary_category['parent_category']->term_id); ?>"><?php echo $primary_category['parent_category']->name; ?></a>
+                    <?php endif; ?>
+
+                <?php endif; ?>
+
+                <?php do_action("wa_show_badges", get_the_ID(), $itemArgs['items_config']); ?>
+
+            </div>
         </figure>
 
         <header class="article-item__header">
@@ -90,7 +121,18 @@ if ($itemArgs['items_config']['items_show_main_cat'] || $itemArgs['items_config'
                 <?php endif; ?>
 
                 <div class="article-item__title-container">
-                    <h2 class="article-item__title"><a href="<?php the_permalink() ?>" title="<?php echo get_the_title() ?>"><?php echo get_the_title(); ?></a></h2>
+                    <h2 class="article-item__title">
+                        <?php if (!$isVideo) : ?>
+                            <a href="<?php the_permalink() ?>" title="<?php echo get_the_title() ?>">
+                            <?php endif; ?>
+
+                            <?php echo get_the_title(); ?>
+
+                            <?php if (!$isVideo) : ?>
+                            </a>
+                        <?php endif; ?>
+
+                    </h2>
                 </div>
 
                 <?php if ($itemArgs['items_config']['items_show_excerpt']) : ?>

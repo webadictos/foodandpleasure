@@ -260,8 +260,20 @@ function foodandpleasure_theme_widgets_init()
 	// Area 2.
 	register_sidebar(
 		array(
+			'name'          => 'Category Widget Area',
+			'id'            => 'category_widget_area',
+			'before_widget' => '<div id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h3 class="widget-title">',
+			'after_title'   => '</h3>',
+		)
+	);
+
+	// Area 2.
+	register_sidebar(
+		array(
 			'name'          => 'Archive Widget Area',
-			'id'            => 'secondary_widget_area',
+			'id'            => 'archive_widget_area',
 			'before_widget' => '<div id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</div>',
 			'before_title'  => '<h3 class="widget-title">',

@@ -8,7 +8,7 @@ body {
 
 .masthead {
   --hamburguer-fill: #f1f0ee;
-
+  z-index: 1022;
   background: var(--header-background, unset);
   padding: var(--header-padding-y, 0) var(--header-padding-x, 0);
 
@@ -260,6 +260,7 @@ body {
   }
   .toggler-container {
     width: rem(24px);
+    height: auto;
     padding-top: 0;
     @include media-breakpoint-up(lg) {
       width: rem(35px);

@@ -88,7 +88,7 @@ class WA_Shortcodes_Module extends WA_Module
 
     public function remove_wpautop_in_front($content)
     {
-        if (is_home() || is_front_page())
+        if (is_home() || is_front_page() || is_page())
             return $content;
         else
             return wpautop($content);

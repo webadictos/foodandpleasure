@@ -183,7 +183,7 @@ class WA_Social_Module extends WA_Module
 
         if (trim($params['css']) !== "") $custom_class = $params['css'];
 
-        echo '<ul class="wa-social-sharebar ' . $custom_class . '">';
+        echo '<ul class="wa-social-share ' . $custom_class . '">';
 
         foreach ($networks as $network) {
 
@@ -200,7 +200,7 @@ class WA_Social_Module extends WA_Module
                 $link = str_replace("{URL}", urlencode(get_permalink($postID)), $current_network['link']);
                 $link = str_replace("{TITLE}", apply_filters("wa_share_{$network}_title", get_the_title($postID)), $link);
 
-                echo '<a href="' . $link . '" target="_blank" class="' . $network . '-social-share__link wa-social-share__link">' . apply_filters("wa_share_{$network}_icon", $current_network['icon']) . '</a>';
+                echo '<a href="' . $link . '" target="_blank" class="' . $network . '-social-share__link wa-social-share__link" title="' . $current_network['share_title'] . '">' . apply_filters("wa_share_{$network}_icon", $current_network['icon']) . '</a>';
                 echo "</li>";
             }
         }

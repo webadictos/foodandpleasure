@@ -10,7 +10,7 @@ get_header();
 
 // the_post();
 ?>
-<main class="site-main container-fluid" role="main">
+<main class="site-main container" role="main">
 
 	<?php
 	$thumb = "";
@@ -20,51 +20,48 @@ get_header();
 
 	endif;
 	?>
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-11 col-lg-10">
+			<article id="page-<?php the_ID(); ?>" <?php post_class('page-layout'); ?>>
+				<header class="page-header">
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class('content section'); ?>>
-		<header class="entry-header">
 
-			<?php
-			if ($thumb !== "") :
-			?>
-				<figure class="post-thumbnail m-0"><?php echo $thumb; ?></figure>
-			<?php
-			endif;
-			?>
 
-			<?php
-			// $category = get_post_primary_category(get_the_ID());
-			// $parent_cat = smart_category_top_parent_id($category['primary_category']->term_id, true);
-			// $catname = get_cat_name($parent_cat->term_id);
+					<?php
+					if ($thumb !== "") :
+					?>
+						<figure class="page-thumbnail m-0"><?php echo $thumb; ?></figure>
+					<?php
+					endif;
+					?>
 
-			/*
-        */
-			?>
-			<div class="entry-info text-center">
-				<h1 class="entry-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
-			</div>
 
-		</header><!-- /.entry-header -->
-		<div class="entry-content">
-			<?php
-			the_content();
+					<div class="page-info">
+						<h1 class="page-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
+					</div>
 
-			wp_link_pages(
-				array(
-					'before'   => '<nav class="page-links" aria-label="' . esc_attr__('Page', 'foodandpleasure-theme') . '">',
-					'after'    => '</nav>',
-					'pagelink' => esc_html__('Page %', 'foodandpleasure-theme'),
-				)
-			);
-			edit_post_link(
-				esc_attr__('Edit', 'foodandpleasure-theme'),
-				'<span class="edit-link">',
-				'</span>'
-			);
-			?>
+				</header><!-- /.entry-header -->
+				<div class="page-content">
+					<?php
+					the_content();
+
+					wp_link_pages(
+						array(
+							'before'   => '<nav class="page-links" aria-label="' . esc_attr__('Page', 'foodandpleasure-theme') . '">',
+							'after'    => '</nav>',
+							'pagelink' => esc_html__('Page %', 'foodandpleasure-theme'),
+						)
+					);
+					edit_post_link(
+						esc_attr__('Edit', 'foodandpleasure-theme'),
+						'<span class="edit-link">',
+						'</span>'
+					);
+					?>
+				</div>
+			</article><!-- /#post-<?php the_ID(); ?> -->
 		</div>
-	</article><!-- /#post-<?php the_ID(); ?> -->
-
+	</div>
 
 </main>
 <?php

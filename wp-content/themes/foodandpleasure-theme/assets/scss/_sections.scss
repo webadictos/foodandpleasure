@@ -2,10 +2,21 @@
   padding: var(--section-padding, 2rem 0);
   margin: var(--section-margin, 0);
   background: var(--section-background, unset);
+  color: var(--section-color, var(--bs-body-color));
 
   @include media-breakpoint-up(lg) {
     padding: var(--section-padding-lg, var(--section-padding, 2rem 0));
   }
+  .section__title-container {
+    &.section__title-bordered-inline {
+      --section-title-font-size: #{fluid(14px, 20px)};
+      text-align: center;
+      .bordered-title {
+        display: inline-block;
+      }
+    }
+  }
+
   .section__title {
     margin: var(--section-title-margin, 0 0 2rem 0);
     font-size: var(
@@ -16,6 +27,10 @@
     font-family: var(--section-title-font-family, var(--headings-font-family));
     font-weight: var(--section-title-font-weight, var(--headings-font-weight));
     color: var(--section-title-color);
+    --bs-link-color: var(--section-title-color);
+    a {
+      color: var(--section-title-color);
+    }
 
     &.with-middle-line {
       display: flex;
@@ -54,5 +69,14 @@
       --bs-btn-font-size: #{fluid(14px, 23px)};
       text-decoration: underline;
     }
+  }
+
+  &.section-dark {
+    --section-background: var(--bs-secondary);
+    --section-color: #f0efed;
+    --borders-color: #efeeec;
+    --section-title-color: #efeeec;
+    --section-title-font-size: #{fluid(14px, 20px)};
+    --bs-link-color: #efeeec;
   }
 }

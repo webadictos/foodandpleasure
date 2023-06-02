@@ -47,4 +47,8 @@ $GLOBALS['theme_modules'] = array(
             'show_in_front' => true,
         ),
     ),
+    'video-channel' => array(
+        'active' => true,
+        'config' => array(),
+    ),
 );

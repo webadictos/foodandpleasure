@@ -12,9 +12,9 @@ $page_id = get_option('page_for_posts');
 
 ?>
 
-<main class="site-main section-blog" role="main">
+<main class="site-main single-main container" role="main">
 
-	<section class="articles-container mt-lg-4">
+	<section class="articles-container">
 
 
 		<?php
@@ -24,8 +24,6 @@ $page_id = get_option('page_for_posts');
 				the_post();
 				$do_not_duplicate[] = get_the_ID();
 				get_template_part('template-parts/single/content', 'single');
-
-
 			endwhile;
 		endif;
 

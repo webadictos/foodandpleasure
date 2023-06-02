@@ -93,7 +93,7 @@ $logo_dark = wa_theme()->setting('general', 'logo_dark') ?? '';
 
     <div class="collapse collapse-search container-fluid" id="collapse-search">
         <div class="collapse-search__container">
-            <form id="collapse-search__form" class="collapse-search__form" action="" accept-charset="utf-8">
+            <form id="collapse-search__form" class="collapse-search__form" action="/" accept-charset="utf-8">
                 <input id="search" name="s" value="" class="form-control" type="search" data-swplive="true" dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="0" placeholder="BUSCAR: Los mejores..." aria-label="Escribe lo que deseas buscar" aria-describedby="search-form-icon">
                 <a class="collapse-search__close" href="#" data-bs-toggle="collapse" data-bs-target="#collapse-search.show">Cerrar</a>
             </form>

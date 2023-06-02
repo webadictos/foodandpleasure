@@ -3,8 +3,9 @@
 $primary: #000;
 $secondary: #191a1c;
 $tertiary: #f1f0ee;
+$borders-color: #221f20;
 $font-weight-base: 300;
-$body-bg: #f1f0ee;
+$body-bg: #f0efed; // #f1f0ee;
 $body-color: #000;
 $popover-bg: #000;
 $popover-body-color: #fff;
@@ -33,11 +34,12 @@ $article-item-title-font-weight: 400;
 
 $single-title-font-family: 'Merriweather', serif;
 $single-title-font-weight: 400;
+$single-title-color: #eeedeb;
 
 $entry-font-family: 'Lato', sans-serif;
 
 $excerpt-font-family: 'Lato', sans-serif;
-$excerpt-font-weight: 400;
+$excerpt-font-weight: 700;
 
 $ads-text-font-family: 'Open Sans', sans-serif;
 
@@ -53,6 +55,9 @@ $color-nav: #091405;
 $footer-background: #191a1c;
 $footer-nav-color: #fff;
 $section-headings-color: #000000;
+
+$widgets-dark-color: #f0efed;
+$arrow-fill: #231f20;
 
 //CSS VARS
 
@@ -94,9 +99,11 @@ $section-headings-color: #000000;
 
   --single-title-font-family: #{meta.inspect($single-title-font-family)};
   --single-title-font-weight: #{meta.inspect($single-title-font-weight)};
-  --page-title-font-size: clamp(3rem, 9.4vw + 1.1rem, 7rem);
-  --single-title-font-size: clamp(1.625rem, 1.3vw + 1.4rem, 2.25rem);
-  --excerpt-font-size: clamp(1rem, 0.4vw + 0.9rem, 1.3rem);
+  --single-title-color: #{meta.inspect($single-title-color)};
+
+  --page-title-font-size: #{fluid(16px, 26px)};
+  --single-title-font-size: #{fluid(16px, 30px)};
+  --excerpt-font-size: #{fluid(15px, 18px)};
   --excerpt-color: #{$excerpt-color};
   --entry-color: #{$entry-color};
 
@@ -104,7 +111,7 @@ $section-headings-color: #000000;
   --footer-nav-font-size: #{fluid(10px, 12px)}; //clamp(0.8875rem, 0.7vw + 0.6rem, 1.0625rem);
   --footer-background: #{$footer-background};
   --footer-color: #fff;
-  --entry-font-size: 1rem;
+  --entry-font-size: #{fluid(15px, 18px)};
   --article-item-title-font-size: clamp(1.25rem, 0.2vw + 1.2rem, 1.375rem);
   --section-margin: 1rem 0;
   --social-icons-font-size: 1rem;
@@ -116,6 +123,9 @@ $section-headings-color: #000000;
   --header-background: var(--bs-secondary);
   --header-padding-x: 0;
   --header-padding-y: 0.5rem;
+
+  --borders-color: #{meta.inspect($borders-color)};
+  --widgets-dark-color: #{meta.inspect($widgets-dark-color)};
 
   //TODO: ELIMINAR variables que no se usan
   --font-family-nav: #{meta.inspect($nav-font-family)};
