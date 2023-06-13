@@ -51,4 +51,8 @@ $GLOBALS['theme_modules'] = array(
         'active' => true,
         'config' => array(),
     ),
+    'maps' => array(
+        'active' => true,
+        'config' => array(),
+    ),
 );

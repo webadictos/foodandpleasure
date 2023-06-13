@@ -94,7 +94,9 @@ if ($isVideo) {
                     <?php if ($itemArgs['items_config']['item_badge_text'] && $itemArgs['items_config']['item_badge_text'] !== "") : ?>
                         <div class="article-item__cat--badge"><?php echo $itemArgs['items_config']['item_badge_text']; ?></div>
                     <?php else : ?>
-                        <a class="article-item__cat--badge post-category" href="<?php echo get_category_link($primary_category['parent_category']->term_id); ?>"><?php echo $primary_category['parent_category']->name; ?></a>
+                        <?php if (is_object($primary_category['parent_category'])) : ?>
+                            <a class="article-item__cat--badge post-category" href="<?php echo get_category_link($primary_category['parent_category']->term_id); ?>"><?php echo $primary_category['parent_category']->name; ?></a>
+                        <?php endif; ?>
                     <?php endif; ?>
 
                 <?php endif; ?>

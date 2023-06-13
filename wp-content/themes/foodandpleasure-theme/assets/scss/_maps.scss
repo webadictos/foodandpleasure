@@ -1,0 +1,246 @@
+.wa_maps_widget {
+  --widget-background: #fff;
+  --widget-title-color: #000000;
+  --borders-color: transparent;
+  --bs-link-color: #000000;
+  --widget-padding: 1rem 0 2rem;
+  --widget-title-font-size: 20px;
+  --widget-title-text-transform: none;
+  --widget-title-font-weight: 700;
+  --wiget-title-padding: 0.5rem 2rem;
+  color: #000000;
+  padding-top: 0;
+  padding-bottom: 0;
+  --map-height: #{rem(250px)};
+
+  .btn-close-map {
+    display: none;
+    top: 0;
+    right: 0;
+    border-radius: 0;
+    padding: 0;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    margin-left: auto;
+    &::before {
+      content: '';
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/> <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>');
+      width: rem(16px);
+      height: rem(16px);
+    }
+    &.collapsed {
+      &::before {
+        background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-box-arrow-in-up" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z"/> <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>');
+      }
+    }
+  }
+
+  &.fixed-bottom {
+    --map-height: #{rem(150px)};
+    .map-places-container,
+    .wa-item-map-places__list,
+    .widget-title {
+      display: none;
+    }
+    .btn-close-map {
+      display: flex;
+    }
+  }
+
+  &.is-mobile {
+    margin: 1rem 0;
+    .widget-title {
+      display: none;
+    }
+    h4 {
+      margin: 0;
+    }
+  }
+}
+
+.map-widget {
+  .map-container {
+    height: var(--map-height);
+  }
+
+  .map-places-container {
+    padding: 1rem 2rem;
+    max-height: rem(235px);
+    overflow: auto;
+  }
+
+  .wa-item-map-places__list {
+    list-style: none;
+    padding: 0;
+    font-family: var(--font-family-tertiary);
+    --border-color-items: transparent;
+    --item-map-places-marker: url('../images/marker-inactive.png');
+    li {
+      display: flex;
+      border-bottom: rem(0.25px) solid #bcbec0;
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+      border-right: 0.75rem solid var(--border-color-items);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s ease-in;
+
+      &:hover,
+      &.active {
+        --item-map-places-marker: url('../images/marker-active.png');
+        --border-color-items: #000000;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      &::before {
+        content: '';
+        background-image: var(--item-map-places-marker);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        width: rem(24px);
+        height: rem(33px);
+      }
+    }
+    li + li {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.gm-style {
+  .gm-style-iw-c {
+    background-color: #000;
+    border-radius: 0;
+  }
+  .gm-style-iw-d::-webkit-scrollbar-track,
+  .gm-style-iw-d::-webkit-scrollbar-track-piece {
+    background: #000;
+  }
+
+  .gm-style-iw-t::after {
+    background: #000;
+  }
+}
+.poi-info-window div,
+.poi-info-window a {
+  background-color: #000;
+  color: #fff;
+}
+.poi-info-window .view-link {
+  display: none;
+}
+
+.gm-style .gm-style-iw-tc::after {
+  background-color: #000;
+}
+
+.gm-ui-hover-effect > span {
+  background-color: #fff;
+}
+
+.location-item-title {
+  font-family: var(--font-family-tertiary);
+  color: #fff;
+  font-size: rem(14px);
+  margin: 0;
+}
+
+.map-badge {
+  background-color: var(--bs-body-bg);
+  width: rem(29px);
+  height: rem(28px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include media-breakpoint-up(lg) {
+    width: rem(61px);
+    height: rem(42px);
+  }
+  &::after {
+    content: '';
+    background-image: url('../images/marker-active.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    display: block;
+    width: rem(14px);
+    height: rem(20px);
+    @include media-breakpoint-up(lg) {
+      width: rem(26px);
+      height: rem(36px);
+    }
+  }
+}
+
+.map-search {
+  .map-search__form {
+    .map-search__form--input {
+      border: 0;
+      border-radius: 0;
+      font-size: fluid(12px, 20px);
+      text-transform: uppercase;
+      border-bottom: rem(1px) solid var(--borders-color);
+
+      background-image: url('../images/marker-active.png');
+      background-repeat: no-repeat;
+      background-position: left center;
+      background-size: rem(25px);
+      display: block;
+      padding: 1rem 0 1rem rem(30px);
+
+      @include media-breakpoint-up(lg) {
+        background-size: rem(40px);
+        padding: 1rem 0 1rem rem(60px);
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.searchwp-live-search-result {
+  --bs-gutter-x: 0;
+  p {
+    padding: 1em 0 !important;
+  }
+  &.category-maps {
+    p {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      @include media-breakpoint-up(lg) {
+        gap: 0.5rem;
+      }
+      &::before {
+        content: '';
+        background-image: url('../images/marker-active.png');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        display: block;
+        width: rem(29px);
+        height: rem(24px);
+        @include media-breakpoint-up(lg) {
+          width: rem(29px);
+          height: rem(40px);
+        }
+      }
+    }
+    // @include media-breakpoint-up(lg) {
+    //   display: flex;
+    //   align-items: center;
+    //   &::before {
+    //     content: '';
+    //     background-image: url('../images/marker-active.png');
+    //     background-repeat: no-repeat;
+    //     background-size: 100%;
+    //     display: block;
+    //     width: rem(29px);
+    //     height: rem(40px);
+    //   }
+    // }
+  }
+}

@@ -14,6 +14,8 @@ class WA_Video_Channel_Module extends WA_Module
         $this->loader->add_filter('rewrite_rules_array', $this, 'modify_videos_archive_rewrite_rules');
 
         $this->loader->add_filter('get_categories_from_videos', $this, 'get_categories_from_videos', 10, 1);
+
+        $this->loader->add_action('pre_get_posts', $this, 'include_videos_in_archive_pages', 10, 1);
     }
 
     public function get_embed_url_on_save($post_id)
@@ -69,6 +71,15 @@ class WA_Video_Channel_Module extends WA_Module
             return !empty($videos);
         });
 
+        wp_reset_postdata();
+
         return $videos_categories;
+    }
+
+    function include_videos_in_archive_pages($query)
+    {
+        if ($query->is_main_query() && !is_admin() && (is_category() || is_tag() && empty($query->query_vars['suppress_filters']))) {
+            $query->set('post_type', array('post', 'fp_video'));
+        }
     }
 }

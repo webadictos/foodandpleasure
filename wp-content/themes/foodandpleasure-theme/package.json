@@ -16,6 +16,7 @@
     "last 2 versions"
   ],
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.1",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "glightbox": "^3.2.0",

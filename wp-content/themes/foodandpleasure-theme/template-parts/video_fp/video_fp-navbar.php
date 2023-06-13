@@ -4,6 +4,9 @@ $categories = apply_filters('get_categories_from_videos', array());
 
 $queried_object = get_queried_object();
 
+$type = get_class($queried_object);
+
+
 if (is_array($categories) && count($categories) > 0) :
 ?>
 
@@ -12,7 +15,11 @@ if (is_array($categories) && count($categories) > 0) :
             <?php
             foreach ($categories as $category) :
                 $active = "";
-                if ($category->slug == $queried_object->slug) $active = "active";
+
+
+                if ($type === "WP_Term") {
+                    if ($category->slug == $queried_object->slug) $active = "active";
+                }
             ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo $active; ?>" href="/to-watch/category/<?php echo $category->slug; ?>/"><?php echo $category->name; ?></a>

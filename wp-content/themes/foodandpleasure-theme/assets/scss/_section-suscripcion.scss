@@ -3,6 +3,7 @@
   --section-title-color: var(--bs-tertiary);
   --section-title-font-size: #{fluid(18px, 33px)};
   --section-padding: #{rem(58px)} 0;
+  --section-margin: 0;
   .form-control {
     background-color: transparent;
     border: 0;

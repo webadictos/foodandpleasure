@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([["map-places"],{"./js/map-places.js":function(e,n,s){s.r(n),s.d(n,{PlacesMap:function(){return a}});const a=(()=>{const e=ThemeSetup.currentID||0;return{init:()=>{console.log("Inicializando mapa de lugares",e)}}})()}}]);

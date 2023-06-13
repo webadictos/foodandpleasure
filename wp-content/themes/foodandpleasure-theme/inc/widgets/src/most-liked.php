@@ -28,6 +28,8 @@ class wa_most_liked extends WP_Widget
     {
         global $post;
 
+        if (has_category('maps')) return;
+
         $title = apply_filters('widget_title', $instance['title']);
 
         // before and after widget arguments are defined by themes

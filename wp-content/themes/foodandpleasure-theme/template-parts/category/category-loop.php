@@ -7,6 +7,8 @@
 $_layoutArgs = array(
 	'items_layout_css' => 'article-item col-12 col-md-6 col-md-4 mb-3 mb-md-0',
 	'items_swiper' => false,
+	'sidebar' => true,
+	'change_item_layout' => true,
 	'items_config' => array(
 		'items_show_tags' => false,
 		'items_show_main_cat' => true,
@@ -35,13 +37,16 @@ if (have_posts()) :
 			 * If you want to overload this in a child theme then include a file
 			 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 			 */
-			$layoutArgs['items_layout_css'] = "archive-item";
+			if ($layoutArgs['change_item_layout']) {
+				$layoutArgs['items_layout_css'] = "archive-item";
+			}
 
-			if ($counter_articles < 2) {
+
+			if ($counter_articles < 2 && $layoutArgs['change_item_layout']) {
 				$layoutArgs['items_layout_css'] = "article-item-tres";
 			}
 
-			if ($counter_articles == 2) :
+			if ($counter_articles == 2 && $layoutArgs['sidebar']) :
 				get_template_part('template-parts/category/category', 'sidebar'); // Post format: content-index.php
 			endif;
 
