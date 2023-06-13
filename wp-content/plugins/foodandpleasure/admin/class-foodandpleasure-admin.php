@@ -274,37 +274,46 @@ class Foodandpleasure_Admin
 			'priority'   => 'high',
 			'show_names' => true, // Show field names on the left
 			'show_in_rest' => true,
-			'tabs' => array(
-				array(
-					'id'    => 'socio-tab-1',
-					'icon' => 'dashicons-index-card',
-					'title' => 'Información General',
-					'fields' => array(
-						$prefix . 'direccion',
-						$prefix . 'telefono',
-						$prefix . 'whatsapp',
-						$prefix . 'web',
-						$prefix . 'social_networks',
+			// 'tabs' => array(
+			// 	array(
+			// 		'id'    => 'socio-tab-1',
+			// 		'icon' => 'dashicons-index-card',
+			// 		'title' => 'Información General',
+			// 		'fields' => array(
+			// 			$prefix . 'direccion',
+			// 			$prefix . 'telefono',
+			// 			$prefix . 'whatsapp',
+			// 			$prefix . 'web',
+			// 			$prefix . 'social_networks',
 
-					),
-				),
-				array(
-					'id'    => 'socio-tab-2',
-					'icon' => 'dashicons-location',
-					'title' => 'Geolocalización',
-					'column' => true,
-					'fields' => array(
-						$prefix . 'geolocalizacion',
-					),
-				),
-			)
+			// 		),
+			// 	),
+			// 	array(
+			// 		'id'    => 'socio-tab-2',
+			// 		'icon' => 'dashicons-location',
+			// 		'title' => 'Geolocalización',
+			// 		'column' => true,
+			// 		'fields' => array(
+			// 			$prefix . 'geolocalizacion',
+			// 		),
+			// 	),
+			// )
 
 		));
 
 
 
 
-
+		$cmb_socio->add_field(array(
+			'name' => 'Geolocalización',
+			'desc' => 'Arrastra el marcador a la ubicación',
+			'id' => $prefix . 'geolocalizacion',
+			'type' => 'pw_map',
+			'split_values' => true, // Save latitude and longitude as two separate fields
+			'attributes'  => array(
+				'required'    => 'required',
+			),
+		));
 
 		$cmb_socio->add_field(array(
 			'name'    => "Dirección",
@@ -343,13 +352,7 @@ class Foodandpleasure_Admin
 			'repeatable' => true,
 		));
 
-		$cmb_socio->add_field(array(
-			'name' => 'Geolocalización',
-			'desc' => 'Arrastra el marcador a la ubicación',
-			'id' => $prefix . 'geolocalizacion',
-			'type' => 'pw_map',
-			'split_values' => true, // Save latitude and longitude as two separate fields
-		));
+
 
 
 
