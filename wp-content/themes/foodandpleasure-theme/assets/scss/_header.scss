@@ -122,6 +122,7 @@ body {
       text-decoration: none;
       font-family: var(--nav-font-family);
       text-transform: uppercase;
+      letter-spacing: rem(1px);
 
       background-image: linear-gradient(
         var(--bs-nav-link-color),
@@ -192,7 +193,8 @@ body {
     .collapse-search__form {
       display: flex;
       gap: 1rem;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
 
       @include media-breakpoint-up(md) {
         flex-direction: row;
@@ -200,8 +202,8 @@ body {
 
       .form-control {
         border: 0;
-        font-size: fluid(14px, 20px);
-        order: 2;
+        font-size: fluid(14px, 18px);
+        // order: 2;
         &:focus {
           box-shadow: unset;
         }
@@ -252,6 +254,7 @@ body {
 
   @include media-breakpoint-up(lg) {
     --hamburguer-fill: #000;
+    margin-left: 1rem;
   }
 
   &:active {
@@ -276,6 +279,7 @@ body {
   border: 0;
   @include media-breakpoint-up(lg) {
     --hamburguer-fill: #000;
+    margin-right: 1rem;
   }
   &:active {
     --hamburguer-fill: var(--hamburger-fill-active, var(--bs-gray));

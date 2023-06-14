@@ -14,11 +14,15 @@
   --header-info-color: #eeedeb;
   --entry-title-font-size: clamp(1.5625rem, 1.2vw + 1.3rem, 2.5rem);
   --header-info-meta-font-size: clamp(0.625rem, 0.5vw + 0.5rem, 0.875rem);
-  --header-info-padding: #{rem(48px)};
+  --header-info-padding: 2rem;
   --bs-link-color: var(--single-title-color);
   --bs-link-hover-color: currentColor;
 
   background-color: var(--single-entry-background, transparent);
+
+  @include media-breakpoint-up(lg) {
+    --header-info-padding: #{rem(48px)};
+  }
 
   .single-entry__header {
     @include media-breakpoint-up(lg) {
@@ -74,14 +78,15 @@
     margin-top: auto;
   }
   .single-entry__header-category {
-    font-size: fluid(10px, 17px);
+    font-size: fluid(12px, 19px);
     border-top: 1px solid #f0efed;
     border-bottom: 1px solid #f0efed;
     text-transform: uppercase;
     margin-bottom: 1rem;
+    padding: 0.7rem 0;
   }
   .single-entry__header-meta {
-    margin-bottom: auto;
+    margin-top: auto;
     font-family: var(--font-family-tertiary);
     font-size: fluid(10px, 17px);
     text-align: center;
@@ -166,9 +171,22 @@
       margin: 1.5rem 0;
     }
 
-    h5 {
-      font-size: 0.9em;
+    h2 {
+      font-size: fluid(18px, 26px);
     }
+    h3 {
+      font-size: fluid(16px, 24px);
+    }
+
+    h4 {
+      font-size: fluid(16px, 22px);
+    }
+    h5 {
+      font-size: fluid(16px, 18px);
+    }
+    // h5 {
+    //   font-size: 0.9em;
+    // }
 
     .wp-caption-text {
       text-align: right;

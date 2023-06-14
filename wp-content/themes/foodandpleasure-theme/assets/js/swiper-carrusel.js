@@ -18,6 +18,7 @@ const swiperCarrusel = (() => {
     */
 
     let swiperConfig = {
+      slideClass: 'swiper-slide',
       direction: 'horizontal',
       centeredSlides: true,
       loop: false,
@@ -72,6 +73,8 @@ const swiperCarrusel = (() => {
       320: {
         slidesPerView: itemConfig.items_visible_movil,
         spaceBetween: 0,
+        slidesOffsetBefore: 30,
+        slidesOffsetAfter: 30,
       },
       // when window width is >= 480px
       768: {

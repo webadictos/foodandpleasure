@@ -25,12 +25,12 @@
     width: 100%;
 
     img {
-      max-width: var(--footer-logo-max-width, rem(330px));
+      max-width: var(--footer-logo-max-width, rem(202px));
       height: auto;
       width: 100%;
-      // @include media-breakpoint-up(lg) {
-      //   // width: rem(281);
-      // }
+      @include media-breakpoint-up(lg) {
+        --footer-logo-max-width: #{rem(330px)};
+      }
     }
   }
 
@@ -61,6 +61,7 @@
       font-size: var(--footer-nav-font-size);
       text-transform: uppercase;
       text-decoration: none;
+      letter-spacing: rem(1px);
     }
   }
 
@@ -98,6 +99,11 @@
         text-align: center;
         justify-content: center;
         align-items: center;
+
+        &:hover {
+          color: #eeedeb;
+          background-color: var(--bs-secondary);
+        }
       }
     }
   }

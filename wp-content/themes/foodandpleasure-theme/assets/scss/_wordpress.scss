@@ -19,6 +19,17 @@
     font-size: 0.55rem;
     margin: 0;
   }
+  &.size-large,
+  &.size-full,
+  &.alignfull,
+  .size-large,
+  .size-full,
+  .alignfull {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
 }
 .aligncenter,
 div.aligncenter {

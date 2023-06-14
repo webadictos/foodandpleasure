@@ -6,13 +6,13 @@
 
 get_header();
 ?>
-<main class="site-main category-archive container" role="main">
+<main class="site-main category-archive " role="main">
 
 	<?php
 	if (have_posts()) :
 	?>
 
-		<header class="category-archive__header">
+		<header class="category-archive__header container-fluid">
 
 
 			<h1 class="category-archive__title bordered-title">
@@ -29,7 +29,7 @@ get_header();
 		</header>
 
 
-		<section class="archive-articles-container category-archive__items" data-loadmore-layout="grid" data-loadmore-item-layout="archive-item">
+		<section class="archive-articles-container category-archive__items container" data-loadmore-layout="grid" data-loadmore-item-layout="archive-item">
 			<div class="row"></div>
 			<?php
 			$_args = array(

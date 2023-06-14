@@ -7,7 +7,7 @@
   --article-item-grid-rows: auto;
   --article-item-background-color: var(--bs-tertiary);
   --article-item-color: #000;
-  --article-item-title-font-size: #{fluid(10px, 17px)};
+  --article-item-title-font-size: #{fluid(14px, 17px)};
   --article-item-title-color: #000;
   --article-item-meta-font-size: clamp(0.88rem, 0.3vw + 0.8rem, 1rem);
   --article-item-thumbnail-aspect-ratio: 1/1;
@@ -106,7 +106,7 @@
     display: flex;
     position: relative;
     background-color: var(--article-item-header-bg);
-    padding: 0 0.5rem;
+    padding: 0.5rem 0.5rem;
 
     flex-direction: column;
     justify-content: center;
@@ -144,8 +144,9 @@
     background-color: var(--bs-secondary);
     color: #fff;
     padding: 1em 1.5em;
-    font-size: fluid(8px, 12px);
+    font-size: fluid(10px, 12px);
     text-transform: uppercase;
+    letter-spacing: rem(1px);
   }
 
   .article-item__title {
@@ -218,14 +219,14 @@
   flex-direction: column;
   .article-item__header {
     align-items: center;
-    padding-bottom: 2rem;
-    padding-top: 2rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
     text-align: left;
     .article-item__meta {
       order: 2;
     }
     .article-item__title {
-      --article-item-font-size: clamp(1.25rem, 0.2vw + 1.2rem, 1.375rem);
+      --article-item-font-size: #{fluid(18px, 20px)}; // clamp(1.25rem, 0.2vw + 1.2rem, 1.375rem);
     }
   }
 
@@ -262,6 +263,7 @@
     padding: 0.2rem 0.5rem;
     font-size: var(--article-item-cat-font-size);
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 }
 
@@ -285,7 +287,7 @@
 
   --article-item-header-bg: var(--bs-secondary);
   --article-item-color: var(--bs-tertiary);
-  --article-item-title-font-size: #{fluid(14px, 21px)};
+  --article-item-title-font-size: #{fluid(14px, 19px)};
   --article-item-title-color: #fff;
   --bs-link-color: #fff;
   --bs-link-hover-color: #fff;
@@ -417,7 +419,7 @@
 
       .article-item__cat--badge {
         display: block;
-        font-size: fluid(10px, 17px);
+        font-size: fluid(10px, 15px);
       }
     }
   }

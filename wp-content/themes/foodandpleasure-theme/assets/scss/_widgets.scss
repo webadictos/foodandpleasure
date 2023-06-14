@@ -103,8 +103,8 @@
     margin-bottom: 1rem;
     &::before {
       content: '';
-      border-top: rem(1px) solid var(--borders-color);
-      flex: 0 0 rem(80px);
+      // border-top: rem(1px) solid var(--borders-color);
+      flex: 0 0 rem(45px);
       margin: 0 0 0 0;
     }
     a {

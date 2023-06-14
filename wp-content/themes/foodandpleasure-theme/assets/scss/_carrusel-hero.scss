@@ -1,6 +1,6 @@
 .section-carrusel {
   --section-padding: 0;
-  --section-margin: #{rem(40px)} 0;
+  --section-margin: #{rem(40px)} 0 0;
 
   .swiper {
     .swiper-button-next,
@@ -18,8 +18,13 @@
       transition-property: transform;
       transition-duration: 800ms;
       transform: scale(1);
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
+      // padding-left: 0.5rem;
+      // padding-right: 0.5rem;
+
+      @include media-breakpoint-down(sm) {
+        width: 82% !important;
+      }
+
       @include media-breakpoint-up(lg) {
         padding: 0;
       }
@@ -37,12 +42,12 @@
   &::after {
     content: '';
     width: 85%;
-    height: rem(2px);
+    height: rem(1px);
     background-color: #b7b9bb;
     display: block;
-    margin: 2rem auto;
+    margin: 2rem auto 0;
     @include media-breakpoint-up(lg) {
-      margin: 4rem auto;
+      margin: 4rem auto 0;
     }
   }
 }
@@ -65,14 +70,14 @@
     --bs-link-color: #fff;
     --bs-link-hover-color: #fff;
     padding: 1.5rem 2rem;
-    opacity: 0;
+    opacity: 0.1;
     transition: opacity 0.5s ease-in;
 
     .article-item__meta {
       text-align: center;
       order: 2;
       .article-item__cat {
-        margin: 1rem 0;
+        margin: 0 0 1rem;
         text-transform: uppercase;
         display: inline-block;
         font-size: fluid(10px, 16px);

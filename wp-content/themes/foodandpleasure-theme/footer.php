@@ -8,8 +8,7 @@ $logo_footer = wa_theme()->setting('general', 'logo_footer') ?? '';
 	<div class="container-fluid">
 		<div class="row justify-content-center">
 
-			<div class="col-12 footer__logo text-center my-5">
-
+			<div class="col-12 footer__logo text-center mt-4 mb-2 my-lg-5">
 				<a href="<?php echo esc_url(home_url()); ?>" title="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" rel="home">
 
 					<?php
