@@ -1,20 +1,15 @@
 <?php
 
-/**
- * Register the /wp-json/fancysquares/v1/vandelay_industries endpoint
- */
 
-/**
- * get vandelay_industries by location radius, closest within 10 files to what you entered
- */
-class BUSHMILLS_Locations_API extends WP_REST_Controller
+
+class WA_Locations_API extends WP_REST_Controller
 {
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->namespace = 'bushmills/v1';
+        $this->namespace = 'wa-theme/v1';
         $this->rest_base = 'get_locations';
     }
 
@@ -27,8 +22,8 @@ class BUSHMILLS_Locations_API extends WP_REST_Controller
         register_rest_route($this->namespace, '/' . $this->rest_base, array(
             array(
                 'methods'             => WP_REST_Server::READABLE,
-                'callback'            => array($this, 'bushmills_get_locations'),
-                'permission_callback' => array($this, 'bushmills_locations_permissions_check'),
+                'callback'            => array($this, 'get_locations'),
+                'permission_callback' => array($this, 'locations_permissions_check'),
                 'args'                => $this->get_collection_params(),
             )
         ));
@@ -37,7 +32,7 @@ class BUSHMILLS_Locations_API extends WP_REST_Controller
     /**
      * Retrieve vandelay industries locations
      */
-    public function bushmills_get_locations($request)
+    public function get_locations($request)
     {
 
         $lat1 = $request['lat'];
@@ -124,7 +119,7 @@ class BUSHMILLS_Locations_API extends WP_REST_Controller
     /**
      * Check if a given request has access to post items.
      */
-    public function bushmills_locations_permissions_check($request)
+    public function locations_permissions_check($request)
     {
         return true;
     }
@@ -211,6 +206,6 @@ class BUSHMILLS_Locations_API extends WP_REST_Controller
 
 
 add_action('rest_api_init', function () {
-    $controller = new BUSHMILLS_Locations_API();
+    $controller = new WA_Locations_API();
     $controller->register_routes();
 });

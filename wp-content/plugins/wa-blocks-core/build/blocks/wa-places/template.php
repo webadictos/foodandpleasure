@@ -69,7 +69,6 @@ ob_start();
                         <a class="wa-place-item__info--value wa-place-item__social--<?php echo $network['social']; ?>" href="<?php echo $network['url']; ?>" target="_blank" rel="noopener noreferrer">
                             <?php echo $social; ?>
                         </a>
-
                     <?php endforeach; ?>
                 </li>
             <?php endif; ?>

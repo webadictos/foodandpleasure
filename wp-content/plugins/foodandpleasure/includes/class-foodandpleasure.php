@@ -143,6 +143,12 @@ class Foodandpleasure
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/cmb2-social-field/cmb2-social-field.php';
 
 		$this->loader = new Foodandpleasure_Loader();
+
+
+		/**
+		 * Shared Count
+		 */
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/modules/sharedcount.php';
 	}
 
 	/**
