@@ -44,12 +44,12 @@ $layoutArgs = wp_parse_args($args, $_layoutArgs);
 
         <form action="https://mailing.technology/subscribe" method="POST" accept-charset="utf-8" target="_blank" class="mx-auto mx-lg-0 suscribe-form">
             <div class="row align-items-center justify-content-center g-0">
-                <div class="col-10 col-lg-6"><input type="text" class="form-control" name="name" id="name-widget" title="<?php echo __('Escribe tu nombre', 'wa-theme'); ?>" placeholder="<?php echo __('Nombre', 'wa-theme'); ?>" required></div>
+                <div class="col-10 col-lg-8"><input type="text" class="form-control" name="name" id="name-widget" title="<?php echo __('Escribe tu nombre', 'wa-theme'); ?>" placeholder="<?php echo __('Nombre', 'wa-theme'); ?>" required></div>
 
             </div>
 
             <div class="row align-items-center justify-content-center g-0">
-                <div class="col-10 col-lg-3 py-3"><input type="email" class="form-control" name="email" id="email-widget" title="<?php echo __('Ingresar correo electrónico', 'wa-theme'); ?>" placeholder="<?php echo __('Correo electrónico', 'wa-theme'); ?>" required></div>
+                <div class="col-10 col-lg-5 py-3"><input type="email" class="form-control" name="email" id="email-widget" title="<?php echo __('Ingresar correo electrónico', 'wa-theme'); ?>" placeholder="<?php echo __('Correo electrónico', 'wa-theme'); ?>" required></div>
                 <div class="col-10 col-lg-3 py-3 ps-lg-3"> <button type="submit" class="btn btn-primary btn-submit w-100" aria-label="<?php echo __('Suscribirme', 'wa-theme'); ?>"><?php echo __('Suscribirme', 'wa-theme'); ?></button></div>
             </div>
             <div style="display:none;"> <label for="hp">HP</label><br> <input type="text" name="hp" id="hpfooter"></div> <input type="hidden" name="list" value="9763Q2PoM82sa9Bo2763AxKenQ" /> <input type="hidden" name="subform" value="yes">

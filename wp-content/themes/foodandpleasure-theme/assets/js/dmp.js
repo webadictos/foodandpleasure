@@ -13,7 +13,7 @@ const DMP = (() => {
   const recordUser = async () => {
     setUserId();
     setSessions();
-    setVisitsIds(ThemeSetup.page.postID);
+    setVisitsIds(ThemeSetup.current.postID);
     setSections();
     //await setLocation();
     setUserProfile();
@@ -76,8 +76,8 @@ const DMP = (() => {
 
   const setSections = () => {
     if (typeof currentUser.sections === 'undefined') currentUser.sections = [];
-    if (Array.isArray(ThemeSetup.page.canal)) {
-      ThemeSetup.page.canal.forEach(canal => {
+    if (Array.isArray(ThemeSetup.current.canal)) {
+      ThemeSetup.current.canal.forEach(canal => {
         if (currentUser.sections.includes(canal) === false)
           currentUser.sections.push(canal);
       });

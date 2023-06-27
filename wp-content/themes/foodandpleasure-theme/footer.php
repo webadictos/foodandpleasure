@@ -98,7 +98,7 @@ $logo_footer = wa_theme()->setting('general', 'logo_footer') ?? '';
 			?>
 
 			<div class="col-12 col-md-6 footer__credits pt-2">
-				<p class="text-center text-md-end">MX © Food & Pleasure. Todos los derechos reservados.</p>
+				<p class="text-center text-md-end">© 2018-2023 Food and Pleasure. Todos los derechos reservados. The Cool Spot Group SL.</p>
 			</div>
 		</div>
 

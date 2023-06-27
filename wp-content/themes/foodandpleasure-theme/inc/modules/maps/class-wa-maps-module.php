@@ -162,9 +162,9 @@ class WA_Maps_Module extends WA_Module
                             ),
                             'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
                         ),
-                        'map-category' =>  array(
+                        'map_category' =>  array(
                             'name'           => 'Categoría de mapas',
-                            'id'             => 'map-category',
+                            'id'             => 'map_category',
                             'taxonomy'       => 'category', // Enter Taxonomy Slug
                             'type'           => 'taxonomy_radio_hierarchical',
                             // Optional :
@@ -190,7 +190,7 @@ class WA_Maps_Module extends WA_Module
     public function add_map_badge()
     {
 
-        $map_category = $this->config('map-category') ?? 0;
+        $map_category = $this->config('map_category') ?? 0;
 
         if ($map_category && has_category($map_category)) {
             $cat = get_category_by_slug($map_category);

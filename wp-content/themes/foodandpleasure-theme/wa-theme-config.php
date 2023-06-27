@@ -20,7 +20,7 @@ $GLOBALS['theme_modules'] = array(
     'infinite-scroll' => array(
         'active' => true,
         'config' => array(
-            'show_in_front' => false,
+            'show_in_front' => true,
         ),
     ),
     'ads' => array(

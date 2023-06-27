@@ -39,6 +39,7 @@ class WA_Ads_Module extends WA_Module
             'loadOnScroll' => '',
             'refreshAllAdUnits' => '',
             'timeToRefreshAllAdUnits' => '',
+            'refreshAllAdUnitsLimit' => '',
             'refreshAds' => '',
             'refresh_time' => '',
             'enableInRead' => '',
@@ -64,11 +65,14 @@ class WA_Ads_Module extends WA_Module
     {
         if ($this->config('enabled')) {
             $this->loader->add_filter('wa_theme_set_options_page', $this, 'add_slots_page', 11, 1);
-            $this->loader->add_filter('wa_theme_set_metaboxes', $this, 'add_metaboxes', 10, 1);
+            $this->loader->add_filter('wa_theme_set_metaboxes', $this, 'add_metaboxes', 10, 2);
             $this->loader->add_filter("wa_ads_front_settings", $this, 'add_size_mappings_to_front', 10, 1);
+            $this->loader->add_filter('wa_article_config', $this, 'article_config_filter', 10, 2);
+
             $this->ads_insertions = new WA_Ads_Insertions($this);
         }
     }
+
 
     public function add_settings($optionsFields)
     {
@@ -148,6 +152,17 @@ class WA_Ads_Module extends WA_Module
                         'id'   => 'timeToRefreshAllAdUnits',
                         'type' => 'text',
                         'default' => 60,
+                        'attributes' => array(
+                            'type' => 'number',
+                            'pattern' => '\d*',
+                        ),
+                    ),
+                    'refreshAllAdUnitsLimit' => array(
+                        'name' => 'Límite de recargas',
+                        'desc' => 'Indica hasta cuantas veces se refrescarán todos los bloques. 0 significa que no tiene límite.',
+                        'id'   => 'refreshAllAdUnitsLimit',
+                        'type' => 'text',
+                        'default' => 0,
                         'attributes' => array(
                             'type' => 'number',
                             'pattern' => '\d*',
@@ -233,19 +248,18 @@ class WA_Ads_Module extends WA_Module
                             0 => __('No', 'cmb2'),
                             1   => __('Si', 'cmb2'),
                         ),
-                        'inReadLimit' => array(
-                            'name' => 'Máximo de banners inRead',
-                            'desc' => 'Indica el número máximo de banners inRead se podrán insertar en un texto',
-                            'id'   => 'inReadLimit',
-                            'type' => 'text',
-                            'default' => 3,
-                            'attributes' => array(
-                                'type' => 'number',
-                                'pattern' => '\d*',
-                            ),
-                        )
                     ),
-
+                    'inReadLimit' => array(
+                        'name' => 'Máximo de banners inRead',
+                        'desc' => 'Indica el número máximo de banners inRead se podrán insertar en un texto',
+                        'id'   => 'inReadLimit',
+                        'type' => 'text',
+                        'default' => 3,
+                        'attributes' => array(
+                            'type' => 'number',
+                            'pattern' => '\d*',
+                        ),
+                    ),
                     'multiple_inread_slot' => array(
                         'name'    => 'Bloque que mostrará los siguientes bloques inread',
                         'desc'    => 'Selecciona el bloque que se mostrará en el espacio inread',
@@ -591,19 +605,25 @@ class WA_Ads_Module extends WA_Module
         return $_ads_slots;
     }
 
-    public function add_metaboxes($metaboxes)
+    public function add_metaboxes($metaboxes, $prefix)
     {
 
-        $id = $this->prefix . 'ads_metabox';
-        $tax_id = $this->prefix . 'ads_tax_metabox';
+        $id = $prefix . 'ads_metabox';
+        $tax_id = $prefix . 'ads_tax_metabox';
 
 
 
         $ads_fields = array(
-            $this->prefix . 'inread_paragraph' => array(
+            $prefix . 'disable_ads' => array(
+                'name' => 'Deshabilitar publicidad',
+                'id'   => $prefix . 'disable_ads',
+                'type' => 'checkbox',
+                'desc' => "Marque si desea desactivar toda la publicidad en la vista",
+            ),
+            $prefix . 'inread_paragraph' => array(
                 'name' => 'Posición del banner inRead',
                 'desc' => 'Párrafo donde aparecerá el banner inRead',
-                'id'   => $this->prefix . 'inread_paragraph',
+                'id'   => $prefix . 'inread_paragraph',
                 'type' => 'text',
                 'default' => '3',
                 'attributes' => array(
@@ -611,16 +631,17 @@ class WA_Ads_Module extends WA_Module
                     'pattern' => '\d*',
                 ),
             ),
-            $this->prefix . 'hide_adunits' => array(
+            $prefix . 'hide_adunits' => array(
                 'name' => 'Desactivar anuncios',
-                'id'   => $this->prefix . 'hide_adunits',
+                'id'   => $prefix . 'hide_adunits',
                 'type' => 'checkbox',
                 'desc' => "Marque si desea desactivar bloques de anuncios en la vista",
+
             ),
-            $this->prefix . 'adunits' => array(
+            $prefix . 'adunits' => array(
                 'name'    => 'Desactivar Bloques de anuncios',
                 'desc'    => 'Marque los bloques a desactivar',
-                'id'      => $this->prefix . 'adunits',
+                'id'      => $prefix . 'adunits',
                 'type'    => 'multicheck',
                 'options_cb' => array($this, 'get_ad_slots_options'),
                 // 'options' => array(
@@ -634,7 +655,7 @@ class WA_Ads_Module extends WA_Module
                 //     'ros-b-b' => 'Box Banner B',
                 // ),
                 'attributes'    => array(
-                    'data-conditional-id'     => $this->prefix . 'hide_adunits',
+                    'data-conditional-id'     => $prefix . 'hide_adunits',
                     'data-conditional-value'  => 'on',
                 ),
             )
@@ -643,21 +664,27 @@ class WA_Ads_Module extends WA_Module
 
 
         $ads_tax_fields = array(
-            $this->prefix . 'opciones_ads' => array(
+            $prefix . 'opciones_ads' => array(
                 'name' => 'Opciones de Publicidad',
                 'type' => 'title',
-                'id'   => $this->prefix . 'opciones_ads'
+                'id'   => $prefix . 'opciones_ads'
             ),
-            $this->prefix . 'hide_adunits' => array(
+            $prefix . 'disable_ads' => array(
+                'name' => 'Deshabilitar publicidad',
+                'id'   => $prefix . 'disable_ads',
+                'type' => 'checkbox',
+                'desc' => "Marque si desea desactivar toda la publicidad en la vista",
+            ),
+            $prefix . 'hide_adunits' => array(
                 'name' => 'Desactivar anuncios',
-                'id'   => $this->prefix . 'hide_adunits',
+                'id'   => $prefix . 'hide_adunits',
                 'type' => 'checkbox',
                 'desc' => "Marque si desea desactivar bloques de anuncios en la vista",
             ),
-            $this->prefix . 'adunits' => array(
+            $prefix . 'adunits' => array(
                 'name'    => 'Desactivar Bloques de anuncios',
                 'desc'    => 'Marque los bloques a desactivar',
-                'id'      => $this->prefix . 'adunits',
+                'id'      => $prefix . 'adunits',
                 'type'    => 'multicheck',
                 'options_cb' => array($this, 'get_ad_slots_options'),
 
@@ -672,7 +699,7 @@ class WA_Ads_Module extends WA_Module
                 //     'ros-b-b' => 'Box Banner B',
                 // ),
                 'attributes'    => array(
-                    'data-conditional-id'     => $this->prefix . 'hide_adunits',
+                    'data-conditional-id'     => $prefix . 'hide_adunits',
                     'data-conditional-value'  => 'on',
                 ),
             )
@@ -711,6 +738,31 @@ class WA_Ads_Module extends WA_Module
 
 
 
+
+    public function article_config_filter($current_config, $post_id)
+    {
+        $disable_ads = get_post_meta($post_id, 'wa_meta_disable_ads', true) ?? '';
+        $hide_ads = get_post_meta($post_id, 'wa_meta_hide_adunits', true) ?? '';
+        $inread_paragraph = get_post_meta($post_id, 'wa_meta_inread_paragraph', true) ?? 3;
+
+        $current_config['disable_ads'] = ($disable_ads === "on") ? true : false;
+
+        if (!$current_config['disable_ads']) {
+            $current_config['inread_paragraph'] = intval($inread_paragraph);
+            if ($hide_ads === "on") {
+                $exclude_adunits = get_post_meta($post_id, 'wa_meta_adunits', true) ?? array();
+
+
+                if (is_array($exclude_adunits) && count($exclude_adunits) > 0) {
+                    $current_config['exclude_adunits'] = $exclude_adunits;
+                }
+            }
+        }
+
+        return $current_config;
+    }
+
+
     public function get_front_settings($settings)
     {
 
@@ -722,6 +774,29 @@ class WA_Ads_Module extends WA_Module
             $settings['enableInRead'] = filter_var($settings['enableInRead'], FILTER_VALIDATE_BOOLEAN) ?? false;
             $settings['enableMultipleInRead'] = filter_var($settings['enableMultipleInRead'], FILTER_VALIDATE_BOOLEAN) ?? false;
             $settings['loadOnScroll'] = filter_var($settings['loadOnScroll'], FILTER_VALIDATE_BOOLEAN) ?? false;
+            $settings['refresh_time'] = filter_var($settings['refresh_time'], FILTER_VALIDATE_INT) ?? 30;
+            $settings['timeToRefreshAllAdUnits'] = filter_var($settings['timeToRefreshAllAdUnits'], FILTER_VALIDATE_INT) ?? 60;
+            $settings['refreshAllAdUnitsLimit'] = filter_var($settings['refreshAllAdUnitsLimit'], FILTER_VALIDATE_INT) ?? 0;
+
+            $settings['inReadParagraph'] = filter_var($settings['inReadParagraph'], FILTER_VALIDATE_INT) ?? 3;
+            $settings['inReadLimit'] = filter_var($settings['inReadLimit'], FILTER_VALIDATE_INT) ?? 5;
+
+            if (!empty($settings['inread_slot'])) {
+                $inread_slot = array();
+                $inread_slot['code'] = $this->ad_slot($settings['inread_slot'])['code'] ?? 'inread';
+                $inread_slot['size_mapping'] = $this->ad_slot($settings['inread_slot'])['size_mapping'] ?? 'inread';
+                $inread_slot['refresh'] = filter_var($this->ad_slot($settings['inread_slot'])['refresh'], FILTER_VALIDATE_BOOLEAN) ?? false;
+
+                $settings['inread_slot'] = $inread_slot;
+            }
+
+            if (!empty($settings['multiple_inread_slot'])) {
+                $multiple_inread_slot = array();
+                $multiple_inread_slot['code'] = $this->ad_slot($settings['multiple_inread_slot'])['code'] ?? 'inread';
+                $multiple_inread_slot['size_mapping'] = $this->ad_slot($settings['multiple_inread_slot'])['size_mapping'] ?? 'inread-multiple';
+                $multiple_inread_slot['refresh'] = filter_var($this->ad_slot($settings['multiple_inread_slot'])['refresh'], FILTER_VALIDATE_BOOLEAN) ?? false;
+                $settings['multiple_inread_slot'] = $multiple_inread_slot;
+            }
         } else {
             $settings = array(
                 'enabled' => false,

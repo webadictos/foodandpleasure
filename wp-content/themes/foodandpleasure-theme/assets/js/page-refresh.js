@@ -3,7 +3,7 @@ const PageRefresh = (() => {
   const canRefresh =
     typeof ThemeSetup.canRefresh === 'undefined' ? true : ThemeSetup.canRefresh;
   const timeToRefresh = ThemeSetup.timeToRefresh || 90;
-  const counterID = 'refreshCounter_' + ThemeSetup.page.postID;
+  const counterID = 'refreshCounter_' + ThemeSetup.current.postID;
   let counter;
 
   const init = () => {

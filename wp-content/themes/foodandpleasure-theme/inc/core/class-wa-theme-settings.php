@@ -136,6 +136,12 @@ class WA_Theme_Settings
         unset($_general_settings['logo_footer_id']);
         unset($_general_settings['logo_dark_id']);
 
+
+        if (is_user_logged_in() || !$_general_settings['refreshPage']) {
+            $_general_settings['refreshPage'] = false;
+            unset($_general_settings['refreshTime']);
+        }
+
         return $_general_settings;
     }
 
@@ -148,7 +154,8 @@ class WA_Theme_Settings
 
             if ($this->modules->module($module_name) && $this->modules->module($module_name)->setting('show_in_front')) {
                 $module_settings = $this->modules->module($module_name)->get_front_settings($this->get($module_name));
-                $setup[$module_name] = $module_settings;
+                $module_json_name = str_replace("-", "_", $module_name);
+                $setup[$module_json_name] = $module_settings;
             }
         }
 

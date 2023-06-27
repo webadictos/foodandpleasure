@@ -43,6 +43,7 @@ export {
   is_single,
   is_archive,
   is_home,
+  is_blog,
   is_singular,
   is_category,
   is_tag,

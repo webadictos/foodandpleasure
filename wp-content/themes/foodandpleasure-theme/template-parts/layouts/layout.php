@@ -47,6 +47,7 @@ $layoutArgs = wp_parse_args($args, $_layoutArgs);
 
 
 $_args = array(
+    'post_type' => array('post', 'fp_video'),
     'posts_per_page' => 5,
     'paged' => 1,
     'no_found_rows' => true,

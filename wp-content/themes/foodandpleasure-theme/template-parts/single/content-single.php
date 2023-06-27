@@ -12,7 +12,7 @@ $primary_category = apply_filters('get_primary_category', $primary_category, get
 
 
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class('single-entry'); ?> <?php function_exists('wa_article_attributes') ? wa_article_attributes() : ''; ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('post single-entry'); ?> <?php function_exists('wa_article_attributes') ? wa_article_attributes() : ''; ?>>
     <header class="entry-header single-entry__header">
         <?php
 
@@ -94,13 +94,6 @@ $primary_category = apply_filters('get_primary_category', $primary_category, get
 
     </div><!-- /.entry-content -->
     <footer class="single-entry__footer">
-        <!-- <div id="wa_maps_widget-2" class="widget wa_maps_widget">
-            <h3 class="widget-title">Casa Pueblo: El hotel más ‘aesthetic’ para hospedarse en Tulum</h3>
-            <div id="map-widget-131293" class="map-widget" data-map-id="131293">
-                <div class="map-container"></div>
-                <div class="map-places-container"></div>
-            </div>
-        </div> -->
 
     </footer>
 </article><!-- /#post-<?php the_ID(); ?> -->

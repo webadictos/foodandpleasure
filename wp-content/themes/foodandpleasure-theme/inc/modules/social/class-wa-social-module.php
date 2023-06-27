@@ -66,6 +66,22 @@ class WA_Social_Module extends WA_Module
                         'desc' => '',
                         'id'   => 'youtube_channel',
                         'type' => 'text',
+                    ),
+                    'instagram_category' =>  array(
+                        'name'           => 'Instagram Picks',
+                        'id'             => 'instagram_category',
+                        'taxonomy'       => 'category', // Enter Taxonomy Slug
+                        'type'           => 'taxonomy_radio_hierarchical',
+                        // Optional :
+                        'text'           => array(
+                            'no_terms_text' => 'Sorry, no terms could be found.' // Change default text. Default: "No terms"
+                        ),
+                        'remove_default' => 'false', // Removes the default metabox provided by WP core.
+                        // Optionally override the args sent to the WordPress get_terms function.
+                        'query_args' => array(
+                            // 'orderby' => 'slug',
+                            // 'hide_empty' => true,
+                        ),
                     )
                 )),
 
@@ -214,12 +230,29 @@ class WA_Social_Module extends WA_Module
     public function get_instagram_token()
     {
 
-        if (!isset($this->module_config['igtoken'])) return;
+        if (!isset($this->module_config['igtoken'])) return "";
 
 
         $ig_token = "";
+        $first_igtoken = "";
+
         if ($this->module_config['igtoken'] !== "") {
-            if (false === ($ig_token = get_transient("wa_ig_tokenv2"))) {
+
+            if (false === ($first_igtoken = get_transient("wa_ig_last_token"))) {
+
+                $first_igtoken = trim($this->module_config['igtoken']);
+
+                if ($this->module_config['igtoken'] !== "") {
+                    set_transient('wa_ig_last_token', $first_igtoken, 10 * YEAR_IN_SECONDS); // 30 Minutos
+                }
+            }
+
+            if (trim($first_igtoken) !== trim($this->module_config['igtoken'])) {
+                set_transient('wa_ig_last_token', $this->module_config['igtoken'], 10 * YEAR_IN_SECONDS); // 30 Minutos
+                delete_transient('wa_ig_tokenv3');
+            }
+
+            if (false === ($ig_token = get_transient("wa_ig_tokenv3"))) {
 
                 $ig_token = trim($this->module_config['igtoken']);
 
@@ -227,7 +260,7 @@ class WA_Social_Module extends WA_Module
 
 
                 if ($ig_token !== "") {
-                    set_transient('wa_ig_tokenv2', $ig_token, MONTH_IN_SECONDS); // 30 Minutos
+                    set_transient('wa_ig_tokenv3', $ig_token, MONTH_IN_SECONDS); // 30 Minutos
                 }
             }
         }
@@ -241,6 +274,7 @@ class WA_Social_Module extends WA_Module
     {
 
         unset($settings['social_networks']);
+        unset($settings['instagram_category']);
 
         $settings['igtoken'] = $this->get_instagram_token();
 

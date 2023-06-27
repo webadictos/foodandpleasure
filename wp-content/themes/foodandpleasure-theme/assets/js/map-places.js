@@ -16,30 +16,32 @@ const PlacesMap = (() => {
    * THEME VARS
    */
 
-  const themeUri = ThemeSetupDos.themeUri;
+  const themeUri = WA_ThemeSetup.themeUri;
   const iconMarker =
-    ThemeSetupDos.maps.marker || `${themeUri}/assets/images/marker.png`;
+    WA_ThemeSetup.maps.marker || `${themeUri}/assets/images/marker.png`;
   const iconMarkerActive =
-    ThemeSetupDos.maps.markerActive || `${themeUri}/assets/images/marker.png`;
-  const mapApiKey = ThemeSetupDos.maps.api || '';
-  let mapCenter = ThemeSetupDos.maps.center || {
+    WA_ThemeSetup.maps.markerActive || `${themeUri}/assets/images/marker.png`;
+  const mapApiKey = WA_ThemeSetup.maps.api || '';
+  let mapCenter = WA_ThemeSetup.maps.center || {
     lat: 19.4326018,
     lng: -99.1332049,
   };
-  const initialZoom = parseInt(ThemeSetupDos.maps.zoom) || 13;
+  const initialZoom = parseInt(WA_ThemeSetup.maps.zoom) || 13;
+
+  const mapCategory = WA_ThemeSetup.maps.map_category ?? 'maps';
 
   /**
    * Methods
    */
   const init = () => {
-    currentID = ThemeSetupDos.currentID ? ThemeSetupDos.currentID : 0;
+    currentID = WA_ThemeSetup.currentID ? WA_ThemeSetup.currentID : 0;
     initMapPlaces(currentID);
 
     document.querySelector('body').addEventListener('is.post-load', e => {
       if (e.detail.postID) {
         if (e.detail.infinitescroll) {
-          isInfiniteScroll = true;
-          currentPostId = e.detail.postID;
+          // isInfiniteScroll = true;
+          //currentPostId = e.detail.postID;
         }
         initMapPlaces(e.detail.postID);
       }
@@ -53,7 +55,10 @@ const PlacesMap = (() => {
     //   ? currentContainer.querySelector('.single-widget-area')
     //   : null;
 
-    if (currentContainer) {
+    if (
+      currentContainer &&
+      currentContainer.classList.contains(`category-${mapCategory}`)
+    ) {
       const title = currentContainer.querySelector('h1').innerText;
       const places = getPlaces(currentContainer);
       if ([...places].length > 0) {

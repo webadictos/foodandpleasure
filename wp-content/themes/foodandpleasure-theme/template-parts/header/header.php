@@ -49,8 +49,8 @@ $logo_dark = wa_theme()->setting('general', 'logo_dark') ?? '';
                 <?php
                 if (!empty($logo) && !empty($logo_dark)) :
                 ?>
-                    <img class="main-logo d-none d-lg-inline-block" src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="271" height="46" loading="eager" fetchpriority="high" />
-                    <img class="main-logo main-logo__dark d-lg-none" src="<?php echo esc_url($logo_dark); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="271" height="46" loading="eager" fetchpriority="high" />
+                    <img class="main-logo d-none d-xl-inline-block" src="<?php echo esc_url($logo); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="271" height="46" loading="eager" fetchpriority="high" />
+                    <img class="main-logo main-logo__dark d-xl-none" src="<?php echo esc_url($logo_dark); ?>" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>" width="271" height="46" loading="eager" fetchpriority="high" />
 
                 <?php
                 else :

@@ -8,6 +8,13 @@ const Site = (() => {
 
   const init = () => {
     checkExternalLinks();
+
+    import(
+      /* webpackChunkName: "dropdown-hover" */
+      /* webpackMode: "lazy" */
+      './dropdown-hover'
+    );
+
     import(
       /* webpackChunkName: "page-refresh" */
       /* webpackMode: "lazy" */
@@ -143,7 +150,7 @@ const Site = (() => {
     }
 
     if (
-      ThemeSetup.loadmore &&
+      ThemeSetup.infinite_scroll &&
       document.querySelector('.archive-articles-container')
     ) {
       import(

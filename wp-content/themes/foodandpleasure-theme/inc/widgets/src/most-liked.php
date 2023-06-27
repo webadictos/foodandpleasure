@@ -32,45 +32,66 @@ class wa_most_liked extends WP_Widget
 
         $title = apply_filters('widget_title', $instance['title']);
 
-        // before and after widget arguments are defined by themes
-        echo $args['before_widget'];
-        if (!empty($title))
-            echo $args['before_title'] . $title . $args['after_title'];
+        $number_of_items = 3;
 
-        // This is where you run the code and display the output
-?>
-        <?php
-        $favorites = WA_Theme_Manager::get_opciones('foodandpleasure_settings', 'foodandp_our_favorites');
+        $_args = array();
 
+        if (is_single()) {
+            // Obtener la categoría del post actual
+            $categories = get_the_category(get_the_ID());
+            $category_ids = wp_list_pluck($categories, 'term_id');
 
+            // Configurar los argumentos de la consulta para obtener los posts con más wa_total_shares en la misma categoría
+            $_args = array(
+                'post_type' => 'post',
+                'post_status' => 'publish',
+                'posts_per_page' => $number_of_items,
+                'meta_key' => 'wa_total_shares',
+                'orderby' => 'meta_value_num',
+                'order' => 'DESC',
+                'category__in' => $category_ids,
+                'post__not_in' => array(get_the_ID()),
+            );
+        } elseif (is_category()) {
+            // Obtener la categoría actual
+            $current_category = get_queried_object();
 
-        if (is_array($favorites) && count($favorites) > 0) :
+            if ($current_category instanceof WP_Term) {
+                // Configurar los argumentos de la consulta para obtener los posts con más wa_total_shares en la categoría actual
+                $_args = array(
+                    'post_type' => 'post',
+                    'post_status' => 'publish',
+                    'posts_per_page' => $number_of_items,
+                    'meta_key' => 'wa_total_shares',
+                    'orderby' => 'meta_value_num',
+                    'order' => 'DESC',
+                    'category__in' => array($current_category->term_id),
+                );
+            }
+        }
 
-        ?>
-            <ul>
-                <?php
-                $i = 1;
-                foreach ($favorites as $post) :
-                    $order = "";
-                    if ($i == 4) break;
-                    setup_postdata($post);
+        $query = new WP_Query($_args);
 
-                ?>
+        // Mostrar el widget solo si hay posts en la misma categoría
+        if ($query->have_posts()) {
+            // Mostrar el título del widget
+            echo $args['before_widget'];
+            if (!empty($title))
+                echo $args['before_title'] . $title . $args['after_title'];
 
-                    <li><a href="<?php the_permalink() ?>" title="<?php echo get_the_title() ?>"><?php echo get_the_title(); ?></a></li>
+            // Mostrar los posts
+            echo '<ul>';
+            while ($query->have_posts()) {
+                $query->the_post();
+                echo '<li><a href="' . get_permalink() . '" title="' . get_the_title() . '">' . get_the_title() . '</a></li>';
+            }
+            echo '</ul>';
 
-                <?php
-                    $i++;
-                endforeach;
-                wp_reset_postdata();
+            echo $args['after_widget'];
 
-                ?>
-            </ul>
-        <?php
-        endif;
-        ?>
-    <?php
-        echo $args['after_widget'];
+            // Restaurar la configuración original de la consulta de WordPress
+            wp_reset_query();
+        }
     }
 
     // Widget Backend 
@@ -82,7 +103,7 @@ class wa_most_liked extends WP_Widget
             $title = __('Título', 'wpb_widget_domain');
         }
         // Widget admin form
-    ?>
+?>
         <p>
             <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Titulo:'); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />

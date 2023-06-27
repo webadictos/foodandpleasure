@@ -288,8 +288,9 @@ class WA_Theme_Setup
 
         echo "<script type='text/javascript'>\n";
         echo "/* <![CDATA[ */\n";
-        echo "const ThemeSetupDos =" . (json_encode($postSetup)) . ";\n";
-        echo "window.ThemeSetupDos = ThemeSetupDos;\n";
+        echo "const WA_ThemeSetup =" . (json_encode($postSetup)) . ";\n";
+        echo "window.WA_ThemeSetup = WA_ThemeSetup;\n";
+        echo "window.ThemeSetup = WA_ThemeSetup;\n";
         echo "/* ]]> */\n";
         echo "</script>\n";
     }

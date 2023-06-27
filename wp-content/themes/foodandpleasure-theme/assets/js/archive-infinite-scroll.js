@@ -1,10 +1,11 @@
 const WPArchiveInfiniteScroll = (() => {
   // Basic Configuration
   const config = {
-    api: ThemeSetup.ajaxurl,
-    max_page: ThemeSetup.loadmore.max_page || 1, // Number of posts to load per page
-    query: ThemeSetup.loadmore.posts,
-    page: ThemeSetup.loadmore.current_page,
+    // api: WA_ThemeSetup.ajaxurl,
+    api: `${window.location.protocol}//${window.location.host}/wp-json/wa-theme/v1/archive`,
+    max_page: WA_ThemeSetup.infinite_scroll.max_page || 1, // Number of posts to load per page
+    query: WA_ThemeSetup.infinite_scroll.query,
+    page: WA_ThemeSetup.infinite_scroll.current_page,
     articlesContainer: '.archive-articles-container',
   };
 
@@ -34,7 +35,7 @@ const WPArchiveInfiniteScroll = (() => {
       const article = fetchArticle().then(article => {
         const fragment = document
           .createRange()
-          .createContextualFragment(article.data);
+          .createContextualFragment(article.content_rendered);
 
         articlesContainer.appendChild(fragment);
 
@@ -52,7 +53,7 @@ const WPArchiveInfiniteScroll = (() => {
     const itemLayout = articlesContainer.dataset.loadmoreItemLayout || '';
 
     const data = {
-      action: 'loadmore_archive',
+      //  action: 'loadmore_archive',
       query: config.query,
       page: config.page,
       item_layout: itemLayout,

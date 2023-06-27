@@ -416,8 +416,8 @@ function wa_themeSetupScript()
 
     echo "<script type='text/javascript'>\n";
     echo "/* <![CDATA[ */\n";
-    echo "const ThemeSetup =" . (json_encode($postSetup)) . ";\n";
-    echo "window.ThemeSetup = ThemeSetup;\n";
+    echo "const ThemeSetupOld =" . (json_encode($postSetup)) . ";\n";
+    echo "window.ThemeSetupOld = ThemeSetupOld;\n";
     echo "/* ]]> */\n";
     echo "</script>\n";
 

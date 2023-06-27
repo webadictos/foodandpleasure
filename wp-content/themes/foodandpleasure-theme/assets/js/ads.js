@@ -11,29 +11,36 @@ import {
 
 const waGoogleAdManagerModule = (function () {
   let adUnits = [];
-  let slots = [];
+  let adSlots = [];
   let previousPostId = 0;
   let adsLoaded = false;
   let isInfiniteScroll = false;
   let currentPostId = 0;
   const setup = {
-    network: ThemeSetup.ads.network || '76814929000',
-    slotPrefix: ThemeSetup.ads.prefix || '',
-    refresh:
-      typeof ThemeSetup.ads.refresh === 'undefined'
-        ? true
-        : ThemeSetup.ads.refresh,
-    refreshTime: ThemeSetup.ads.refresh_time || 30,
-    loadOnScroll:
-      typeof ThemeSetup.ads.loadOnScroll === 'undefined'
-        ? true
-        : ThemeSetup.ads.loadOnScroll,
-    enableInRead:
-      typeof ThemeSetup.ads.enableInRead === 'undefined'
-        ? true
-        : ThemeSetup.ads.enableInRead,
-    inReadParagraph: ThemeSetup.ads.inReadParagraph || 3,
-    inReadLimit: ThemeSetup.ads.inReadLimit || 3,
+    network: WA_ThemeSetup.ads.network ?? '76814929000',
+    slotPrefix: WA_ThemeSetup.ads.prefix ?? '',
+    refresh: WA_ThemeSetup.ads.refreshAds ?? false,
+    refreshTime: parseInt(WA_ThemeSetup.ads.refresh_time) || 30,
+    refreshAllAdUnits: WA_ThemeSetup.ads.refreshAllAdUnits ?? false,
+    timeToRefreshAllAdUnits:
+      parseInt(WA_ThemeSetup.ads.timeToRefreshAllAdUnits) || 60,
+    refreshAllAdUnitsLimit:
+      parseInt(WA_ThemeSetup.ads.refreshAllAdUnitsLimit) || 5,
+    loadOnScroll: WA_ThemeSetup.ads.loadOnScroll ?? false,
+    enableInRead: WA_ThemeSetup.ads.enableInRead ?? false,
+    inReadParagraph: WA_ThemeSetup.ads.inReadParagraph ?? 3,
+    inReadLimit: WA_ThemeSetup.ads.inReadLimit ?? 3,
+    inReadSlot: WA_ThemeSetup.ads.inread_slot ?? {
+      code: 'inread',
+      size_mapping: 'inread',
+      refesh: true,
+    },
+    multipleInreadSlot: WA_ThemeSetup.ads.multiple_inread_slot ?? {
+      code: 'inread-multiple',
+      size_mapping: 'inread_multiple',
+      refesh: true,
+    },
+
     mappings: {
       superbanner: {
         sizes: [
@@ -119,12 +126,15 @@ const waGoogleAdManagerModule = (function () {
         mobile: [[1, 1], [300, 250], [300, 600], 'fluid'],
         all: [[1, 1], [300, 250], 'fluid'],
       },
-      inreadbox: {
+      inread_multiple: {
         sizes: [
           [300, 250],
           [300, 600],
         ],
-        desktop: [],
+        desktop: [
+          [300, 250],
+          [300, 600],
+        ],
         mobile: [
           [300, 250],
           [300, 600],
@@ -151,15 +161,8 @@ const waGoogleAdManagerModule = (function () {
   };
 
   const initialize = () => {
-    //Create Event Listener for Infinite Scroll
     var bodyEl = document.querySelector('body');
     if (bodyEl) {
-      // var bodyEl = document.querySelector( 'body' );
-      // const eventAwesome = new CustomEvent('is.post-load', {
-      //   detail: { postID:76716 }
-      // });
-      // bodyEl.dispatchEvent(eventAwesome);
-
       bodyEl.addEventListener('is.post-load', e => {
         // console.log(e);
         if (e.detail.postID) {
@@ -167,14 +170,18 @@ const waGoogleAdManagerModule = (function () {
             isInfiniteScroll = true;
             currentPostId = e.detail.postID;
           }
-          createInReadBlocks(e.detail.postID, e.detail.infinitescroll);
+          if (setup.enableInRead) {
+            createInReadBlocks(e.detail.postID, e.detail.infinitescroll);
+          }
           renderBlocks();
         }
       });
     }
 
+    adSlots['all'] = [];
+
     if (is_single()) {
-      if (setup.enableInRead) createInReadBlocks(ThemeSetup.page.postID);
+      if (setup.enableInRead) createInReadBlocks(WA_ThemeSetup.current.postID);
     }
 
     renderBlocks();
@@ -200,6 +207,23 @@ const waGoogleAdManagerModule = (function () {
           });
       });
     }
+
+    if (setup.refreshAllAdUnits) {
+      let refreshCounter = 0;
+      let refreshAllSlotsInterval = window.setInterval(() => {
+        refreshAllSlots();
+        refreshCounter++;
+
+        // console.log(refreshCounter);
+
+        if (setup.refreshAllAdUnitsLimit > 0) {
+          if (refreshCounter === setup.refreshAllAdUnitsLimit) {
+            // console.log('Clear interval');
+            clearInterval(refreshAllSlotsInterval);
+          }
+        }
+      }, setup.timeToRefreshAllAdUnits * 1000);
+    }
     //console.log('Rendering');
     if (setup.loadOnScroll) {
       loadOnScroll();
@@ -208,7 +232,7 @@ const waGoogleAdManagerModule = (function () {
     }
   };
 
-  const isSlotDisabled = (slot, exclude_adunits) =>
+  const isSlotDisabled = (slot, exclude_adunits = []) =>
     exclude_adunits.includes(slot);
 
   const createInReadBlocks = (postID, infinitescroll = false) => {
@@ -219,13 +243,13 @@ const waGoogleAdManagerModule = (function () {
 
     //console.log(isSlotDisabled('ros-inread', postConfig.exclude_adunits));
 
-    if (!isSlotDisabled('ros-inread', postConfig.exclude_adunits)) {
+    if (!isSlotDisabled(setup.inReadSlot, postConfig.exclude_adunits)) {
       //console.log('Esta habilitado');
 
       let inReadContainer = document.createElement('div');
       let id = uniqid();
-      let pNumber = postConfig.inReadParagraph || setup.inReadParagraph;
-      let inReadLimit = postConfig.inReadLimit || setup.inReadLimit;
+      let pNumber = postConfig.inReadParagraph ?? setup.inReadParagraph;
+      let inReadLimit = postConfig.inReadLimit ?? setup.inReadLimit;
 
       inReadContainer.setAttribute('id', 'ros-inread-' + id); // assign an id
       inReadContainer.classList.add('ad-container');
@@ -233,12 +257,15 @@ const waGoogleAdManagerModule = (function () {
       inReadContainer.classList.add('ad-inread');
       inReadContainer.classList.add('ad-main-inread');
 
-      inReadContainer.setAttribute('data-ad-type', 'inread'); // assign an id
-      inReadContainer.setAttribute('data-slot', 'inread'); // assign an id
+      inReadContainer.setAttribute(
+        'data-ad-type',
+        setup.inReadSlot.size_mapping
+      ); // Size Mapping
+      inReadContainer.setAttribute('data-slot', setup.inReadSlot.code); // assign an id
       inReadContainer.setAttribute('data-ad-loaded', '0'); // assign an id
       inReadContainer.setAttribute(
         'data-ad-setup',
-        `{"postID":${postID},"canRefresh":false,"infinitescroll":${infinitescroll}}`
+        `{"postID":${postID},"canRefresh":${setup.inReadSlot.refresh},"infinitescroll":${infinitescroll}}`
       ); // assign an id
 
       let mainContainer = document.querySelector(
@@ -259,8 +286,11 @@ const waGoogleAdManagerModule = (function () {
         document.querySelector('body').dispatchEvent(inReadAdedd);
 
         if (
-          !isSlotDisabled('inread-multiple', postConfig.exclude_adunits) &&
-          ThemeSetup.ads.enableMultipleInread
+          !isSlotDisabled(
+            setup.multipleInreadSlot,
+            postConfig.exclude_adunits
+          ) &&
+          WA_ThemeSetup.ads.enableMultipleInRead
         ) {
           let sib = nextAll(document.querySelector('#ros-inread-' + id));
           let counter = 1;
@@ -280,12 +310,18 @@ const waGoogleAdManagerModule = (function () {
               divInreadMultiple.classList.add('dfp-ad-unit');
               divInreadMultiple.classList.add('ad-inread');
 
-              divInreadMultiple.setAttribute('data-ad-type', 'inreadbox'); // assign an id
-              divInreadMultiple.setAttribute('data-slot', 'inread-multiple'); // assign an id
+              divInreadMultiple.setAttribute(
+                'data-ad-type',
+                setup.multipleInreadSlot.size_mapping
+              ); // assign an id
+              divInreadMultiple.setAttribute(
+                'data-slot',
+                setup.multipleInreadSlot.code
+              ); // assign an id
               divInreadMultiple.setAttribute('data-ad-loaded', '0'); // assign an id
               divInreadMultiple.setAttribute(
                 'data-ad-setup',
-                `{"postID":${postID},"canRefresh":false,"infinitescroll":${infinitescroll}}`
+                `{"postID":${postID},"canRefresh":${setup.multipleInreadSlot.refresh},"infinitescroll":${infinitescroll}}`
               ); // assign an id
 
               element.parentNode.insertBefore(
@@ -350,6 +386,24 @@ const waGoogleAdManagerModule = (function () {
     }, 100);
   };
 
+  const refreshAllSlots = () => {
+    if (window.googletag && googletag.pubadsReady) {
+      adSlots['all'].forEach(slot => {
+        if (slot.getTargeting('canRefresh').indexOf('true') > -1) {
+          // let slotId = slot.getSlotElementId();
+          // let slotContainer = document.getElementById(slotId);
+          // let refreshingTimes = parseInt(slotContainer.dataset.refreshing) || 0;
+
+          // slotContainer.dataset.refreshing = refreshingTimes + 1;
+
+          // console.log(slot);
+
+          googletag.pubads().refresh([slot]);
+        }
+      });
+    }
+  };
+
   const checkGoogleTag = () => {
     if (window.googletag && googletag.pubadsReady) {
       return true;
@@ -400,10 +454,10 @@ const waGoogleAdManagerModule = (function () {
               targeting.tags = postConfig.tags;
               targeting.is_single = 'true';
             } else {
-              targeting.canal = ThemeSetup.page.canal;
-              targeting.postID = ThemeSetup.page.postID;
-              targeting.tags = ThemeSetup.page.tags;
-              targeting.is_single = ThemeSetup.page.is_single;
+              targeting.canal = WA_ThemeSetup.current.canal;
+              targeting.postID = WA_ThemeSetup.current.postID;
+              targeting.tags = WA_ThemeSetup.current.tags;
+              targeting.is_single = WA_ThemeSetup.current.is_single;
             }
 
             slotNameElements.push(setup.network);
@@ -460,9 +514,14 @@ const waGoogleAdManagerModule = (function () {
                 .setTargeting('url', window.location.pathname)
                 .setTargeting('hostname', window.location.hostname)
                 .setTargeting('canRefresh', adSetup.canRefresh)
-                .setTargeting('referrer', document.referrer.split('/')[2]);
+                .setTargeting(
+                  'referrer',
+                  document.referrer.split('/')[2] ?? ''
+                );
 
-              //console.log(adUnit.id);
+              // console.log(adUnit.id);
+
+              // console.log(slot);
 
               adSlots['all'].push(slot);
               if (is_single() && adSetup.postID) {

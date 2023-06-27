@@ -12,16 +12,25 @@ const AdManager = (() => {
       cmd: [],
     };
     googletag.cmd.push(function () {
-      googletag.pubads().setTargeting('canal', ThemeSetup.page.canal);
-      googletag.pubads().setTargeting('postID', ThemeSetup.page.postID);
-      googletag.pubads().setTargeting('tags', ThemeSetup.page.tags);
-      googletag.pubads().setTargeting('single', ThemeSetup.page.is_single);
+      googletag
+        .pubads()
+        .setTargeting('canal', WA_ThemeSetup.current.canal ?? []);
+      googletag
+        .pubads()
+        .setTargeting('postID', WA_ThemeSetup.current.postID ?? 0);
+      googletag.pubads().setTargeting('tags', WA_ThemeSetup.current.tags ?? []);
+      googletag
+        .pubads()
+        .setTargeting('single', WA_ThemeSetup.current.is_single);
       googletag.pubads().setTargeting('url', window.location.pathname);
       googletag.pubads().setTargeting('hostname', window.location.hostname);
 
-      googletag
-        .pubads()
-        .setTargeting('referrer', document.referrer.split('/')[2]);
+      if (document.referrer) {
+        googletag
+          .pubads()
+          .setTargeting('referrer', document.referrer.split('/')[2]);
+      }
+
       googletag.pubads().setCentering(true);
 
       googletag.pubads().setCentering(true);

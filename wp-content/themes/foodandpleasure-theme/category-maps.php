@@ -6,7 +6,7 @@
 
 get_header();
 
-$map_category = wa_theme()->module('maps')->config('map-category') ?? '';
+$map_category = wa_theme()->module('maps')->config('map_category') ?? '';
 ?>
 <main class="site-main category-archive container" role="main">
 

@@ -25,7 +25,7 @@ class WA_Articles extends WA_Module
 
         $atts = array_merge($atts, $_atts);
 
-        $attributes = apply_filters('article_item_attributes', $atts, $post_id);
+        $attributes = apply_filters('wa_article_item_attributes', $atts, $post_id);
 
         $data_attributes = array();
 
@@ -49,7 +49,13 @@ class WA_Articles extends WA_Module
 
         $atts = array_merge($atts, $_atts);
 
-        $attributes = apply_filters('article_item_attributes', $atts, $post_id);
+        $article_config = $this->get_article_config($post_id) ?? array();
+
+        if (count($article_config) > 0) {
+            $atts['meta'] = htmlentities(json_encode($article_config));
+        }
+
+        $attributes = apply_filters('wa_article_attributes', $atts, $post_id);
 
         $data_attributes = array();
 
@@ -58,6 +64,58 @@ class WA_Articles extends WA_Module
         }
 
         echo implode(" ", $data_attributes);
+    }
+
+    public function get_article_config($post_id = 0)
+    {
+        if (!$post_id) $post_id = get_the_ID();
+
+        $article_config = array();
+
+
+        if (function_exists('YoastSEO')) {
+            $title = YoastSEO()->meta->for_current_page()->title;
+
+            $article_config['title'] = $title;
+        } else {
+            $article_config['title'] = get_the_title($post_id);
+        }
+
+
+        $post_tags = get_the_tags($post_id);
+
+        $tagsTmp = array();
+
+        if ($post_tags) {
+            foreach ($post_tags as $t) {
+                //echo $t->name;
+                //$tag_name = preg_replace('/[^A-Za-zÀ-ú0-9 ]/', '', $t->name);
+                //echo trim($t->slug);
+                $tagsTmp[] = strtolower($t->slug);
+            }
+        }
+
+        $article_config['tags'] = $tagsTmp;
+
+
+        $canales = get_the_category($post_id);
+
+        $canalTmp = array();
+
+        foreach ($canales as $c) {
+            // $cat_name = preg_replace('/[^A-Za-zÀ-ú0-9 ]/', '', $c->slug);
+
+            $canalTmp[] = strtolower($c->slug);
+        }
+
+        $article_config['canal'] = $canalTmp;
+        // $disable_ads = get_post_meta($post_id, 'wa_theme_options_disable_ads', true);
+        // $hide_ads = get_post_meta($post_id, 'wa_post_hide_adunits', true);
+        // $inread_paragraph = get_post_meta($post_id, 'wa_post_inread_paragraph', true);
+        // $disable_scroll = get_post_meta($post_id, 'wa_post_disable_scroll', true);
+        // $posts_scroll = get_post_meta($post_id, 'wa_post_posts_scroll', true);
+
+        return apply_filters('wa_article_config', $article_config, $post_id);
     }
 
     public function reading_time($post_id = 0)
@@ -86,7 +144,7 @@ function wa_article_item_attributes($atts = array(), $post_id = 0)
 
         if (!$post_id) $post_id = get_the_ID();
 
-        $GLOBALS['WA_Theme']->helper('articles')->article_item_attributes($atts, $post_id);
+        WA_Theme()->helper('articles')->article_item_attributes($atts, $post_id);
     }
 }
 
@@ -100,6 +158,6 @@ function wa_article_attributes($atts = array(), $post_id = 0)
 
         if (!$post_id) $post_id = get_the_ID();
 
-        $GLOBALS['WA_Theme']->helper('articles')->article_attributes($atts, $post_id);
+        WA_Theme()->helper('articles')->article_attributes($atts, $post_id);
     }
 }

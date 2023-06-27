@@ -53,7 +53,7 @@ class WA_Our_Maps extends WP_Widget
 
 
 
-        $map_category = wa_theme()->module('maps')->config('map-category') ?? '';
+        $map_category = wa_theme()->module('maps')->config('map_category') ?? '';
 
 
         //wp_get_post_categories(get_the_ID(), array('fields' => 'ids'));

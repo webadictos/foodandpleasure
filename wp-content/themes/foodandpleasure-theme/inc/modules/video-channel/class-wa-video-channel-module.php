@@ -28,9 +28,21 @@ class WA_Video_Channel_Module extends WA_Module
                 $embed_url = $block['attrs']['url']; // Obtener la URL del atributo "url"
                 $embed_code = wp_oembed_get($embed_url);
 
+                // preg_match('/src=["\'](.*?)["\']/', $embed_code, $matches);
+                // if (isset($matches[1])) {
+                //     $embed_url = $matches[1];
+                // }
                 preg_match('/src=["\'](.*?)["\']/', $embed_code, $matches);
                 if (isset($matches[1])) {
-                    $embed_url = $matches[1];
+                    $embed_url_match = $matches[1];
+                    // Obtener la extensión del archivo de la URL
+                    $url_info = parse_url($embed_url_match);
+                    $path = isset($url_info['path']) ? $url_info['path'] : '';
+                    $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+                    if ($extension !== 'js') {
+                        $embed_url = $embed_url_match;
+                    }
                 }
 
                 update_post_meta($post_id, '_wa_embed_url', $embed_url); // Guardar la URL como metadata "mi_metadata"

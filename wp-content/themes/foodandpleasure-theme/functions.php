@@ -193,7 +193,9 @@ add_filter('edit_comment_link', 'foodandpleasure_theme_custom_edit_comment_link'
  */
 function foodandpleasure_theme_oembed_filter($html)
 {
-	return '<div class="ratio ratio-16x9">' . $html . '</div>';
+	//	return '<div class="ratio ratio-16x9">' . $html . '</div>';
+
+	return $html;
 }
 add_filter('embed_oembed_html', 'foodandpleasure_theme_oembed_filter', 10);
 

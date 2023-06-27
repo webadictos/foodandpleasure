@@ -43,7 +43,10 @@ const Single = (() => {
   };
 
   const scriptsLoadedByScroll = () => {
-    if (ThemeSetup.loadmore && document.querySelector('.articles-container')) {
+    if (
+      ThemeSetup.infinite_scroll &&
+      document.querySelector('.articles-container')
+    ) {
       import(
         /* webpackChunkName: "infinite-scroll" */
         /* webpackMode: "lazy" */
@@ -93,8 +96,10 @@ const Single = (() => {
   };
 
   const trackPost = () => {
-    const postConfig = getPostConfig(ThemeSetup.page.postID);
-    const article = document.querySelector(`#post-${ThemeSetup.page.postID}`);
+    const postConfig = getPostConfig(ThemeSetup.current.postID);
+    const article = document.querySelector(
+      `#post-${ThemeSetup.current.postID}`
+    );
     if (Array.isArray(postConfig.canal)) {
       postConfig.canal.forEach(function (item, index) {
         try {

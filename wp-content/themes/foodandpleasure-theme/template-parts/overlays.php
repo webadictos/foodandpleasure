@@ -30,7 +30,7 @@
                         'container'      => 'div',
                         'container_class' => 'menu-hamburger__main-items collapse show navbar-collapse justify-content-start',
                         'fallback_cb'    => 'WP_Bootstrap_Navwalker::fallback',
-                        'walker'          => new WP_Bootstrap4_Navwalker_Footer(),
+                        'walker'          => new WP_Bootstrap_Navwalker(),
                         'theme_location' => 'hamburger-menu',
                     )
                 );

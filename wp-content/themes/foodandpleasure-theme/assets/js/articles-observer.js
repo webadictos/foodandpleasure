@@ -6,17 +6,24 @@ const articlesObserver = (() => {
     articleObserverSelector: 'entry-main-text',
     firstArticleSelector: '.post',
     jetpackID:
-      typeof ThemeSetup.jetpackID === 'undefined' ? '' : ThemeSetup.jetpackID,
+      typeof WA_ThemeSetup.general.jetpackID === 'undefined'
+        ? ''
+        : WA_ThemeSetup.general.jetpackID,
     promotedExpire: ThemeSetup.promotedTTL || 86400,
     comscoreC1:
-      typeof ThemeSetup.comscoreC1 === 'undefined' ? '' : ThemeSetup.comscoreC1,
+      typeof WA_ThemeSetup.general.comscoreC1 === 'undefined'
+        ? ''
+        : WA_ThemeSetup.general.comscoreC1,
     comscoreC2:
-      typeof ThemeSetup.comscoreC2 === 'undefined' ? '' : ThemeSetup.comscoreC2,
+      typeof WA_ThemeSetup.general.comscoreC2 === 'undefined'
+        ? ''
+        : WA_ThemeSetup.general.comscoreC2,
   };
 
   let previousArticle;
   let scrollIndex = 0;
   let promotedArticles = [];
+  let firstArticleSlug = '';
 
   const trackedPromotedposts = postID => {
     const promotedviews = ls.get('promotedviews') || [];
@@ -68,7 +75,6 @@ const articlesObserver = (() => {
 
   const trackingArticle = (article, slug) => {
     if (article.dataset.isTracking) {
-      //console.log('Ya está trackeado');
     } else {
       const meta = JSON.parse(article.dataset.meta);
 
@@ -145,11 +151,13 @@ const articlesObserver = (() => {
       const newTarget = entry.target;
       const parentArticle = newTarget.closest('article');
       const currentMeta = JSON.parse(parentArticle.dataset.meta);
-      const title = currentMeta.seo;
+      const title = currentMeta.title;
       const permalink = parentArticle.dataset.slug;
       const articlesContainer = document.querySelector(
         config.articlesContainerSelector
-      ); //console.log(parentArticle);
+      );
+
+      // console.log(parentArticle);
 
       // Prhimera ejecucción
       if (!previousArticle) {
@@ -158,9 +166,12 @@ const articlesObserver = (() => {
         parentArticle.setAttribute('data-is-tracking', 'true');
         parentArticle.setAttribute('data-scroll-index', scrollIndex++);
         dispatchTrackedEvent(currentMeta, false);
+        firstArticleSlug = window.location.pathname + window.location.search;
+        parentArticle.setAttribute('data-slug', firstArticleSlug);
+
         // Hay un nuevo articulo visible
       } else if (previousArticle !== parentArticle) {
-        //console.log(parentArticle.dataset);
+        // console.log(parentArticle.dataset);
         // console.log(title, permalink);
         previousArticle.removeAttribute('data-is-visible');
         parentArticle.setAttribute('data-is-visible', 'true');
@@ -190,7 +201,7 @@ const articlesObserver = (() => {
               const parentArticle = mainText.closest('article');
 
               articleIntersectionObserver.observe(mainText);
-              //console.log('Nuevo Artículo', 'Observer agregado');
+              // console.log('Nuevo Artículo', 'Observer agregado');
 
               parentArticle.setAttribute('data-scroll-index', scrollIndex++);
             }

@@ -3,12 +3,13 @@ import { ls } from './localstorage';
 const WPInfiniteScroll = (() => {
   // Basic Configuration
   const config = {
-    api: ThemeSetup.ajaxurl,
+    // api: WA_ThemeSetup.ajaxurl,
+    api: `${window.location.protocol}//${window.location.host}/wp-json/wa-theme/v1/post/`,
     startPage: 0, // 0 for the first page, 1 for the second and so on...
-    postsPerPage: ThemeSetup.loadmore.max_page || 5, // Number of posts to load per page
+    postsPerPage: WA_ThemeSetup.infinite_scroll.max_page || 5, // Number of posts to load per page
     articlesContainer: '.articles-container',
-    next: ThemeSetup.loadmore.next || [],
-    promoted: ThemeSetup.promoted || [],
+    next: WA_ThemeSetup.infinite_scroll.next || [],
+    promoted: WA_ThemeSetup.promoted || [],
   };
 
   // Private Properties
@@ -72,24 +73,9 @@ const WPInfiniteScroll = (() => {
       const article = fetchArticle(pID).then(article => {
         const fragment = document
           .createRange()
-          .createContextualFragment(article.data);
+          .createContextualFragment(article.content_rendered);
 
         articlesContainer.appendChild(fragment);
-
-        // const promotedviews = ls.get('promotedviews') || [];
-
-        // console.log('Promoted Before:', ls.get('promotedviews'));
-
-        // promotedviews.push(pID);
-
-        // ls.set('promotedviews', promotedviews, 60);
-
-        // console.log('Promoted After:', ls.get('promotedviews'));
-
-        // const newPostLoaded = new CustomEvent('is.post-load', {
-        //   detail: { postID: pID, infinitescroll: true, isPromoted: isPromoted },
-        // });
-        // document.querySelector('body').dispatchEvent(newPostLoaded);
 
         dispatchArticleEvent(pID, isPromoted);
 
@@ -98,9 +84,10 @@ const WPInfiniteScroll = (() => {
     }
   };
   const getApiUrl = (url, id) => {
-    const data = { action: 'loadmore', postid: id };
+    // const data = { action: 'loadmore', postid: id };
+    url = url + id;
     let apiUrl = new URL(url);
-    apiUrl.search = new URLSearchParams(data).toString();
+    //apiUrl.search = new URLSearchParams(data).toString();
     return apiUrl;
   };
   const fetchArticle = async id => {

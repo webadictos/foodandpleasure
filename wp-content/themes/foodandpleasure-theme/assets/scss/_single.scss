@@ -169,17 +169,18 @@
 
     :where(h2, h3, h4, h5) {
       margin: 1.5rem 0;
+      font-weight: 600;
     }
 
     h2 {
-      font-size: fluid(18px, 26px);
+      font-size: fluid(20px, 26px);
     }
     h3 {
-      font-size: fluid(16px, 24px);
+      font-size: fluid(18px, 24px);
     }
 
     h4 {
-      font-size: fluid(16px, 22px);
+      font-size: fluid(17px, 22px);
     }
     h5 {
       font-size: fluid(16px, 18px);
@@ -187,6 +188,10 @@
     // h5 {
     //   font-size: 0.9em;
     // }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
 
     .wp-caption-text {
       text-align: right;

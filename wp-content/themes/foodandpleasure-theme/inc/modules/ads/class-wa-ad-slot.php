@@ -34,22 +34,29 @@ class WA_Ad_Slot
     {
         $key = "wa_theme_options_adunits";
         $hide_key = "wa_theme_options_hide_adunits";
+        $disable_key = "wa_theme_options_disable_ads";
+
 
         $adunits = array();
 
         $hide_adunits = "";
+        $disable_ads = "";
 
 
         if (is_singular()) {
-            $adunits = get_post_meta(get_the_ID(), $key, true);
-            $hide_adunits = get_post_meta(get_the_ID(), $hide_key, true);
+            $adunits = get_post_meta(get_the_ID(), $key, true) ?? array();
+            $hide_adunits = get_post_meta(get_the_ID(), $hide_key, true) ?? "";
+            $disable_ads = get_post_meta(get_the_ID(), $disable_key, true) ?? "";
         } else {
             $term = get_queried_object();
-            $hide_adunits = get_term_meta($term->term_id, $key, true);
-            $adunits = get_term_meta($term->term_id, $key, true);
+            $hide_adunits = get_term_meta($term->term_id, $key, true) ?? "";
+            $adunits = get_term_meta($term->term_id, $key, true) ?? array();
+            $disable_ads = get_term_meta($term->term_id, $key, true) ?? "";
         }
 
-        if ($hide_adunits == "on") {
+        if ($disable_ads === "on") return false;
+
+        if ($hide_adunits === "on") {
             if (!is_array($adunits)) $adunits = array();
 
 

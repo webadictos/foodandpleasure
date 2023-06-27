@@ -64,4 +64,17 @@ class WA_Promoted_Module extends WA_Module
 
         return $optionsPage;
     }
+
+    public function get_front_settings($settings)
+    {
+
+        $currentPost = get_the_ID();
+
+        if ($currentPost) {
+            $settings = array_diff($settings, [$currentPost]);
+            $settings = array_values($settings);
+        }
+
+        return $settings;
+    }
 }

@@ -45,7 +45,8 @@ class wa_dynamic_widget extends WP_Widget
             'no_found_rows' => true,
             'caller_get_posts' => 1,
             'order' => 'DESC',
-            'orderby' => 'date',
+            'meta_key' => 'wa_total_shares',
+            'orderby' => 'meta_value_num',
             'has_password' => false,
         );
         $my_query = new WP_Query($_args);
