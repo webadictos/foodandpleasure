@@ -351,7 +351,7 @@ class WA_Infinite_Scroll_Module extends WA_Module
                 }
             }
 
-            if (is_archive() || is_search()) {
+            if (is_archive() || is_search() || is_home()) {
                 return $this->get_archive_infinite_scroll_settings();
             }
         }

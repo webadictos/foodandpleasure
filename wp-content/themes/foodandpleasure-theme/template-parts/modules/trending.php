@@ -1,5 +1,7 @@
 <?php
 
+use Automattic\Jetpack\Stats\WPCOM_Stats;
+
 /**
  * Construye el layout dependiendo los parámetrs
  */
@@ -159,87 +161,104 @@ $seccion = isset($layoutArgs['queryArgs']['category_name']) ? get_category_by_sl
                 'items_config' => $layoutArgs['items_config'],
             );
 
+            $wordpressAPI = "3bdf3a9b8c63";
+
+            $jetpackBlogID = "";
+
+            if (class_exists('Jetpack_Options')) {
+                $jetpackBlogID = Jetpack_Options::get_option('id');
+            }
 
 
-            if (function_exists('stats_get_csv')) :
-
-                //  if (false === ($popularToday = get_transient("wa_popular_today"))) {
-
-                //  $popularToday = stats_get_csv( 'postviews', "period=days&days=3&limit=15" );
-
-                // $popularToday = stats_get_csv('postviews', array('days' => 3, 'limit' => 20));
-
-                $popularToday =  stats_get_csv('views', 'days=1&limit=-1&end=' . $today);
+            if (false === ($popularToday = get_transient("wa_trending_week"))) {
 
 
-                //    set_transient('wa_popular_today', $popularToday, 1 * HOUR_IN_SECONDS); // 30 Minutos
-                // }
+                $jetpackURL = 'https://stats.wordpress.com/csv.php?api_key=' . $wordpressAPI . '&blog_id=' . $jetpackBlogID . '&table=postviews&days=7&limit=20&summarize&format=json';
 
-                $i = 0;
-                $frontpage_id = get_option('page_on_front');
-                $blog_id = get_option('page_for_posts');
-
-                $exclude_ids = array($frontpage_id, $blog_id);
-
-                $exclude_ids = array_merge($exclude_ids, $GLOBALS['exclude_ids']);
+                $response = wp_remote_get($jetpackURL);
 
 
-                $popularIds = array();
+                if (is_wp_error($response)) {
+                    // Ocurrió un error al hacer la llamada
+                    //echo 'Error al obtener los datos de la API: ' . $response->get_error_message();
+                } else {
+                    // Obtener la respuesta de la API
+                    $body = wp_remote_retrieve_body($response);
 
-                foreach ($popularToday as $p) {
+                    // Convertir la respuesta a un objeto JSON
+                    $popularToday = json_decode($body);
 
-                    if (intval($p['post_id']) > 0 && !in_array(intval($p['post_id']), $exclude_ids) && intval($p['post_id']) !== get_the_ID()) :
+                    set_transient('wa_trending_week', $popularToday, 1 * HOUR_IN_SECONDS); // 30 Minutos
 
-
-                        if (!has_post_thumbnail($p['post_id'])) continue;
-                        if (!get_post_type($p['post_id']) !== "post") continue;
-
-                        $popularIds[] = $p['post_id'];
-                        $i++;
-                        if ($i === $_args['posts_per_page']) :
-                            break;
-                        endif;
-                    endif;
                 }
-
-                print_r($popularIds);
-
-                if (count($popularIds) > 0) :
-
-                    $_args_popular = array(
-                        'post__in' => $popularIds,
-                        'no_found_rows' => true,
-                        'update_post_meta_cache' => false,
-                        'update_post_term_cache' => false,
-                        'post_status' => 'publish',
-                    );
-
-                    $articlesQuery = new WP_Query();
+            }
 
 
+            $i = 0;
+            $frontpage_id = get_option('page_on_front');
+            $blog_id = get_option('page_for_posts');
 
-                    $articlesQuery->query($_args_popular);
+            $exclude_ids = array($frontpage_id, $blog_id);
 
-                    while ($articlesQuery->have_posts()) : $articlesQuery->the_post();
-                        $GLOBALS['exclude_ids'][] = get_the_ID();
+            $exclude_ids = array_merge($exclude_ids, $GLOBALS['exclude_ids']);
 
+            $popularIds = array();
 
+            foreach ($popularToday[0]->postviews as $p) {
 
-                        get_template_part('template-parts/items/' . $layoutArgs['items_layout'], null, $itemArgs);
+                $current_id = intval($p->post_id);
 
+                if ($current_id > 0 && !in_array($current_id, $exclude_ids) && $current_id !== get_the_ID()) :
 
-                        $numdestacado++;
-                        $i++;
+                    if (!has_post_thumbnail($current_id)) continue;
+                    if (get_post_type($current_id) !== "post") continue;
 
-                    endwhile;
-                    wp_reset_postdata();
-                    wp_reset_query();
+                    if ($i > ($_args['posts_per_page'] - 1)) :
+                        break;
+                    endif;
+
+                    $popularIds[] = $current_id;
+
+                    $i++;
+
                 endif;
+            }
+
+            if (count($popularIds) > 0) :
+
+                $_args_popular = array(
+                    'post__in' => $popularIds,
+                    'no_found_rows' => true,
+                    'update_post_meta_cache' => false,
+                    'update_post_term_cache' => false,
+                    'post_status' => 'publish',
+                );
+
+                $articlesQuery = new WP_Query();
 
 
 
+                $articlesQuery->query($_args_popular);
 
+                while ($articlesQuery->have_posts()) : $articlesQuery->the_post();
+                    $GLOBALS['exclude_ids'][] = get_the_ID();
+
+
+
+                    get_template_part('template-parts/items/' . $layoutArgs['items_layout'], null, $itemArgs);
+
+
+                    $numdestacado++;
+                    $i++;
+
+                endwhile;
+                wp_reset_postdata();
+                wp_reset_query();
             endif;
+
+
+
+
             ?>
             <?php //endforeach;
             ?>
