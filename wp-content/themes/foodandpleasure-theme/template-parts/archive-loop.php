@@ -21,12 +21,14 @@ $_layoutArgs = array(
 
 
 $layoutArgs = wp_parse_args($args, $_layoutArgs);
-
+$GLOBALS['showed_ids'] = array();
 if (have_posts()) :
 ?>
 		<?php
 		while (have_posts()) :
 			the_post();
+			$GLOBALS['showed_ids'][] = get_the_ID();
+
 
 			/**
 			 * Include the Post-Format-specific template for the content.
@@ -50,5 +52,4 @@ if (have_posts()) :
 		?>
 <?php
 endif;
-
 wp_reset_postdata();

@@ -313,7 +313,7 @@ if (!class_exists('Wa_Theme_Manager_Codes')) {
                                 'search' => 'En los resultados de búsqueda',
             */
 
-            $ids_to_show = explode(",", $code['posts_ids']);
+            $ids_to_show = explode(",", $code['posts_ids'] ?? '');
             $category_ids = $code['category_ids'] ?? array();
 
 

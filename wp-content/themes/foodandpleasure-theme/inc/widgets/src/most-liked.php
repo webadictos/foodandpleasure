@@ -26,7 +26,7 @@ class wa_most_liked extends WP_Widget
 
     public function widget($args, $instance)
     {
-        global $post;
+        global $post, $wp_query;
 
         if (has_category('maps')) return;
 
@@ -36,39 +36,39 @@ class wa_most_liked extends WP_Widget
 
         $_args = array();
 
-        if (is_single()) {
-            // Obtener la categoría del post actual
-            $categories = get_the_category(get_the_ID());
-            $category_ids = wp_list_pluck($categories, 'term_id');
+        // if (is_single(get_the_ID())) {
+        // Obtener la categoría del post actual
+        $categories = get_the_category(get_the_ID());
+        $category_ids = wp_list_pluck($categories, 'term_id');
 
-            // Configurar los argumentos de la consulta para obtener los posts con más wa_total_shares en la misma categoría
-            $_args = array(
-                'post_type' => 'post',
-                'post_status' => 'publish',
-                'posts_per_page' => $number_of_items,
-                'meta_key' => 'wa_total_shares',
-                'orderby' => 'meta_value_num',
-                'order' => 'DESC',
-                'category__in' => $category_ids,
-                'post__not_in' => array(get_the_ID()),
-            );
-        } elseif (is_category()) {
-            // Obtener la categoría actual
-            $current_category = get_queried_object();
+        // Configurar los argumentos de la consulta para obtener los posts con más wa_total_shares en la misma categoría
+        $_args = array(
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'posts_per_page' => $number_of_items,
+            'meta_key' => 'wa_total_shares',
+            'orderby' => 'meta_value_num',
+            'order' => 'DESC',
+            'category__in' => $category_ids,
+            'post__not_in' => array(get_the_ID()),
+        );
+        // } elseif (is_category()) {
+        //     // Obtener la categoría actual
+        //     $current_category = get_queried_object();
 
-            if ($current_category instanceof WP_Term) {
-                // Configurar los argumentos de la consulta para obtener los posts con más wa_total_shares en la categoría actual
-                $_args = array(
-                    'post_type' => 'post',
-                    'post_status' => 'publish',
-                    'posts_per_page' => $number_of_items,
-                    'meta_key' => 'wa_total_shares',
-                    'orderby' => 'meta_value_num',
-                    'order' => 'DESC',
-                    'category__in' => array($current_category->term_id),
-                );
-            }
-        }
+        //     if ($current_category instanceof WP_Term) {
+        //         // Configurar los argumentos de la consulta para obtener los posts con más wa_total_shares en la categoría actual
+        //         $_args = array(
+        //             'post_type' => 'post',
+        //             'post_status' => 'publish',
+        //             'posts_per_page' => $number_of_items,
+        //             'meta_key' => 'wa_total_shares',
+        //             'orderby' => 'meta_value_num',
+        //             'order' => 'DESC',
+        //             'category__in' => array($current_category->term_id),
+        //         );
+        //     }
+        // }
 
         $query = new WP_Query($_args);
 

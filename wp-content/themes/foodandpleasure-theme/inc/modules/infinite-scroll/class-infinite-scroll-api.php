@@ -111,6 +111,7 @@ class WA_InfiniteScroll_API extends WP_REST_Controller
         // prepare our arguments for the query
         $args = json_decode(stripslashes($request['query']), true);
         $args['paged'] = $request['page'] + 1; // we need next page to be loaded
+        $args['posts_per_page'] = 12;
         $args['post_status'] = 'publish';
         $itemLayout = (isset($request['item_layout']) &&  trim($request['item_layout']) !== "") ? trim($request['item_layout']) : 'article-item-nota col-12 col-md-6 col-md-4 mb-3 mb-md-0';
         $layout = (isset($request['layout']) &&  trim($request['layout']) !== "") ? trim($request['layout']) : 'flex';

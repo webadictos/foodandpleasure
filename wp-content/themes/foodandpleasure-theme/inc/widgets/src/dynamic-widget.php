@@ -37,6 +37,7 @@ class wa_dynamic_widget extends WP_Widget
 
         // This is where you run the code and display the output
 
+
         $_args = array(
             'post_status' => 'publish',
             'post_type' => 'post',
@@ -48,8 +49,21 @@ class wa_dynamic_widget extends WP_Widget
             'meta_key' => 'wa_total_shares',
             'orderby' => 'meta_value_num',
             'has_password' => false,
+            'post__not_in' => $GLOBALS['showed_ids'] ?? array(),
         );
         $my_query = new WP_Query($_args);
+
+        if (!$my_query->have_posts()) {
+            $current_id = get_queried_object_id();
+
+            $parent = WA_Theme()->helper('main-term')->get_parent_term($current_id, true, 'category');
+
+            unset($_args['cat']);
+
+            $_args['category__in'] = array($parent->term_id);
+
+            $my_query = new WP_Query($_args);
+        }
 
         if ($my_query->have_posts()) {
 
@@ -74,6 +88,7 @@ class wa_dynamic_widget extends WP_Widget
                 get_template_part('template-parts/items/article', 'item', $_itemArgs);
             }
         }
+        wp_reset_query();
         wp_reset_postdata();
 
 

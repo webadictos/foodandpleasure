@@ -175,7 +175,8 @@ body {
   margin: 0;
   text-align: var(--bs-body-text-align);
 }
-h1 {
+h1,
+h3 {
   color: #000;
   font-family: Merriweather, serif;
   font-weight: 400;
@@ -189,6 +190,14 @@ h1 {
 @media (min-width: 1200px) {
   h1 {
     font-size: 2.5rem;
+  }
+}
+h3 {
+  font-size: calc(1.3rem + 0.6vw);
+}
+@media (min-width: 1200px) {
+  h3 {
+    font-size: 1.75rem;
   }
 }
 p {
@@ -205,15 +214,16 @@ ul {
 ul ul {
   margin-bottom: 0;
 }
-strong {
-  font-weight: bolder;
-}
 a {
   color: var(--bs-link-color);
   text-decoration: none;
 }
 figure {
   margin: 0 0 1rem;
+  max-width: 100%;
+}
+.entry-main-text figure.wp-caption {
+  width: 100% !important;
 }
 img,
 svg {
@@ -1826,26 +1836,26 @@ img {
   background: var(--widget-background);
   padding: var(--widget-padding, 1rem 0);
 }
-@charset "UTF-8";
-:root {
-  --swiper-theme-color: #007aff;
+.widget .widget-title {
+  border-bottom: 1px solid var(--borders-color);
+  border-top: 1px solid var(--borders-color);
+  color: var(--widget-title-color, var(--headings-color));
+  font-family: var(--widget-title-font-family, var(--headings-font-family));
+  font-size: var(
+    --widget-title-font-size,
+    clamp(1rem, 0.4vw + 0.9rem, 1.25rem)
+  );
+  font-weight: var(--widget-title-font-weight, var(--headings-font-weight));
+  margin: var(--widget-title-margin, 0 0 2rem);
+  padding: var(--wiget-title-padding, 0.5rem 0);
+  text-align: var(--widget-title-text-align, center);
+  text-transform: var(--widget-title-text-transform, uppercase);
 }
-:root {
-  --swiper-navigation-size: 44px;
-}
-:root {
-  --jp-carousel-primary-color: #fff;
-  --jp-carousel-primary-subtle-color: #999;
-  --jp-carousel-bg-color: #000;
-  --jp-carousel-bg-faded-color: #222;
-  --jp-carousel-border-color: #3a3a3a;
-}
-:root {
-  --jetpack--contact-form--border: 1px solid #8c8f94;
-  --jetpack--contact-form--border-color: #8c8f94;
-  --jetpack--contact-form--border-size: 1px;
-  --jetpack--contact-form--border-style: solid;
-  --jetpack--contact-form--border-radius: 0px;
-  --jetpack--contact-form--input-padding: 16px;
-  --jetpack--contact-form--font-size: 16px;
+.wa_most_liked_widget {
+  --widget-background: var(--bs-secondary);
+  --widget-title-color: var(--widgets-dark-color);
+  --borders-color: var(--widgets-dark-color);
+  --bs-link-color: var(--widgets-dark-color);
+  --widget-padding: 1rem 0 2rem;
+  color: var(--widgets-dark-color);
 }

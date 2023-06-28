@@ -20,11 +20,12 @@ body {
     display: grid;
     grid-template-columns: 4rem 1fr 4rem;
     grid-template-rows: auto;
-    grid-gap: 1em 1em;
+    grid-gap: 1em 0;
     align-items: center;
     justify-items: center;
 
     @include media-breakpoint-up(xl) {
+      grid-gap: 1em 1em;
       grid-template-columns: 4rem 1fr 1fr 1fr 4rem;
     }
 
@@ -49,8 +50,8 @@ body {
       grid-area: 1 / 2 / 2 / 3;
       width: 100%;
       transition: all 0.15s ease-in;
-      --bs-navbar-brand-margin-end: 1rem;
-      --logo-nav-bar-width-mobile: #{rem(146px)};
+      --bs-navbar-brand-margin-end: 0;
+      --logo-nav-bar-width-mobile: #{rem(220px)};
       --logo-nav-bar-width: #{rem(330px)};
 
       text-align: center;

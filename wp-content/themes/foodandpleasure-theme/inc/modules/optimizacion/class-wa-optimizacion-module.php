@@ -67,80 +67,113 @@ class WA_Optimizacion_Module extends WA_Module
         return $html;
     }
 
+    private static function get_url_type()
+    {
+        global $wp_query;
+
+        $type = '';
+
+        if ($wp_query->is_page) {
+            $type = is_front_page() ? 'front' : 'page-' . $wp_query->post->ID;
+        } elseif ($wp_query->is_home && !is_front_page()) {
+            $type = 'home';
+        } elseif ($wp_query->is_single) {
+            $type = get_post_type() !== false ? get_post_type() : 'single';
+        } elseif ($wp_query->is_category) {
+            $type = 'category';
+        } elseif ($wp_query->is_tag) {
+            $type = 'tag';
+        } elseif ($wp_query->is_tax) {
+            $type = 'tax';
+        } elseif ($wp_query->is_archive) {
+            $type = $wp_query->is_day ? 'day' : ($wp_query->is_month ? 'month' : ($wp_query->is_year ? 'year' : ($wp_query->is_author ? 'author' : 'archive')));
+        } elseif ($wp_query->is_search) {
+            $type = 'search';
+        } elseif ($wp_query->is_404) {
+            $type = '404';
+        }
+
+        return $type;
+    }
+
+
     public function critical_css($inlined)
     {
+        global $wp_query;
 
-        $slug = $GLOBALS['WA_Theme']->helper('utils')->formatted_slug();
-
+        // $slug = $GLOBALS['WA_Theme']->helper('utils')->formatted_slug();
 
         $filename = "";
-        $type = "";
-
-        $fileTmp = $this->path_to_css . $slug . ".css";
-
-        if (is_front_page() && !is_home()) {
-
-            $filename = $this->path_to_css  . "home.css";
-            $type = "home";
-        } else if (!is_front_page() && is_home()) {
-
-            $filename = $this->path_to_css  . "blog.css";
-            $type = "blog";
-        } else if (file_exists($fileTmp)) {
-            $filename = $fileTmp;
-            $type = $slug;
-        } else if (is_single()) {
-            $filename = $this->path_to_css  . get_post_type() . ".css";
-            $type = get_post_type();
-
-            if (!file_exists($filename)) {
-                $filename = $this->path_to_css . "single.css";
-            }
-        } else if (is_page()) {
-            $filename = $this->path_to_css  . "page.css";
-            $type = "page";
-        } else if (is_archive()) {
-
-            $filename = $this->path_to_css  . "archive.css";
-            $type = "archive-";
+        $type = self::get_url_type();
 
 
-            if (is_post_type_archive()) {
-                $post_type = get_query_var('post_type');
-                $filenamePostType = $this->path_to_css . "archive-" .    $post_type . ".css";
-                $type = "post-type-archive-" . $post_type;
+        $filename = $this->path_to_css  . $type . ".css";
 
-                if (file_exists($filenamePostType)) {
-                    $filename = $filenamePostType;
-                }
-            }
-            if (is_tax()) {
-                $term = get_queried_object();
-                $post_type = $term->taxonomy;
-                $filenamePostType = $this->path_to_css . "tax-archive-" .    $post_type . ".css";
-                $type = "tax-archive-" . $post_type;
+        // $fileTmp = $this->path_to_css . $slug . ".css";
 
-                if (file_exists($filenamePostType)) {
-                    $filename = $filenamePostType;
-                }
-            }
-        } else if (is_category()) {
-            $filename = $this->path_to_css  . "category.css";
-            $type = "category";
-        } else if (is_tag()) {
-            $filename = $this->path_to_css  . "tag.css";
-            $type = "tag";
-        }
-        if (is_search()) {
-            $filename = $this->path_to_css  . "search.css";
-            $type = "search";
-        }
+        // if (is_front_page() && !is_home()) {
+
+        //     $filename = $this->path_to_css  . "home.css";
+        //     $type = "home";
+        // } else if (!is_front_page() && is_home()) {
+
+        //     $filename = $this->path_to_css  . "blog.css";
+        //     $type = "blog";
+        // } else if (file_exists($fileTmp)) {
+        //     $filename = $fileTmp;
+        //     $type = $slug;
+        // } else if (is_single()) {
+        //     $filename = $this->path_to_css  . get_post_type() . ".css";
+        //     $type = get_post_type();
+
+        //     if (!file_exists($filename)) {
+        //         $filename = $this->path_to_css . "single.css";
+        //     }
+        // } else if (is_page()) {
+        //     $filename = $this->path_to_css  . "page.css";
+        //     $type = "page";
+        // } else if (is_archive()) {
+
+        //     $filename = $this->path_to_css  . "archive.css";
+        //     $type = "archive-";
+
+
+        //     if (is_post_type_archive()) {
+        //         $post_type = get_query_var('post_type');
+        //         $filenamePostType = $this->path_to_css . "archive-" .    $post_type . ".css";
+        //         $type = "post-type-archive-" . $post_type;
+
+        //         if (file_exists($filenamePostType)) {
+        //             $filename = $filenamePostType;
+        //         }
+        //     }
+        //     if (is_tax()) {
+        //         $term = get_queried_object();
+        //         $post_type = $term->taxonomy;
+        //         $filenamePostType = $this->path_to_css . "tax-archive-" .    $post_type . ".css";
+        //         $type = "tax-archive-" . $post_type;
+
+        //         if (file_exists($filenamePostType)) {
+        //             $filename = $filenamePostType;
+        //         }
+        //     }
+        // } else if (is_category()) {
+        //     $filename = $this->path_to_css  . "category.css";
+        //     $type = "category";
+        // } else if (is_tag()) {
+        //     $filename = $this->path_to_css  . "tag.css";
+        //     $type = "tag";
+        // }
+        // if (is_search()) {
+        //     $filename = $this->path_to_css  . "search.css";
+        //     $type = "search";
+        // }
 
         if (file_exists($filename)) {
             $inlined = file_get_contents($filename);
         }
 
-        // $inlined = ".test-" . $type . "{--test:'{$filename}';--slug='{$slug}'}" . $inlined;
+        $inlined = ".test-" . $type . "{--test:'{$type}';}" . $inlined;
         $inlined = str_replace(array("\r", "\n"), '', $inlined);
 
         return $inlined;

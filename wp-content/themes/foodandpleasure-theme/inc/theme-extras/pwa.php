@@ -9,10 +9,7 @@ add_filter('web_app_manifest', function ($manifest) {
         },
         $manifest['icons']
     );
-
-    $manifest['short_name'] = 'Venture & Pleasure';
-
-
+    //$manifest['short_name'] = 'Venture & Pleasure';
     return $manifest;
 });
 

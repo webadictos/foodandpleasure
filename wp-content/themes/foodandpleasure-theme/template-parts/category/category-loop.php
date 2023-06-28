@@ -24,6 +24,7 @@ $_layoutArgs = array(
 
 
 $layoutArgs = wp_parse_args($args, $_layoutArgs);
+$GLOBALS['showed_ids'] = array();
 
 if (have_posts()) :
 ?>
@@ -31,6 +32,7 @@ if (have_posts()) :
 		$counter_articles = 0;
 		while (have_posts()) :
 			the_post();
+			$GLOBALS['showed_ids'][] = get_the_ID();
 
 			/**
 			 * Include the Post-Format-specific template for the content.

@@ -229,8 +229,15 @@ class WA_Infinite_Scroll_Module extends WA_Module
 
         $posts_scroll = get_post_meta(get_the_ID(), 'wa_meta_posts_scroll', true);
 
-        $notIn = array_merge($promoted, $excluded_posts);
+        $notIn = array();
 
+        if (is_array($promoted)) {
+            $notIn = array_merge($notIn, $promoted);
+        }
+
+        if (is_array($excluded_posts)) {
+            $notIn = array_merge($notIn, $excluded_posts);
+        }
 
         $notIn[] = get_the_ID();
 
