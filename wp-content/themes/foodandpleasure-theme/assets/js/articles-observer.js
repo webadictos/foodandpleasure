@@ -89,6 +89,16 @@ const articlesObserver = (() => {
       if (typeof gtag === 'function' && gtag.hasOwnProperty('config')) {
         // Google Analytics 4 is being used.
         gtag('event', 'page_view', { page_path: slug });
+
+        if (Array.isArray(meta.canal)) {
+          meta.canal.forEach(function (item, index) {
+            gtag('event', 'page_view', {
+              event_category: 'Pageviews por canal',
+              event_label: item,
+              page_path: slug,
+            });
+          });
+        }
       }
 
       //Send Google Analytics Pageview

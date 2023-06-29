@@ -4,6 +4,7 @@ import { fileLoader } from './file-loader';
 const Single = (() => {
   let scriptsLoaded = false;
   let SocialShare;
+  let mapLoaded = false;
 
   const init = () => {
     //Send GA Events to track channels of current post
@@ -14,17 +15,41 @@ const Single = (() => {
     document
       .querySelector('body')
       .addEventListener('is.post-load', loadDependenciesForNewArticles);
+
+    if (document.querySelector('[data-place-id]')) {
+      import(
+        /* webpackChunkName: "map-places" */
+        /* webpackMode: "lazy" */
+        './map-places'
+      ).then(e => {
+        mapLoaded = true;
+        e.PlacesMap.init();
+      });
+    }
   };
 
   const loadDependenciesForNewArticles = e => {
     if (e.detail.postID) {
       //console.log(`Loading dependencies for #post-${e.detail.postID}`);
+      WA_ThemeSetup.currentID = e.detail.postID;
       loadSocialScripts(`#post-${e.detail.postID}`);
       if (typeof window.lazyLoadInstance != 'undefined') {
         window.lazyLoadInstance.update();
       }
 
       if (SocialShare) SocialShare.init();
+
+      if (!mapLoaded) {
+        console.log('No estaba');
+        import(
+          /* webpackChunkName: "map-places" */
+          /* webpackMode: "lazy" */
+          './map-places'
+        ).then(e => {
+          mapLoaded = true;
+          e.PlacesMap.init();
+        });
+      }
     }
   };
 
@@ -100,6 +125,19 @@ const Single = (() => {
     const article = document.querySelector(
       `#post-${ThemeSetup.current.postID}`
     );
+
+    if (typeof gtag === 'function' && gtag.hasOwnProperty('config')) {
+      if (Array.isArray(postConfig.canal)) {
+        postConfig.canal.forEach(function (item, index) {
+          gtag('event', 'page_view', {
+            event_category: 'Pageviews por canal',
+            event_label: item,
+            page_path: article.dataset.slug,
+          });
+        });
+      }
+    }
+
     if (Array.isArray(postConfig.canal)) {
       postConfig.canal.forEach(function (item, index) {
         try {

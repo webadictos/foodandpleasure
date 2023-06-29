@@ -74,7 +74,7 @@ class WA_Articles extends WA_Module
 
 
         if (function_exists('YoastSEO')) {
-            $title = YoastSEO()->meta->for_current_page()->title;
+            $title = YoastSEO()->meta->for_post($post_id)->title; //YoastSEO()->meta->for_current_page()->title;
 
             $article_config['title'] = $title;
         } else {

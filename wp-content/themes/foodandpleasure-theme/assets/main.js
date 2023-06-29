@@ -29,14 +29,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
       /* webpackMode: "lazy" */
       './js/single'
     ).then(e => e.Single.init());
-
-    if (document.querySelector('[data-place-id]')) {
-      import(
-        /* webpackChunkName: "map-places" */
-        /* webpackMode: "lazy" */
-        './js/map-places'
-      ).then(e => e.PlacesMap.init());
-    }
   }
 });
 
