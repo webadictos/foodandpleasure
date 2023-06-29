@@ -47,7 +47,7 @@ export default function Edit(props) {
           <PanelBody title="Leyenda" icon="editor-textcolor">
             <TextControl
               label="Leyenda"
-              help="Leyenda antes del enlace, por default es No te pierdas:"
+              help="Leyenda antes del enlace, por default es Te puede interesar:"
               onChange={caption => setAttributes({ caption })}
               value={attributes.caption}
             />

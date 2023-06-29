@@ -23,14 +23,15 @@
   }
   .wp-block-wa-blocks-core-wa-internal-link__preview {
     font-weight: 600;
-    display: flex;
-    gap: 0 0.5rem;
+    display: inline-block;
     &::before {
       content: var(--wa-internal-link-txt, 'Te puede interesar:');
       text-transform: uppercase;
+      margin-right: 0.3em;
     }
     .input-box {
       text-decoration: underline;
+      display: inline-block;
     }
   }
 }
