@@ -80,3 +80,15 @@
     --bs-link-color: #efeeec;
   }
 }
+
+.section-cant-miss {
+  .grid-container-items--with-featured {
+    article {
+      @include media-breakpoint-up(md) {
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
