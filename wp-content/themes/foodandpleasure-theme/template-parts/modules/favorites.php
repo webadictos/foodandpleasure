@@ -45,34 +45,14 @@ $_layoutArgs = array(
 $layoutArgs = wp_parse_args($args, $_layoutArgs);
 
 
-
-$_args = array(
-    'post_type' => array('post', 'fp_video'),
-    'posts_per_page' => 5,
-    'paged' => 1,
-    'no_found_rows' => true,
-    'update_post_meta_cache' => false,
-    'update_post_term_cache' => false,
-    'post_status' => 'publish',
-);
-
-if ($layoutArgs['exclude_ids']) {
-    $_args['post__not_in'] =  $GLOBALS['exclude_ids'] ?? array();
-}
-
-$_args = array_merge($_args, $layoutArgs['queryArgs']);
+$favorites = Foodandpleasure_Public::get_opciones('foodandpleasure_settings', 'foodandp_our_favorites') ?? array();
 
 
 $seccion = isset($layoutArgs['queryArgs']['category_name']) ? get_category_by_slug($layoutArgs['queryArgs']['category_name']) : '';
 
-$articlesQuery = new WP_Query();
 
 
-
-$articlesQuery->query($_args);
-
-
-if (!$layoutArgs['show_empty'] && !$articlesQuery->have_posts()) {
+if (!$layoutArgs['show_empty'] && count($favorites) == 0) {
     return;
 } else {
 
@@ -166,16 +146,11 @@ if (!$layoutArgs['show_empty'] && !$articlesQuery->have_posts()) {
                     'items_config' => $layoutArgs['items_config'],
                 );
 
-
-                while ($articlesQuery->have_posts()) : $articlesQuery->the_post();
+                foreach ($favorites as $post) :
+                    $order = "";
+                    //if($i==3) break;
+                    setup_postdata($post);
                     $GLOBALS['exclude_ids'][] = get_the_ID();
-
-
-
-
-
-                    add_filter('term_links-post_tag', 'limit_to_tags');
-
 
 
                     get_template_part('template-parts/items/' . $layoutArgs['items_layout'], null, $itemArgs);
@@ -184,13 +159,12 @@ if (!$layoutArgs['show_empty'] && !$articlesQuery->have_posts()) {
                     $numdestacado++;
                     $i++;
 
-                endwhile;
+                endforeach;
                 wp_reset_postdata();
                 wp_reset_query();
                 ?>
                 <?php //endforeach;
                 ?>
-                <?php remove_filter('term_links-post_tag', 'limit_to_tags'); ?>
 
             </div>
 

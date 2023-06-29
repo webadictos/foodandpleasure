@@ -40,7 +40,6 @@ const Single = (() => {
       if (SocialShare) SocialShare.init();
 
       if (!mapLoaded) {
-        console.log('No estaba');
         import(
           /* webpackChunkName: "map-places" */
           /* webpackMode: "lazy" */
