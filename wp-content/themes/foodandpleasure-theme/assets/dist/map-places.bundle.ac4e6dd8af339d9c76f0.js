@@ -1,0 +1,11 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([["map-places"],{"./js/leaflet-places.js":function(e,t,a){a.r(t),a.d(t,{PlacesMap:function(){return p}});a("../node_modules/@googlemaps/js-api-loader/dist/index.esm.js");var t=a("../node_modules/leaflet/dist/leaflet-src.js"),m=a.n(t);const p=(()=>{let e;const p={};var t=WA_ThemeSetup.themeUri;WA_ThemeSetup.maps.marker,WA_ThemeSetup.maps.markerActive;WA_ThemeSetup.maps.api;let s=WA_ThemeSetup.maps.center||{lat:19.4326018,lng:-99.1332049};const n=parseInt(WA_ThemeSetup.maps.zoom)||13,o=WA_ThemeSetup.maps.map_category??"maps";const a=e=>{var t,a=document.getElementById("post-"+e),p=l(e);a&&a.classList.contains("category-"+o)&&(t=a.querySelector("h1").innerText,0<[...a=r(a)].length)&&(i(t,e,p),c(e,[...a]),d())},r=e=>e.querySelectorAll("[data-place-id]"),i=(e,t,a)=>{e=`
+    <div id="wa-maps-widget-${t}" class="widget wa_maps_widget ${d()?"is-mobile":""}">
+    <div class="widget-header">
+        <h3 class="widget-title">${e}</h3>
+    </div>
+        <div id="map-widget-${t}" class="map-widget" data-map-id="${t}">
+            <div id="map-container-${t}" class="map-container"></div>
+            <div id="map-places-container-${t}" class="map-places-container"></div>
+        </div>
+    </div>
+`,t=document.createRange().createContextualFragment(e);d()?a.after(t):a.prepend(t)},d=()=>{return window.matchMedia("(max-width: 991px)").matches},l=e=>{e=document.getElementById("post-"+e);return d()?e.querySelector(".entry-excerpt"):e.querySelector(".single-widget-area")};const c=(e,t)=>{var a=m().map("map-container-"+e).setView([s.lat,s.lng],n);p[e]=a,m().tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(a),m().marker([51.5,-.09]).addTo(a).bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();a.on("load",function(){console.log("El mapa se ha cargado completamente")})};return{init:()=>{e=WA_ThemeSetup.currentID||0,a(e),document.querySelector("body").addEventListener("is.post-load",e=>{e.detail.postID&&(e.detail.infinitescroll,a(e.detail.postID))})}}})()}}]);

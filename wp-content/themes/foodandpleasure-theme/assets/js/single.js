@@ -20,8 +20,9 @@ const Single = (() => {
       import(
         /* webpackChunkName: "map-places" */
         /* webpackMode: "lazy" */
-        './map-places'
+        './leaflet-places'
       ).then(e => {
+        // console.log('Tiene mapa');
         mapLoaded = true;
         e.PlacesMap.init();
       });
@@ -43,10 +44,11 @@ const Single = (() => {
         import(
           /* webpackChunkName: "map-places" */
           /* webpackMode: "lazy" */
-          './map-places'
+          './leaflet-places'
         ).then(e => {
           mapLoaded = true;
           e.PlacesMap.init();
+          // console.log('Tiene mapa también');
         });
       }
     }
