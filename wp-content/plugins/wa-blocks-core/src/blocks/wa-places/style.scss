@@ -108,6 +108,13 @@
     .btn-map {
       --bs-btn-border-radius: 0;
       --bs-btn-bg: #000;
+      --bs-btn-color: #fff;
+      text-decoration: none;
+      --bs-btn-hover-border-color: #000;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9375rem;
     }
   }
 }
