@@ -127,13 +127,12 @@ const Single = (() => {
       `#post-${ThemeSetup.current.postID}`
     );
 
-    if (typeof gtag === 'function' && gtag.hasOwnProperty('config')) {
+    if (typeof gtag === 'function') {
       if (Array.isArray(postConfig.canal)) {
         postConfig.canal.forEach(function (item, index) {
           gtag('event', 'page_view', {
-            event_category: 'Pageviews por canal',
-            event_label: item,
-            page_path: article.dataset.slug,
+            post_category: item,
+            page_location: window.location.href,
           });
         });
       }

@@ -77,25 +77,29 @@ const articlesObserver = (() => {
     if (article.dataset.isTracking) {
     } else {
       const meta = JSON.parse(article.dataset.meta);
+      const postId = parseInt(article.dataset.postId);
 
       article.setAttribute('data-is-tracking', 'true');
 
-      if (promotedArticles.includes(meta.id)) {
-        trackedPromotedposts(meta.id);
+      if (promotedArticles.includes(postId)) {
+        trackedPromotedposts(postId);
       }
 
       dispatchTrackedEvent(meta);
 
-      if (typeof gtag === 'function' && gtag.hasOwnProperty('config')) {
+      if (typeof gtag === 'function') {
         // Google Analytics 4 is being used.
-        gtag('event', 'page_view', { page_path: slug });
+        gtag('event', 'page_view', {
+          page_location: window.location.href,
+          medium: 'infinite',
+          infinite_scroll_index: scrollIndex,
+        });
 
         if (Array.isArray(meta.canal)) {
           meta.canal.forEach(function (item, index) {
             gtag('event', 'page_view', {
-              event_category: 'Pageviews por canal',
-              event_label: item,
-              page_path: slug,
+              post_category: item,
+              page_location: window.location.href,
             });
           });
         }
@@ -123,7 +127,7 @@ const articlesObserver = (() => {
           '?v=ext&j=1%3A9.5&blog=' +
           config.jetpackID +
           '&post=' +
-          meta.id +
+          postId +
           '&tz=-6&srv=' +
           encodeURIComponent(window.location.hostname) +
           '&host=' +

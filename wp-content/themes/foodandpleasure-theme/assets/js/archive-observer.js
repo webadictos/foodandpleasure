@@ -77,9 +77,13 @@ const articlesObserver = (() => {
 
         currentUri = uri;
 
-        if (typeof gtag === 'function' && gtag.hasOwnProperty('config')) {
+        if (typeof gtag === 'function') {
           // Google Analytics 4 is being used.
-          gtag('event', 'page_view', { page_path: uri });
+          gtag('event', 'page_view', {
+            page_location: window.location.href,
+            medium: 'infinite',
+            infinite_scroll_index: scrollIndex,
+          });
         }
 
         if (typeof ga === 'function') {
