@@ -93,16 +93,18 @@ const articlesObserver = (() => {
           page_location: window.location.href,
           medium: 'infinite',
           infinite_scroll_index: scrollIndex,
+          //  post_category: meta.canal,
         });
 
-        if (Array.isArray(meta.canal)) {
-          meta.canal.forEach(function (item, index) {
-            gtag('event', 'page_view', {
-              post_category: item,
-              page_location: window.location.href,
-            });
-          });
-        }
+        // if (Array.isArray(meta.canal)) {
+        //   meta.canal.forEach(function (item, index) {
+        //     gtag('event', 'page_view', {
+        //       post_category: item,
+        //       page_location: window.location.href,
+        //       non_interaction: true,
+        //     });
+        //   });
+        // }
       }
 
       //Send Google Analytics Pageview

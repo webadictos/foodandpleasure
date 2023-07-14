@@ -127,16 +127,17 @@ const Single = (() => {
       `#post-${ThemeSetup.current.postID}`
     );
 
-    if (typeof gtag === 'function') {
-      if (Array.isArray(postConfig.canal)) {
-        postConfig.canal.forEach(function (item, index) {
-          gtag('event', 'page_view', {
-            post_category: item,
-            page_location: window.location.href,
-          });
-        });
-      }
-    }
+    // if (typeof gtag === 'function') {
+    //   if (Array.isArray(postConfig.canal)) {
+    //     postConfig.canal.forEach(function (item, index) {
+    //       gtag('event', 'page_view', {
+    //         post_category: item,
+    //         page_location: window.location.href,
+    //         non_interaction: true,
+    //       });
+    //     });
+    //   }
+    // }
 
     if (Array.isArray(postConfig.canal)) {
       postConfig.canal.forEach(function (item, index) {
