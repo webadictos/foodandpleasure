@@ -10,6 +10,11 @@ $logo_dark = wa_theme()->setting('general', 'logo_dark') ?? '';
 ?>
 <header id="masthead" class="masthead sticky-top <?php echo (is_home() || is_front_page()) ? 'header-home' : ''; ?>">
 
+
+    <?php
+    do_action('wa_inner_header');
+    ?>
+
     <div id="header" class="header-container">
 
         <div class="header__toggler">

@@ -7,6 +7,7 @@ const AdManager = (() => {
     window.adSlots = window.adSlots || {
       all: [],
       refreshables: [],
+      slots: [],
     };
     window.googletag = window.googletag || {
       cmd: [],

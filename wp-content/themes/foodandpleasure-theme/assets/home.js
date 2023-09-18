@@ -16,3 +16,5 @@ if (document.querySelector('.swiper')) {
     module.swiperCarrusel.init();
   });
 }
+
+//import('./js/wa-adunit');

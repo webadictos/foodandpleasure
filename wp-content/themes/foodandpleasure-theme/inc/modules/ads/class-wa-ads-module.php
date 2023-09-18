@@ -488,7 +488,7 @@ class WA_Ads_Module extends WA_Module
         $width_height_array = [];
         foreach ($this->size_mappings as $k => $item) {
             foreach ($item['sizes'] as $size) {
-                $width_height_array[$k][] = [$size['width'], $size['height']];
+                $width_height_array[$k][] = [(int) $size['width'], (int) $size['height']];
             }
 
             $width_height_array[$k] = array_unique($width_height_array[$k], SORT_REGULAR);
@@ -508,7 +508,7 @@ class WA_Ads_Module extends WA_Module
                     // Check if the 'platform' key exists
                     if (isset($size['platform'])) {
                         // Group the size by 'identificador' and 'platform'
-                        $sizes_by_platform_array[$key][$size['platform']][] = [$size['width'], $size['height']];
+                        $sizes_by_platform_array[$key][$size['platform']][] = [(int) $size['width'], (int) $size['height']];
                     }
                 }
             }
@@ -525,7 +525,7 @@ class WA_Ads_Module extends WA_Module
 
         $size_mappings = $this->process_size_mappings();
 
-        $settings['mappings'] = $size_mappings;
+        $settings['ad_types'] = $size_mappings;
 
         return $settings;
     }
@@ -537,7 +537,7 @@ class WA_Ads_Module extends WA_Module
             'boxbanner' => 'Box Banner',
             'halfpage' => 'Half Page',
             'superbanner' => 'Super Banner',
-            'Billboard' => 'Billboard',
+            'billboard' => 'Billboard',
             'inread' => 'In Read',
             'inread_multiple' => 'In Read secundarios',
             'interstitial' => 'Interstitial'

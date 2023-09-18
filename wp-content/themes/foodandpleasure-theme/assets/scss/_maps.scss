@@ -835,21 +835,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
   align-items: center;
   justify-content: center;
   @include media-breakpoint-up(lg) {
-    width: rem(61px);
+    width: rem(61px); //rem(61px);
     height: rem(42px);
   }
   &::after {
     content: '';
     background-image: url('../images/marker-active.png');
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: contain;
+    background-position: center;
     display: block;
-    width: rem(14px);
-    height: rem(20px);
-    @include media-breakpoint-up(lg) {
-      width: rem(26px);
-      height: rem(36px);
-    }
+    height: 90%;
+    width: 90%;
+    margin: 0 auto;
+    // width: rem(14px);
+    // height: rem(20px);
+    // @include media-breakpoint-up(lg) {
+    //   width: rem(26px);
+    //   height: rem(36px);
+    // }
   }
 }
 

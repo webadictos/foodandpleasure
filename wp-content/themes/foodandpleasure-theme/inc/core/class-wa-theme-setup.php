@@ -189,6 +189,8 @@ class WA_Theme_Setup
         if (is_single()) {
             $current_page['is_single'] = 'true';
             $current_page['post_type'] = get_post_type(get_the_ID());
+        } else {
+            $current_page['is_single'] = 'false';
         }
 
         if (is_page() || is_single() && !is_front_page()) {

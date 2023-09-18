@@ -11,7 +11,7 @@ import {
 
 const waGoogleAdManagerModule = (function () {
   let adUnits = [];
-  let adSlots = [];
+  //let adSlots = [];
   let previousPostId = 0;
   let adsLoaded = false;
   let isInfiniteScroll = false;
@@ -427,9 +427,10 @@ const waGoogleAdManagerModule = (function () {
         mobile: [],
         all: [],
       };
+      let slotInfo = {};
 
       try {
-        //console.log(adUnit.id);
+        console.log('ID', adUnit.id);
         adSetup = adUnit.dataset.adSetup;
 
         if (adUnit.dataset.adLoaded != 1) {
@@ -466,7 +467,7 @@ const waGoogleAdManagerModule = (function () {
               slotNameElements.push(setup.slotPrefix);
             }
 
-            slotNameElements.push(adUnit.dataset.slot);
+            slotNameElements.push(adUnit.dataset.adSlot);
 
             slotName = '/' + slotNameElements.join('/');
 
@@ -481,19 +482,35 @@ const waGoogleAdManagerModule = (function () {
               slotMapping['mobile'] =
                 setup.mappings[adUnit.dataset.adType].mobile;
               slotMapping['all'] = setup.mappings[adUnit.dataset.adType].all;
-            } else if (typeof adSetup.mappings.sizes != 'undefined') {
+              // } else if (typeof adSetup.mappings.sizes != 'undefined') {
+            } else if (
+              typeof WA_ThemeSetup.ads.ad_types.mappings[
+                adUnit.dataset.adType
+              ] != 'undefined'
+            ) {
               //console.log('Custom Sizes');
               // console.log(adSetup.mapping.sizes);
-              slotSizes = adSetup.mappings.sizes;
-              slotMapping['desktop'] = adSetup.mappings.desktop;
-              slotMapping['mobile'] = adSetup.mappings.mobile;
-              slotMapping['all'] = adSetup.mappings.all;
+              slotSizes =
+                WA_ThemeSetup.ads.ad_types.sizes[adUnit.dataset.adType]; //adSetup.mappings.sizes;
+              slotMapping['desktop'] =
+                WA_ThemeSetup.ads.ad_types.mappings[adUnit.dataset.adType]
+                  .desktop ?? []; //adSetup.mappings.desktop;
+              slotMapping['mobile'] =
+                WA_ThemeSetup.ads.ad_types.mappings[adUnit.dataset.adType]
+                  .mobile ?? []; //adSetup.mappings.mobile;
+              slotMapping['all'] =
+                WA_ThemeSetup.ads.ad_types.mappings[adUnit.dataset.adType]
+                  .all ?? []; //adSetup.mappings.all;
             } else {
               console.log(
                 `No se encontraron sizes definidos para el slot: ${adUnit.id} `
               );
               return;
             }
+
+            slotInfo.slotID = adUnit.id;
+            slotInfo.slotName = slotName;
+            slotInfo.sizes = slotSizes;
 
             googletag.cmd.push(function () {
               slot = googletag
@@ -522,8 +539,10 @@ const waGoogleAdManagerModule = (function () {
               // console.log(adUnit.id);
 
               // console.log(slot);
+              adSlots['slots'].push(slotInfo);
 
               adSlots['all'].push(slot);
+
               if (is_single() && adSetup.postID) {
                 adSlots['post-' + adSetup.postID].push(slot);
               }
