@@ -1,16 +1,16 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "wa-blocks-core/wa-internal-link",
+  "name": "wa-blocks-core/wa-list-items-content",
   "version": "0.1.0",
-  "title": "Enlace relacionado",
+  "title": "WA - Contenido de Lista",
   "category": "widgets",
-  "icon": "format-aside",
-  "description": "Inserta un enlace interno o externo dentro del texto.",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
   "supports": {
     "html": false
   },
-  "textdomain": "wa-internal-link",
+  "textdomain": "wa-list-items-content",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css"

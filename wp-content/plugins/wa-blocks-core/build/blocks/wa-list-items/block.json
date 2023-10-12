@@ -1,16 +1,16 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "wa-blocks-core/wa-internal-link",
+  "name": "wa-blocks-core/wa-list-items",
   "version": "0.1.0",
-  "title": "Enlace relacionado",
+  "title": "Encabezado numerado",
   "category": "widgets",
-  "icon": "format-aside",
-  "description": "Inserta un enlace interno o externo dentro del texto.",
+  "icon": "heading",
+  "description": "Inserta un encabezado numerado.",
   "supports": {
     "html": false
   },
-  "textdomain": "wa-internal-link",
+  "textdomain": "wa-list-items",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css"
