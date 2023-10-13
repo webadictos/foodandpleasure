@@ -43,6 +43,8 @@
     }
 
     .wa-blocks-core-wa-list-items__item-counter--total {
+      display: flex;
+      gap: 0.2rem;
       &::before {
         content: 'de ';
       }
