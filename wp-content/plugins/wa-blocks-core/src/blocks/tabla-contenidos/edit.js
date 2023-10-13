@@ -113,7 +113,7 @@ export default function Edit(props) {
         }
       >
         <ul>
-          {headings.map((heading, index) => {
+          {attributes.items.map((heading, index) => {
             if (heading.attributes.anchor) {
               return (
                 <li key={heading.clientId}>

@@ -3,7 +3,7 @@
   "apiVersion": 2,
   "name": "wa-blocks-core/wa-internal-link",
   "version": "0.1.0",
-  "title": "Enlace relacionado",
+  "title": "T+L Enlace relacionado",
   "category": "widgets",
   "icon": "format-aside",
   "description": "Inserta un enlace interno o externo dentro del texto.",

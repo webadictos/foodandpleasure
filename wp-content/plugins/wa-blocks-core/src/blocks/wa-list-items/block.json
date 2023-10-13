@@ -3,7 +3,7 @@
   "apiVersion": 2,
   "name": "wa-blocks-core/wa-list-items",
   "version": "0.1.0",
-  "title": "Encabezado numerado",
+  "title": "T+L - Encabezado numerado",
   "category": "widgets",
   "icon": "heading",
   "description": "Inserta un encabezado numerado.",

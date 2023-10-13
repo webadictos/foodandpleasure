@@ -3,10 +3,10 @@
   "apiVersion": 2,
   "name": "wa-blocks-core/callout",
   "version": "0.1.0",
-  "title": "Callout",
+  "title": "T+L - Callout",
   "category": "widgets",
   "icon": "admin-comments",
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "Inserta un recuadro resaltado con contenido dentro.",
   "supports": {
     "html": false
   },
