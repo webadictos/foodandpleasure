@@ -54,6 +54,10 @@ export default function save(props) {
           return null; // Ignora los headings sin anchor válido
         })}
       </ul>
+      <div class="toc-wrapper-view-all">
+        {' '}
+        <button class="btn btn-view-all">Ver todo</button>
+      </div>
     </nav>
   );
 }
