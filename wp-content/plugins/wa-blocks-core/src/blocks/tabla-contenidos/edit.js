@@ -25,8 +25,6 @@ import {
   Flex,
 } from '@wordpress/components';
 
-import { useMemo } from 'react';
-
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -45,22 +43,6 @@ import './editor.scss';
  */
 export default function Edit(props) {
   const { attributes, setAttributes } = props;
-
-  // Bloque de vista previa en el editor
-  const headings = useMemo(() => {
-    return select('core/block-editor')
-      .getBlocks()
-      .filter(
-        block => block.name === 'core/heading' && block.attributes.level === 2
-      );
-  }, []); // El segundo argumento vacío [] asegura que la función de obtención se ejecute una vez y luego se memoice.
-
-  setAttributes({ items: headings });
-  //props.setAttributes({ items: headings });
-
-  if (headings.length === 0) {
-    return <div>No existen encabezados H2</div>;
-  }
 
   const blockProps = useBlockProps({
     'data-heading': `${attributes.title ? `${attributes.title}` : ''}`,
@@ -104,7 +86,7 @@ export default function Edit(props) {
         </Panel>
       </InspectorControls>
 
-      <nav
+      <div
         {...blockProps}
         style={
           attributes.borderColor
@@ -112,21 +94,12 @@ export default function Edit(props) {
             : {}
         }
       >
-        <ul>
-          {attributes.items.map((heading, index) => {
-            if (heading.attributes.anchor) {
-              return (
-                <li key={heading.clientId}>
-                  <a href={`#${heading.attributes.anchor}`}>
-                    {heading.attributes.content}
-                  </a>
-                </li>
-              );
-            }
-            return null; // Ignora los headings sin anchor válido
-          })}
-        </ul>
-      </nav>
+        <em>
+          Aquí se generará la tabla de contenido de manera dinámica en la vista
+          pública del artículo. Solamente configura la leyenda y elige la
+          posición dentro del artículo donde quieras que aparezca.
+        </em>
+      </div>
     </>
   );
 }

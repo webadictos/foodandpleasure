@@ -19,6 +19,19 @@ import { InnerBlocks, RichText } from '@wordpress/block-editor';
 export default function save(props) {
   const { attributes } = props;
 
+  // let title = attributes.contenidoEncabezado;
+
+  // title = title.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // title = title
+  //   .replace(/[^\p{L}\p{N}]+/gu, '-')
+  //   // Convert to lowercase
+  //   .toLowerCase()
+  //   // Remove any remaining leading or trailing hyphens.
+  //   .replace(/(^-+)|(-+$)/g, '');
+
+  // const listItemId = `${title}-${attributes.numeroEncabezado}`;
+
   return (
     <div {...useBlockProps.save()}>
       <div class="wa-blocks-core-wa-list-items__item-counter">
@@ -30,7 +43,10 @@ export default function save(props) {
         </span>
       </div>
 
-      <h2 className="wa-blocks-core-wa-list-items__item-title">
+      <h2
+        className="wa-blocks-core-wa-list-items__item-title"
+        id={attributes.itemId}
+      >
         <RichText.Content value={attributes.contenidoEncabezado} />
       </h2>
     </div>

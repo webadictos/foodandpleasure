@@ -35,7 +35,7 @@ import './editor.scss';
  */
 function Edit(props) {
   const { attributes, setAttributes, blockIndex, totalBlocks } = props;
-  const { contenidoEncabezado, numeroEncabezado } = attributes;
+  const { contenidoEncabezado, numeroEncabezado, itemId } = attributes;
 
   const paddedBlockIndex = String(blockIndex + 1).padStart(2, '0');
 
@@ -43,6 +43,26 @@ function Edit(props) {
     totalEncabezados: totalBlocks,
     numeroEncabezado: paddedBlockIndex,
   });
+
+  const onContentChange = value => {
+    let title = value;
+
+    title = title.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    title = title
+      .replace(/[^\p{L}\p{N}]+/gu, '-')
+      // Convert to lowercase
+      .toLowerCase()
+      // Remove any remaining leading or trailing hyphens.
+      .replace(/(^-+)|(-+$)/g, '');
+
+    const listItemId = `${title}-${paddedBlockIndex}`;
+
+    setAttributes({
+      itemId: listItemId,
+      contenidoEncabezado: value,
+    });
+  };
 
   return (
     <div {...useBlockProps()}>
@@ -60,7 +80,9 @@ function Edit(props) {
         value={contenidoEncabezado}
         placeholder="Encabezado"
         className="wa-blocks-core-wa-list-items__item-title"
-        onChange={newText => setAttributes({ contenidoEncabezado: newText })}
+        onChange={onContentChange}
+        id={itemId}
+        // onChange={newText => setAttributes({ contenidoEncabezado: newText })}
       />
     </div>
   );

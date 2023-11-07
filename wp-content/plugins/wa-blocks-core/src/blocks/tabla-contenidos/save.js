@@ -30,29 +30,28 @@ export default function save(props) {
     'data-heading': `${attributes.title ? `${attributes.title}` : ''}`,
     className: 'toc-wrapper',
   });
-  return (
-    <nav
-      {...blockProps}
-      style={
-        attributes.borderColor
-          ? { '--toc-main-color': '' + attributes.borderColor + '' }
-          : {}
-      }
-    >
-      <ul>
-        {headings.map((heading, index) => {
-          if (heading.attributes.anchor) {
-            return (
-              <li key={heading.clientId}>
-                <a href={`#${heading.attributes.anchor}`}>
-                  {heading.attributes.content}
-                </a>
-              </li>
-            );
-          }
-          return null; // Ignora los headings sin anchor válido
-        })}
-      </ul>
-    </nav>
-  );
+  //   <nav
+  //   {...blockProps}
+  //   style={
+  //     attributes.borderColor
+  //       ? { '--toc-main-color': '' + attributes.borderColor + '' }
+  //       : {}
+  //   }
+  // >
+  //   <ul>
+  //     {headings.map((heading, index) => {
+  //       if (heading.attributes.anchor) {
+  //         return (
+  //           <li key={heading.clientId}>
+  //             <a href={`#${heading.attributes.anchor}`}>
+  //               {heading.attributes.content}
+  //             </a>
+  //           </li>
+  //         );
+  //       }
+  //       return null; // Ignora los headings sin anchor válido
+  //     })}
+  //   </ul>
+  // </nav>
+  return <></>;
 }

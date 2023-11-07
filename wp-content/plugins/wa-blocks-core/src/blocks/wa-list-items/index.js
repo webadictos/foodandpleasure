@@ -40,8 +40,14 @@ registerBlockType(metadata.name, {
       type: 'string',
       default: '',
     },
+    itemId: {
+      type: 'string',
+      default: '',
+    },
   },
-
+  supports: {
+    anchor: true,
+  },
   transforms: {
     from: [
       {
