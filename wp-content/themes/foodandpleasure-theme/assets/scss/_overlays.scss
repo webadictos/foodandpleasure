@@ -119,6 +119,13 @@
         text-transform: uppercase;
         font-size: var(--menu-hamburger-font-size, #{fluid(15px, 24px)});
       }
+      &.submenu {
+        padding-left: 1.5rem;
+        display: block;
+        @include media-breakpoint-up(lg) {
+          // display: none;
+        }
+      }
     }
   }
 

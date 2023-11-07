@@ -1301,6 +1301,9 @@ img {
   .section {
     padding: var(--section-padding-lg, var(--section-padding, 2rem 0));
   }
+  .author-archive .section__title-container .bio {
+    padding: 0 3rem;
+  }
 }
 .section .section__title {
   --bs-link-color: var(--section-title-color);
@@ -1316,6 +1319,22 @@ img {
 .section .section__title {
   color: var(--section-title-color);
 }
+.author-archive .section__title-container {
+  background-color: #fff;
+  padding: 1.5rem;
+  text-align: center;
+}
+.author-archive .section__title-container .avatar {
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+}
+.author-archive .section__title-container .bio {
+  max-width: 600px;
+  padding: 0 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .archive-item,
 .article-item {
   --article-item-thumbnail-height: 17.5rem;

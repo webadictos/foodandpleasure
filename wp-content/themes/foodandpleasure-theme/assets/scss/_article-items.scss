@@ -26,8 +26,10 @@
     .article-item__thumbnail:not(.unanimated) {
       overflow: hidden;
       &:hover {
-        img {
-          transform: scale(1.2);
+        @include media-breakpoint-up(lg) {
+          img {
+            transform: scale(1.2);
+          }
         }
       }
     }
@@ -158,9 +160,11 @@
     & a {
       color: var(--article-item-title-color);
       text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-        color: currentColor;
+      @include media-breakpoint-up(md) {
+        &:hover {
+          text-decoration: underline;
+          color: currentColor;
+        }
       }
     }
   }

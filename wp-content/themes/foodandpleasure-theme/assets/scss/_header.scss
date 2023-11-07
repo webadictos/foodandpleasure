@@ -178,6 +178,13 @@ body {
         letter-spacing: rem(1px);
         font-size: var(--bs-nav-link-font-size);
       }
+
+      &.submenu {
+        @include media-breakpoint-up(lg) {
+          left: 100%;
+          top: -7px;
+        }
+      }
     }
 
     .search-form {

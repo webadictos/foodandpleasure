@@ -105,3 +105,17 @@ add_action('pre_get_posts', function ($query) {
         $query->set('posts_per_page', $posts_per_page);
     }
 });
+
+
+add_filter('block_editor_settings_all', function ($editor_settings, $editor_context) {
+    $editor_settings['generateAnchors'] = true;
+    return $editor_settings;
+}, 10, 2);
+
+
+/**
+ * Temporary fix jetpack cdn
+ */
+add_filter('jetpack_photon_skip_for_url', function ($allow) {
+    return false;
+}, 10, 1);

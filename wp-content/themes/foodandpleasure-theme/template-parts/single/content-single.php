@@ -21,7 +21,7 @@ $primary_category = apply_filters('get_primary_category', $primary_category, get
         if (has_post_thumbnail()) :
             $thumb = get_the_post_thumbnail(get_the_ID(), 'full', array('title' => get_the_title(), 'alt' => get_the_title(), 'class' => "w-100"));
 
-            $caption = get_the_post_thumbnail_caption();
+        //$caption = get_the_post_thumbnail_caption();
 
         else :
             $thumb = '<img src="' . $GLOBALS['default_image'] . '" alt="' . get_the_title() . '" title="' . get_the_title() . '" class="w-100">';

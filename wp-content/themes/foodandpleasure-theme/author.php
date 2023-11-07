@@ -6,6 +6,9 @@
 
 get_header();
 ?>
+<?php
+$queried_object = get_queried_object();
+?>
 <main class="site-main author-archive" role="main">
 	<div class="container">
 		<?php
@@ -24,15 +27,21 @@ get_header();
 			<section class="section p-0">
 
 				<header class="section__title-container page-header">
+					<?php echo get_avatar($queried_object->ID, "150"); ?>
+					<h1 class="section__title page-title text-center"><?php echo get_the_author_meta('display_name', $queried_object->ID); ?></h1>
 
 
-					<h1 class="section__title page-title">
-						<?php
-						printf(esc_html__('Autor: %s', 'foodandpleasure-theme'), get_the_author());
-						?>
-					</h1>
+					<?php
+					$bio = get_the_author_meta('description', $queried_object->ID);
 
+					if ($bio != "") :
+					?>
+						<p class="bio mx-auto px-2 px-md-5"><?php echo $bio; ?></p>
+
+
+					<?php endif; ?>
 				</header>
+
 
 			</section>
 			<section class="section p-0">
