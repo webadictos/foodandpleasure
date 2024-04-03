@@ -16,9 +16,13 @@ const AdManager = (() => {
       googletag
         .pubads()
         .setTargeting('canal', WA_ThemeSetup.current.canal ?? []);
-      googletag
-        .pubads()
-        .setTargeting('postID', WA_ThemeSetup.current.postID ?? 0);
+
+      if (WA_ThemeSetup.current.postID > 0) {
+        googletag
+          .pubads()
+          .setTargeting('postID', WA_ThemeSetup.current.postID ?? 0);
+      }
+
       googletag.pubads().setTargeting('tags', WA_ThemeSetup.current.tags ?? []);
       googletag
         .pubads()
@@ -42,7 +46,7 @@ const AdManager = (() => {
         mobileScaling: 2.0,
       });
 
-      googletag.pubads().enableSingleRequest();
+      // googletag.pubads().enableSingleRequest();
       googletag.pubads().disableInitialLoad();
       googletag.enableServices();
 
@@ -50,6 +54,9 @@ const AdManager = (() => {
         if (event.isEmpty) {
           var id = event.slot.getSlotElementId();
           var x = document.getElementById(id);
+
+          if (!x) return;
+
           x.style.display = 'none';
           //console.log("No tiene anuncio");
 
@@ -70,6 +77,7 @@ const AdManager = (() => {
           var id = event.slot.getSlotElementId();
           var x = document.getElementById(id);
           //console.log("Cargando anuncio");
+          if (!x) return;
 
           //console.log(event.size[1]);
           if (event.size[1] > 100) {

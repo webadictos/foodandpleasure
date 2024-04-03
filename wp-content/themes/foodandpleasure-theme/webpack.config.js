@@ -1,6 +1,8 @@
 const path = require('path'),
   webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // Importa CleanWebpackPlugin
+
 const themeFolder = path.basename(__dirname);
 
 console.log(`\nCompilando el tema ubicado en ${themeFolder}\n`);
@@ -27,6 +29,9 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
+    }),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['**/*', '!*.css', '!*.map'], // Excluye archivos .css y .map
     }),
   ],
   optimization: {

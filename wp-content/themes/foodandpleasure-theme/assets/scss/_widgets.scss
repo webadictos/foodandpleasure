@@ -5,6 +5,10 @@
 
   background: var(--widget-background);
   padding: var(--widget-padding, 1rem 0);
+
+  &:first-child {
+    --widget-padding: 0 0 1rem;
+  }
   .widget-title {
     font-family: var(--widget-title-font-family, var(--headings-font-family));
     font-weight: var(--widget-title-font-weight, var(--headings-font-weight));

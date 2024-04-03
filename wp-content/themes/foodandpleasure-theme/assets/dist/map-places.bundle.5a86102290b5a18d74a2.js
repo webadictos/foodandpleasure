@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([["map-places"],{"./js/map-places.js":function(a,s,e){e.r(s),e.d(s,{PlacesMap:function(){return n}});const n={init:()=>{console.log("Inicializando mapa de lugares")}}}}]);

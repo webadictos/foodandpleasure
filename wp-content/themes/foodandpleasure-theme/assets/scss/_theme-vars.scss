@@ -39,7 +39,7 @@ $single-title-color: #eeedeb;
 $entry-font-family: 'Lato', sans-serif;
 
 $excerpt-font-family: 'Lato', sans-serif;
-$excerpt-font-weight: 700;
+$excerpt-font-weight: 400;
 
 $ads-text-font-family: 'Open Sans', sans-serif;
 
@@ -48,7 +48,7 @@ $fa-font-path: '../webfonts/fontawesome/';
 //Colors
 
 $headings-color: #000000;
-$excerpt-color: #091405;
+$excerpt-color: #eeedeb;
 $entry-color: #000000;
 $background-nav: transparent;
 $color-nav: #091405;
@@ -101,9 +101,9 @@ $arrow-fill: #231f20;
   --single-title-font-weight: #{meta.inspect($single-title-font-weight)};
   --single-title-color: #{meta.inspect($single-title-color)};
 
-  --page-title-font-size: #{fluid(16px, 26px)};
-  --single-title-font-size: #{fluid(16px, 30px)};
-  --excerpt-font-size: #{fluid(15px, 18px)};
+  --page-title-font-size: #{fluid(20px, 26px)};
+  --single-title-font-size: #{fluid(20px, 30px)};
+  --excerpt-font-size: #{fluid(13px, 16px)};
   --excerpt-color: #{$excerpt-color};
   --entry-color: #{$entry-color};
 

@@ -43,36 +43,49 @@ $primary_category = apply_filters('get_primary_category', $primary_category, get
 
             <h1 class="entry-title single-entry__header-title"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h1>
 
-            <div class="entry-meta single-entry__header-meta">
 
-                <div class="article-autor single-entry__header-meta--author" itemprop="author" itemscope itemtype="http://schema.org/Person"><?php echo __('Por', 'guia-gastronomica'); ?> <span itemprop="name">
-                        <?php the_author_posts_link(); ?></span>
+
+            <?php
+            $excerpt = get_the_excerpt();
+            if (trim($excerpt) !== "") :
+            ?>
+                <div class="entry-excerpt">
+                    <?php echo wpautop($excerpt); ?>
                 </div>
+            <?php endif; ?>
 
-                <time class="post-meta-date single-entry__header-meta--date" itemprop="datePublished" content="<?php the_date('Y-m-d'); ?>"><?php the_time(get_option('date_format')); ?></time>
-
-            </div><!-- /.entry-meta -->
+            <div class="single-entry__header-meta__tags">
+                <?php the_tags('', ' ', ''); ?>
+            </div>
         </div>
 
     </header><!-- /.entry-header -->
 
 
+
+
     <div class="entry-content entry-grid">
 
-        <div class="entry-grid__main-text entry-main-text">
+        <?php
+        if (function_exists('wa_show_sharebar')) {
+            wa_show_sharebar(get_the_ID(), array('networks' => array('facebook', 'whatsapp', 'twitter')));
+        }
+        ?>
 
-            <?php
-            if (function_exists('wa_show_sharebar')) {
-                wa_show_sharebar(get_the_ID(), array('networks' => array('facebook', 'whatsapp', 'twitter')));
-            }
-            ?>
+        <div class="entry-grid__main-meta">
 
-            <?php
-            $excerpt = get_the_excerpt();
-            ?>
-            <div class="entry-excerpt">
-                <?php echo wpautop($excerpt); ?>
+            <div class="article-autor single-entry__header-meta--author" itemprop="author" itemscope itemtype="http://schema.org/Person"><?php echo __('Por', 'guia-gastronomica'); ?> <span itemprop="name">
+                    <?php the_author_posts_link(); ?></span>
             </div>
+
+            <time class="post-meta-date single-entry__header-meta--date" itemprop="datePublished" content="<?php the_date('Y-m-d'); ?>"><?php the_time(get_option('date_format')); ?></time>
+
+
+        </div><!-- /.entry-meta -->
+
+
+
+        <div class="entry-grid__main-text entry-main-text">
 
             <?php
 
